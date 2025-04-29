@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="sitePost.css">
+    <link rel="icon" href="./images/icons/user_icon.png">
+    <title>Site Name</title>
+    <script>
+        var accountInformationsVisible = false;
+        function showaccountInformation(){
+            if(!accountInformationsVisible){
+                document.getElementById('accountInformations').style = "display: block;margin-top: 50px;";
+                accountInformationsVisible = true;
+            }else if(accountInformationsVisible){
+                document.getElementById('accountInformations').style = "display: none;";
+                accountInformationsVisible = false;
+            }
+        }
+    </script>
+</head>
+<body>
+    <nav class="userSection">
+        <!-- <dic class="topBar">  
+          <h2>Du-zilla</h2><h2 style="color:rgb(140, 0, 255);margin-left: 20px;">Sites</h2>
+        </div> -->
+
+        <div class="userBox" style="margin-top: 10px;">
+            <img class="user_img" style="margin-left: 0px;" src="./images/icons/user_icon.png">
+            <h4 class="normal_text" style="margin-left: 10px;">account name</h4>
+            <div class="showButton" onclick="showaccountInformation()">
+                <h4 class="normal_text">A</h4>
+            </div>    
+        </div>
+    </nav>
+
+    <div class="scroll_box" id="accountInformations" style="margin-top: 50px;display: none;">
+        <h3>Assistido</h3>
+        <h5 style="color: rgb(80, 80, 80);">informações adicionais(opicional)</h5>
+        
+        <div class="video_info_section">
+          <h5>000 views</h5>
+          <div class="like_section">
+            <div class="like_box" onclick="like_function()"><h6 id="likes">0 likes</h6></div>
+            <div class="deslike_box" onclick="deslike_function()"><h6 id="deslikes">0 deslikes</h6></div>
+          </div>
+       </div>
+
+        <div class="channel_box">
+         <div class='user_img_box'></div>   
+           <div style="height:40px; margin-left: 10px;">
+             <h5>channel_name</h5>
+             <h6>0 followers</h6>
+           </div>  
+         <button id="follow_but">Follow</button>
+       </div>
+
+       <div class="description">
+         <div class="info_about_video"><h5>00/00/0000</h5></div>
+         <textarea class="text_description normal_text" wrap="hard" readonly>asdhau yasduyga yg aysdguy yusg uaygdu ysyafryigyas</textarea>
+       </div>
+
+       <div class="comments">
+         <div class="user_comment">
+            <img src='./images/icons/user_icon.png' class="user_img_box">
+            <input type="text" placeholder="comments" class="input_comment" id="input_comment" 
+            autocomplete="off">
+            <Button class="send_button" onclick="send_comment()">-></button>
+         </div>
+         <div class="others_comments" id="others_comments">
+            
+            <div class="ao_user_comment">
+            <img src='./images/icons/user_icon.png' class="user_img_box">
+            <div>
+            <h5 class="name_channel">Mr.Hello</h5>  
+            <h6 class="text_comment">Video top d+ me ensina a fazer essa merda</h6>
+            </div></div>
+
+         </div>
+       </div>
+      </div>
+
+
+    <div class="dzBox">
+        <h2>Dz</h2>
+    </div>
+
+    <div class="siteSection">
+        <iframe src="./accounts/sites/sitePost-abc123456/index.html"></iframe>
+    </div>
+    
+
+    <!-- <section style="border:5px solid rgb(140, 0, 255);width: 100%;height: calc(100vh - 70px);margin-top: 50px;">
+        <iframe src="video2.html" style="width: 100%;height: 100%;"></iframe>
+    </section> -->
+    
+</body>
+</html>

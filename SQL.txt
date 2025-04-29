@@ -1,0 +1,43 @@
+create database faca;
+use faca;
+
+create table user_account(
+	nick varchar(20) primary key not null,
+    user_name varchar(40) not null,
+    email varchar(80) not null,
+    user_password varchar(64) not null,
+    create_account_date timestamp default current_timestamp,
+    user_description varchar(700)
+);
+
+create table videos(
+	id char(20) default (substring(md5(rand()),1,20)) primary key,
+    #id char(20) default(MD5(RAND())) primary key,
+    video_title varchar(200) not null,
+    add_info varchar(200),
+    video_description varchar(500),
+    video_tag varchar(300),
+    video_duration int, #seconds
+    shippein_date timestamp default current_timestamp,
+    user_nick varchar(20) not null,
+    views bigint,
+    #allows
+     allow_comments char(1),
+     allow_show_like char(1),
+     alloe_show_deslike char(1),
+    foreign key (user_nick) references user_account(nick)
+);
+drop table videos;
+select * from videos;
+
+insert into videos(video_title,add_info,video_description,video_tag,video_duration,user_nick,views)
+values('the potency time is now!!!','the begin','se how the potency is work for justicy','potency mr.river the first music clip',180,'mr.river',0);
+
+insert into videos(video_title,add_info,video_description,video_tag,video_duration,user_nick,views)
+values('MY PAY BACK MRRIVER!!KKKKK','','follow me i am new in this site. the mr.river can be the first, but i am the mr.river isnt?','first mr_hello pay back mrriver mrhellovsmrriver',360,'mr-hello',20);
+
+
+insert into user_account(nick,user_name,email,user_password,user_description)
+values('mr-hello','Mr.Hello','mr.hello@gmail.com','mrhello12345.','hi, i am mr.hello');
+
+select * from user_account

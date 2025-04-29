@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Upload Site</title>
+</head>
+<body>
+  <script src="script_exp.js"></script>
+  <script>
+    var execution = "preview";
+
+    class PageFile{
+      constructor(){
+        this.name;
+        this.fileType;
+        this.homePage;//boolean
+        this.isPage;//boolean
+        this.pageName;
+        this.content;
+      }
+    }
+
+    var homePage = new PageFile;
+    homePage.name = "Home Page";
+    homePage.fileType = "dz";
+    homePage.isPage = true;
+    homePage.pageName = "Home Page";
+
+    var filesObjects = [JSON.stringify(homePage)];
+
+    function previewMode(mode){
+      // p = preview
+      //c = code
+      // cd code preview
+      function turnSettings(mode){
+        execution = mode;
+        let button = document.getElementById(mode+'Button');
+        button.classList.add('previewButtonActive');
+        
+        if(mode == 'preview'){
+          document.getElementById('codeButton').classList.remove('previewButtonActive');
+          document.getElementById('codePreviewButton').classList.remove('previewButtonActive');
+        }
+        else if(mode == 'code'){
+          document.getElementById('previewButton').classList.remove('previewButtonActive');
+          document.getElementById('codePreviewButton').classList.remove('previewButtonActive');
+        }
+        else if(mode == 'codePreview'){
+          document.getElementById('previewButton').classList.remove('previewButtonActive');
+          document.getElementById('codeButton').classList.remove('previewButtonActive');
+        }
+
+
+      }
+
+      if(mode == 'p'){turnSettings('preview')}
+      else if(mode == 'c'){turnSettings('code')}
+      else if(mode == 'cd'){turnSettings('codePreview')}
+
+
+      if(execution == 'code'){
+        document.getElementById('codePreview').style.display = "flex";
+        document.getElementById('code_preview_mode').style.display = "none";
+        document.getElementById('preview_mode').style.display = 'none';
+      }else if(execution == 'codePreview'){
+        document.getElementById('codePreview').style.display = "none";
+        document.getElementById('code_preview_mode').style.display = "flex";
+        document.getElementById('preview_mode').style.display = 'none';
+      }else if(execution == 'preview'){
+        document.getElementById('preview_mode').style.display = 'flex';
+        document.getElementById('codePreview').style.display = "none";
+        document.getElementById('code_preview_mode').style.display = "none";
+      }
+    }
+
+    function newFile(){
+      let box = document.getElementById('newFile');
+      let input = box.querySelector('#uploadElementInput');
+      input.value = "";
+      box.style = "display:flex";
+      // setTimeout(function(){
+      // document.addEventListener('click',function(event){
+      //   if(!box.contains(event.target)){
+      //     alert('ok');
+      //   }
+      // })
+      // },200)
+
+    }
+
+
+    function createFile(elem){
+      let box = document.getElementById('newFile')
+      let input = box.querySelector('#uploadElementInput')
+      let fileName = input.value;
+
+      let elemento = document.createElement('div');
+      elemento.innerHTML = `
+        <div class="uploadElement">
+            <div class="iconUploadElement" style="background-image: url(./images/icons/user_icon.png);"></div>
+            <h4 class="normal_text">`+fileName+`</h4>
+            <div class="diverse_button" style="position: absolute;right:0;margin-right: 10px;"></div>
+          </div>
+      `;
+
+      document.getElementById('filesView').append(elemento);
+      box.style.display = "none";
+    }
+
+    var lastFile;
+
+    function elementPress(file){
+      let selection = document.getElementById('filesElements');
+      let numberDivs = selection.getElementsByClassName('uploadElement').length
+
+      for(let i = 0; i < numberDivs; i++){
+        let id = selection.getElementsByClassName('uploadElement')[i].id;
+        selection.getElementsByClassName('uploadElement')[i].className ='uploadElement';
+      }
+
+      document.getElementById(file).classList.add('uploadElementActive');
+      
+    }
+
+    function optionsBox(options,action,icon,e){
+      let faca = false;
+
+
+      let optionsBox = ""; 
+      for(let i = 0;i< options.length;i++){
+        let value = options[i];
+        optionsBox += `
+        <div class="boxSection" onclick="`+action[i][0]+`('`+action[i][1]+`')"><div class="boxSectionImg" style="background-image:url('`+icon[i]+`')"></div><h5 class="normal_text">`+value+`</h5></div>
+        `
+      }
+
+      let elementBass = `
+      <div class="optionBox" style="margin-left:`+(e.clientX)+`px;margin-top:`+(e.clientY)+`px;display:block;">
+      `+optionsBox+`
+      </div>
+      `
+      let box = document.createElement("div");
+      box.innerHTML = elementBass;
+      let section = document.getElementById('teste');
+      section.append(box);
+
+      setTimeout(function(){document.addEventListener('click',function(){
+        if(!faca){
+        let elements = document.getElementsByClassName("optionBox")[1];
+        let number = (document.getElementsByClassName("optionBox").length)-1;
+        (document.getElementsByClassName("optionBox")[number]).style.display = "none";
+        faca = true;
+        clicked = true;
+        }
+      })},500)
+    }
+
+    function teste(text){
+      let section = document.getElementById('filesElements');
+      switch (text){
+        case "dzFile":
+          
+          let div = document.createElement('div');
+          div.innerHTML = `<div class="uploadElement" id="newFileEdit">
+              <div class="iconUploadElement" style="background-image: url(./images/icons/user_icon.png);margin-left: 10px;"></div>
+              <input id="editInput" class="normal_text uploadElementInput" style="width: 80%;">
+            </div>`;
+          section.append(div);
+
+          document.addEventListener('keydown',function(e){
+            if(e.key == "Enter"){
+              let page = new PageFile();
+              let fileName = document.getElementById('editInput').value;
+              page.name = fileName;
+              page.fileType = 'dz';
+              page.homePage = false;
+              page.isPage = true;
+              page.content = "<html></html>";
+
+              filesObjects[filesObjects.length] = JSON.stringify(page);
+              refreshFileSection();
+              document.getElementById('newFileEdit').classList.add('invisible');
+            }
+          })
+          break;
+      }
+    }
+
+    function refreshFileSection(){
+      let section = document.getElementById('filesElements');
+      let htmlValue = "";
+      for(let i=0;i < filesObjects.length;i++){
+        let object = JSON.parse(filesObjects[i]);
+        //let element = document.createElement('div');
+        htmlValue += `<div class="uploadElement" id="${object.name}.dz" onclick="elementPress('${object.name}.dz')">
+               <div class="iconUploadElement" style="background-image: url(./images/icons/user_icon.png);"></div>
+              <h5 class="normal_text">${object.name}.${object.fileType}</h5>
+              <div class="diverse_button" style="position: absolute;right:0;margin-right: 10px;"
+              onclick="optionsBox(['copy','delete','rename'],action=[['teste','hi'],['teste','bye'],['teste','world']],icon=['./images/icons/user_icon.png'],e=event)"></div>
+              </div>`
+        //section.append(element);
+      }
+      section.innerHTML = htmlValue;
+    }
+
+    setTimeout(function(){refreshFileSection()},500);
+
+    function uploadFile(){
+      document.getElementById('fileButton').click();
+    }
+
+    setTimeout(function(){previewMode('p')},100)
+  </script>
+    <nav>
+        <div class="topBar">  
+          <h2>Du-zilla</h2><h2 style="color:rgb(140, 0, 255);margin-left: 20px;">Sites</h2>
+        </div>
+    </nav>
+
+    <!-- <section class="user_bar" id="userBar" onclick="showUserBar()" onmouseenter="showUserBar('byHover')">
+      <a href="account.html">
+        <div class="box_user_bar" style="background-color: black;"><h5 class="normal_text">user_name</h5><img class='user_img'src="./images/icons/user_icon.png"></div>
+      </a>
+
+      <a href="user.html">
+        <div class="box_user_bar" >
+          <h5 class="normal_text" >Notifications</h5>
+          <div class="iconBoxUserBar" style="background-image: url('./images/icons/notification_icon.png');"></div>
+        </div>
+      </a> 
+
+      <a href="user.html">
+        <div class="box_user_bar">
+          <h5 class="normal_text" >Upload</h5>
+          <div class="iconBoxUserBar" style="background-image: url(./images/icons/upload_icon.png);"></div>
+        </div>
+      </a> 
+
+      <a href="user.html">
+        <div class="box_user_bar">
+          <h5 class="normal_text" >See Later</h5>
+          <div class="iconBoxUserBar" style="background-image: url(./images/icons/see_later_icon.png);"></div>
+        </div>
+      </a>
+
+      <a href="user.html">
+        <div class="box_user_bar">
+          <h5 class="normal_text" >Following</h5>
+          <div class="iconBoxUserBar"></div>
+        </div>
+      </a>
+
+      <a href="user.html">
+        <div class="box_user_bar">
+          <h5 class="normal_text" >Help</h5>
+          <div class="iconBoxUserBar"></div>
+        </div>textst
+      </a>
+    </section> -->
+
+    <div id="teste" style="position: absolute;width:100%;height: 100%;pointer-events: none;"></div>
+
+    <div class="blurBox templateWindow">
+      <div style="position: absolute;top: 0;right: 0;margin-right: 20px;">
+        <h3 class="normal_text">X</h3>
+      </div>
+
+      <div class="scrollTemplates">
+
+        <div class="templateSectionTitle">
+          <h3 class="normal_text">Templates</h3>
+        </div>
+
+        <div class="templateSection">
+          <div class="template">
+            <div class="templateText"><h4 class="normal_text">Empty Page</h4></div>
+          </div>
+          
+          <div class="template">
+            <div class="templateText"><h4 class="normal_text">Photo home Page</h4></div>
+          </div>
+
+          <div class="template">
+            <div class="templateText"><h4 class="normal_text">News home Page</h4></div>
+          </div>
+
+          <div class="template">
+            <div class="templateText"><h4 class="normal_text">Video home Page</h4></div>
+          </div>
+
+          <div class="template">
+            <div class="templateText"><h4 class="normal_text">Store home Page</h4></div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <section class="actionSection" style="margin-top: 70px;">
+        <input class="uploadElementInput" style="margin-left: 20px;" value="HelloWorld Project">
+
+        <div style="position: absolute;right: 0;display: flex;margin-right: 40px;">
+        <div class="actionButton" onclick="saveUploadBanner()" style="margin-left: 20px;margin-right: 20px;">
+          <h4 class="normal_text">Save</h4>
+        </div>
+        <div class="actionButton" onclick="saveUploadInformations()">
+          <h4 class="normal_text">Publish</h4>
+        </div>
+        </div>
+    </section>
+
+    <!-- <div class="optionBox" style="float: right;">
+      <div class="boxSection"><div class="boxSectionImg"></div><h5 class="normal_text">Option 1</h5></div>
+      <div class="boxSection"><div class="boxSectionImg"></div><h5 class="normal_text">Option 1</h5></div>
+
+    </div> -->
+    <input id="fileButton" type="file" style="display:none" accept="image/png,image/jpeg,.html,.css,audio/mp3">
+    <section class="uploadSection" id="uploadSection">
+        <div class="scroll_box" id="filesView">
+          <!-- <h5 class="normal_text">html, css, js, txt, png, jpeg, mp4</h5> -->
+
+          <!-- onclick="optionsBox(
+            ['Create Page Template','create Dz file','create File','upload File'],
+            action=[['teste','template'],['teste','dzFile'],['teste','emptyFile'],['uploadFile','']],
+            icon=['./images/icons/upload_icon.png','./images/icons/upload_icon.png','./images/icons/upload_icon.png','./images/icons/upload_icon.png'],
+            e=event)" -->
+          <div class="uploadElement" style="margin-top: 20px;">
+            <div class="iconUploadElement" style="background-image: url(./images/icons/upload_icon.png);"></div>
+            <h5 class="normal_text">New Page</h5>
+          </div>
+
+
+          <div id="filesElements" class="filesElements">
+          
+
+            <!-- <div class="uploadElement" id="helloWorld.html" onclick="elementPress('helloWorld.html')">
+              <div class="iconUploadElement" style="background-image: url(./images/icons/user_icon.png);"></div>
+              <h5 class="normal_text">helloWorld.html</h5>
+              <div class="diverse_button" style="position: absolute;right:0;margin-right: 10px;"
+               onclick="optionsBox(['copy','delete','rename'],action=[['teste','hi'],['teste','bye'],['teste','world']],icon=['./images/icons/user_icon.png'],e=event)"></div>
+            </div> -->
+
+
+         </div>
+
+          
+
+        </div>
+
+
+        <div class="scroll_box pagePreviewUpload" >
+
+          <div style="display: flex;align-items: center;">
+            <h4 class="normal_text">Page Preview</h4>
+            <div class="selectPreviewBox" style="margin-left: 10px;"><h5 class="normal_text">HelloWorld.dz</h5></div>
+            <h5 class="normal_text" style="margin-left: 20px;">Resolution: 1920x1080</h5>
+            <!-- <div class="previewButton" id="previewButton" onclick="previewMode('p')">Preview</div>
+            <div class="previewButton" id="codeButton" onclick="previewMode('c')">Code</div>
+            <div class="previewButton" id="codePreviewButton" onclick="previewMode('cd')">Code/Preview</div> -->
+          </div>
+
+          <box class="uploadSitePreview">
+            <div class="codeView" id="preview_mode">
+              <iframe src="video2.html" class="darkFilter" style="background-color: white;width: 100%;height: 100%;"></iframe>
+
+                <div style="display: flex;position: absolute;">
+                  <div class="actionButton">Edit</div>
+                  <div class="actionButton" style="margin-left: 20px;">See</div>
+              </div>
+            </div>
+
+
+          </box>
+
+        </div>
+    </section>
+
+    <section class="aboutSection">
+      <box class="infoVideoUploadBox">
+        <textarea class="inputPrp normal_text" id="input_title" placeholder="Title" title="Title of video" rows="1"></textarea>
+
+        <textarea class="inputPrp normal_text" id="input_add" style="margin-bottom: 30px;" placeholder="Additional" title="Title of video" rows="1"></textarea>
+        
+
+        <textarea class="inputPrp normal_text" id="input_description" placeholder="Description" title="Title of video" 
+        rows="4" style="height:50px"></textarea>
+
+        <textarea class="inputPrp normal_text" id="input_tag" placeholder="Tags" title="Title of video" 
+        rows="4" style="height:50px"></textarea>
+
+
+        <div style="display:flex">
+          <h4 class="normal_text">Show likes number</h4><input id="checkId" class="checkBox" type="checkbox" checked>
+        </div>
+
+        <div style="display:flex">
+            <h4 class="normal_text">Show deslikes number</h4><input class="checkBox" type="checkbox" checked>
+        </div>
+
+        <div style="display:flex">
+          <h4 class="normal_text">Comments</h4><input class="checkBox" type="checkbox" checked>
+        </div>
+    </box>
+
+      <div style="width:350px;margin-left: auto;margin-right: auto;">
+        <box class="movie_box" >
+            <div id="bannerVideoPreview" class='banner_video' style="background-image: url('./images/icons/banner_icon.jpg')">
+            </div>  
+            
+            <div class="info_post_video">
+              <div class="box_text_video">
+                <div style="width:90%;margin-left: 20px;"><h4 class="normal_text" id="box_input_title">Movie name title</h4></div>  
+              </div>
+              <div class="channel_bar">
+                <img class="user_img_box" src="./images/icons/user_icon.png" style="margin-right: 10px;margin-left: 10px;">
+                <h5 class="normal_text">channel_name</h5>
+                <h6 class="normal_text" style="margin-left: 15px;">000 views</h6>
+                    <div style="display: flex;position: absolute;right: 0;margin-right: 10px;">
+                    <div class="diverse_button" ></div>
+                      <ul class="show_more" id="show_more">
+                        <li><h5 class="normal_text">Report</h5></li>
+                        <li><h5 class="normal_text">Save</h5></li>
+                        <li><h5 class="normal_text">not interessed</h5></li>
+                      </ul>
+                   </div>
+              </div>
+            </div>   
+        </box>
+        </div>
+    </section>
+    
+</body>
+</html>

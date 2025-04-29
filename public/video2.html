@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="videoTeste.css">
+    <link rel="icon" href="./images/icons/antegeddon.png">
+    <title>Assistido: Movies</title>
+    <script src="script.js"></script>
+</head>
+<body>
+  <section class="notification_section" id="notification_section">
+
+    <!-- <box class="notification_box">
+      <div class="close_notification_box"></div>
+      <div class="notification_icon"></div>
+      <div class="notification_text">
+        <h4 class="normal_text">
+          text etxt etxe tetxte xettxet xtetxet txetxaaaaaaaaaaaaaaaaaaaaaa  
+        </h4>
+      </div>
+    </box> -->
+
+</section>
+     <ul id="top_bar">  
+      <li><a><h2>Du-Zilla</h2></a></li>
+    </ul>
+
+    <ul id="nav_bar">
+    <li><input id='search_bar' type="search" placeholder="search" autocomplete="off" style="outline: none;"></li> 
+    </ul>
+
+    <section class="user_bar" id="user_bar" onclick="show_user_bar()" onmouseleave="hidden_user_bar()">
+      <a href="account.html">
+        <div class="box_user_bar" style="background-color: black;"><h5 class="normal_text">user_name</h5><img class='user_img'src="./images/icons/user_icon.png"></div>
+      </a>
+
+
+      <a href="user.html">
+        <div class="box_user_bar" style="border: 2px solid rgb(163, 33, 33);background-color: rgba(112, 30, 30, 0.658);"><h5 class="normal_text" style="color: red;text-align: center;">Upload</h5></div>
+      </a> 
+
+      <a href="user.html">
+        <div class="box_user_bar" style="border: 2px solid rgb(53, 93, 180);background-color: rgba(30, 63, 134, 0.658);"><h5 class="normal_text" style="color: rgb(0, 81, 255);text-align: center;">See Later</h5></div>
+      </a>
+    </section>
+   
+    <section class='video_bar'>
+        <box id="video_watch" class="videoWatch" onclick="startVideo()" onmouseenter="showPropriety()" onmouseleave="hiddenPropriety()" oncontextmenu="return false">
+          <!-- http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4 -->
+          <video src="0428(1).mp4" id="videoView" poster="./images/icons/banner_icon.jpg"></video>
+          <box class="proprietyBox" id="proprietyBox">
+            <div class="timeSelect" id="timeBox"><h6 class="normal_text" id="textTimeBox">00:00</h6></div>
+
+            <div class="videoProgressBar" id="videoProgressBar">
+              <div class="pointSelect" id="timePoint"></div>
+              <div class="videoProgressLoader" id="videoLoader"></div>
+              <div class="videoProgress" id="videoProgress"></div>
+              <div class="currentProgress"></div>
+            </div>
+
+            <div class="videoButton play" onclick="playButtonPress()" id="playButton"></div>
+            <div class="videoButton volume" id="volumeButton"></div>
+            <div class="volumeBar" id="volumeBar">
+              <div class="progressVolumeBar" id="progressVolume"></div>
+              <div class="currentProgress"></div>
+            </div>
+            <h5 class="normal_text" style="margin-left: 20px;" id="videoTime">00:00/00:00</h5>
+            <div class="videoButton fullScreen" onclick="fullScreen()"></div>
+
+          </box>
+
+          <div class="loaderIcon" id="loader"></div>
+        </box>
+
+  
+        <div class="scroll_box">
+            <h3>Assistido</h3>
+            <h5 style="color: rgb(80, 80, 80);">informações adicionais(opicional)</h5>
+            
+            <div class="video_info_section">
+              <h5>000 views</h5>
+              <div class="like_section">
+                <div class="like_box" onclick="like_function()"><h6 id="likes">0 likes</h6></div>
+                <div class="deslike_box" onclick="deslike_function()"><h6 id="deslikes">0 deslikes</h6></div>
+              </div>
+           </div>
+
+            <div class="channel_box">
+             <div class='user_img_box'></div>   
+               <div style="height:40px; margin-left: 10px;">
+                 <h5>channel_name</h5>
+                 <h6>0 followers</h6>
+               </div>  
+             <button id="follow_but">Follow</button>
+           </div>
+
+           <div class="description">
+             <div class="info_about_video"><h5>00/00/0000</h5></div>
+             <textarea class="text_description normal_text" wrap="hard" readonly>asdhau yasduyga yg aysdguy yusg uaygdu ysyafryigyas</textarea>
+           </div>
+
+           <div class="comments">
+             <div class="user_comment">
+                <img src='./images/icons/user_icon.png' class="user_img_box">
+                <input type="text" placeholder="comments" class="input_comment" id="input_comment" 
+                autocomplete="off">
+                <Button class="send_button" onclick="send_comment()">-></button>
+             </div>
+             <div class="others_comments" id="others_comments">
+                
+                <div class="ao_user_comment">
+                <img src='./images/icons/user_icon.png' class="user_img_box">
+                <div>
+                <h5 class="name_channel">Mr.Hello</h5>  
+                <h6 class="text_comment">Video top d+ me ensina a fazer essa merda</h6>
+                </div></div>
+
+             </div>
+           </div>
+          </div>
+
+        </section>
+
+
+     <div class="other_video">
+        <h3 class="darkNormalText">Others you might like:</h3>
+        <div class="other_video_bar">
+           
+            
+        </div>
+     </div>
+    
+    
+</body>
+</html>
