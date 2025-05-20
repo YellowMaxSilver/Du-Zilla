@@ -42,10 +42,16 @@
     --shadowSize:20px;
 }
 
+
 body{
     background-color: rgb(233, 233, 233);
     /* background-color: rgb(54, 54, 54); */
     overflow-x: hidden;   
+    background-image: url('../images/Du-zilla-Wallpeaper.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position-y: top;
 }
 
 #top_bar{
@@ -333,17 +339,6 @@ body{
     cursor: pointer;
 }
 
-.loginButton{
-    height: 100%;
-    width: 90px;
-    background-color: #00000000;
-    border: 2px solid var(--brightColor);
-    border-radius: 50px;
-    color: var(--white_normal_color);
-    display: flex;justify-content: center;align-items: center;
-    cursor: pointer;
-    margin-left: 10px;
-}
 
 .loginButtonsSection{
     display: flex;
@@ -735,22 +730,6 @@ body{
          color: var(--white_normal_color);
          outline: none;
         }
-
-        .input_sign{
-           background-color: #00000000; 
-           border-bottom: 1px solid var(--white_normal_color);
-           border-right: 0px;
-           border-left: 0px;
-           border-top: 0px;
-           color: var(--white_normal_color);
-           outline: none;
-           height: 40px;
-           width: 80%;
-           margin-left: 10%;
-           font-size: 20px;
-           margin-bottom: 40px;
-        }
-
 
 
         .others_comments{

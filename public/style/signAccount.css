@@ -1,0 +1,71 @@
+@import url(style.css);
+
+.mainBox{
+    width: 70%;
+    height: 90vh;
+    margin-left: 15%;
+    margin-right: 15%;
+    margin-top: 5vh;
+    position: absolute;
+    top: 0;
+    /* background-image: radial-gradient(500px,var(--soloBassColor),var(--bass_color)); */
+    box-shadow: 0px 0px var(--shadowSize) var(--shadowColor);
+    display: flex;
+    align-items: center;
+}
+
+.darkTitle{
+    color: var(--bass_color);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 55px;
+    margin-left: 30px;
+    margin-top: 100px;
+}
+
+.signBox{
+    width: 40%;
+    height: 100%;
+    background-color: var(--bass_color);
+    position: relative;
+}
+
+.infoBox{
+    width: 60%;
+    height: 100%;
+    background-image: url('../images/Du-Zilla-White-Vertical-Background.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.linkText{
+    color: rgb(0, 110, 255);
+    text-decoration: underline;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.signInput{
+           background-color: #00000000; 
+           border-bottom: 1px solid var(--white_normal_color);
+           border-right: 0px;
+           border-left: 0px;
+           border-top: 0px;
+           color: var(--white_normal_color);
+           outline: none;
+           height: 40px;
+           width: 80%;
+           margin-left: 10%;
+           font-size: 20px;
+}
+
+.loginButton{
+    height: 80px;
+    width: 250px;
+    background-color: #00000000;
+    border: 2px solid var(--brightColor);
+    border-radius: 20px;
+    color: var(--white_normal_color);
+    display: flex;justify-content: center;align-items: center;
+    cursor: pointer;
+    margin-left: 10px;
+}
