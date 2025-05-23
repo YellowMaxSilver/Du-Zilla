@@ -69,3 +69,22 @@
     cursor: pointer;
     margin-left: 10px;
 }
+
+.visibilityButton{
+    width: 30px;
+    height: 30px;
+    background-image: url("../images/visibility_off.png");
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+}
+
+
+.visibilityButtonVisible{
+    width: 30px;
+    height: 30px;
+    background-image: url("../images/visibility.png");
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+}

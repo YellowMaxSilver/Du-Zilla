@@ -5,9 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style/signAccount.css">
     <link rel="stylesheet" href="style/style.css">
+    <script src="script_exp.js"></script>
     <title>Log in</title>
 </head>
 <body>
+    <script type="module" src="./dist/public/script/sign.js"></script>
+    <div id="notification_section" class="notification_section"></div>
+
 
     <div class="mainBox">
         <div class="infoBox">
@@ -21,10 +25,13 @@
             </div>
 
 
-            <input class="signInput" placeholder="Email" type="email" style="margin-top: 10vh;"/>
-            <input class="signInput" placeholder="Password" type="password" style="margin-top: 40px;"/>
-            <h5 class="linkText" style="margin-left: 10%;">I forgot my password</h5>
-            <h5 class="linkText" style="margin-left: 10%;">I don't have an account</h5>
+            <input class="signInput" id="emailInput" placeholder="Email" type="email" style="margin-top: 10vh;"/><!--EMAIL-->
+            <div style="display: flex;align-items: end;position: relative;">
+                <input class="signInput" id="passwordInput" placeholder="Password" type="password" style="margin-top: 40px;"/><!--PASSWORD-->
+                <div class="visibilityButton" id="visibilityButton" style="margin-bottom: 10px;margin-right: 10%;position: absolute;right: 0;"></div><!--PASSWORD VISIBILITY BUTTON-->
+            </div>
+            <h5 class="linkText" style="margin-left: 10%;">I forgot my password</h5><!--FORGOT PASSWORD-->
+            <h5 class="linkText" style="margin-left: 10%;">I don't have an account</h5><!--DONT HAVE AN ACCOUNT-->
 
             <div style="width: 100%;
             display: flex;
@@ -33,8 +40,8 @@
             position: absolute;
             bottom: 0;
             margin-bottom: 10vh;">
-                <div class="loginButton">
-                    <h3 class="normal_text">Log in</h3>
+                <div class="loginButton" id="loginButton">
+                    <h3 class="normal_text">Log in</h3><!--LOGIN BUTTON-->
                 </div>
             </div>
             

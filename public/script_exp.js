@@ -97,6 +97,8 @@ function notification(icon,message){
   setTimeout(function(){close_notification_box(number)}, 5000)
 }
 
+
+
 function close_notification_box(self){
   let box = document.getElementById(self);
   box.style = `animation-name: hidden_box_notification;
