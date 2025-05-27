@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style/signAccount.css">
+    <link rel="stylesheet" href="style/style.css">
+    <script src="script_exp.js"></script>
+    <title>Log in</title>
+</head>
+<body>
+    <script type="module" src="../src/script/sign.ts"></script>
+    <div id="notification_section" class="notification_section"></div>
+
+
+    <div class="mainBox">
+        <div class="infoBox">
+            <h1 class="title" style="margin-top: 10px;margin-left: 30px;">Du-Zilla</h1>
+            <h1 class="darkTitle">Hello! </br>Welcome to Du-Zila</h1>
+            <h3 class="darkNormalText" style="margin-left: 30px;">If you dont have an account, you can sign up <a>here!</a></a></h3>
+        </div>
+        <div class="signBox">
+            <div style="display: flex;justify-content: center;align-items: center;margin-top: 50px;">
+                <h2 class="normal_text">Sign Up</h2>
+            </div>
+
+
+            <input class="signInput" id="emailInput" placeholder="Name" type="text" style="margin-top: 5vh;"/>
+            <input class="signInput" id="emailInput" placeholder="Id Name ex: @my_id_name" type="text" style="margin-top: 40px;"/>
+            <input class="signInput" id="emailInput" placeholder="Email" type="email" style="margin-top: 40px;"/>
+            
+            <div style="display: flex;align-items: end;position: relative;">
+                <input class="signInput" id="passwordInput" placeholder="Password" type="password" style="margin-top: 40px;"/><!--PASSWORD-->
+                <div class="visibilityButton" id="visibilityButton" style="margin-bottom: 10px;margin-right: 10%;position: absolute;right: 0;"></div><!--PASSWORD VISIBILITY BUTTON-->
+            </div>
+            <input class="signInput" id="passwordInput" placeholder="Verify Password" type="password" style="margin-top: 40px;"/>
+            
+            <div style="width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            bottom: 0;
+            margin-bottom: 5vh;">
+                <div class="loginButton" id="loginButton">
+                    <h3 class="normal_text">Create Account</h3><!--LOGIN BUTTON-->
+                </div>
+            </div>
+            
+            
+        </div>
+        
+    </div>
+
+</body>
+</html>
