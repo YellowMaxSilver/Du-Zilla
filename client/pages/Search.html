@@ -3,23 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/style/style.css">
     <title>Result: "faca lisa"</title>
+    <script type="module" src="../src/script/search.ts"></script>
 </head>
 <body>
-    <nav>
-        <ul id="top_bar">  
-          <li><h2>Faca</h2></li>
-        </ul>
-  
-        <box class="navBar">
-          <input placeholder="Search" class="inputSearch" value="faca lisa">
-          <div class="serachButton"></div>
-          <div class="loginButton" title="Login"><h5 class="normal_text">Login</h5></div>
-        </box>    
-    </nav>
+    <nav class="topNav"></nav>
 
-    <h3 class="darkNormalText" style="margin-top: 130px;">Results of "faca lisa":</h3>
+    <section class="globalBox searchSection" style="height: 150px;align-items: center;">
+     <input class="inputSearch" type="text" placeholder="Search" autocomplete="off" id="searchInput">
+     <div class="signButtonsBox">
+          <a href="login"><div class="signInButton"><h4 class="normal_text">Sign in</h4></div></a>
+          <a href="signUp"><div class="signUpButton"><h4 class="normal_text">Sign Up</h4></div></a>
+        </div>
+    </section>
+
+    <div style="display: flex;width: 100%;"><h3 class="normal_text" id="resultText">Results Of "faca lisa":</h3></div>
 
     <section class="videos_section">
 

@@ -3,6 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.notification = notification;
 function notification(icon, message) {
     //icons avaliables: comment, save/blue
+    if (document.getElementById('notification_section') == undefined) {
+        const mainSection = document.createElement("div");
+        mainSection.classList.add("notification_section");
+        mainSection.id = "notification_section";
+        document.body.appendChild(mainSection);
+    }
     let section = document.getElementById('notification_section');
     let number = String(Math.random());
     let linkIcon;

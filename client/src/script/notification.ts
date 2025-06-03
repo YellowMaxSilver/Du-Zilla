@@ -1,6 +1,14 @@
 
 export function notification(icon:string,message:string){
     //icons avaliables: comment, save/blue
+    if(document.getElementById('notification_section') == undefined){
+      const mainSection = document.createElement("div") as HTMLElement;
+      mainSection.classList.add("notification_section");
+      mainSection.id = "notification_section";
+
+      document.body.appendChild(mainSection);
+    }
+
   let section = document.getElementById('notification_section') as HTMLElement;
 
   let number = String(Math.random());
