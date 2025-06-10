@@ -47,7 +47,7 @@ body{
     background-color: rgb(233, 233, 233);
     /* background-color: rgb(54, 54, 54); */
     overflow-x: hidden;   
-    background-image: url('../images/Du-zilla-Wallpeaper.jpg');
+    background-image: url('../images/Du-Zilla-White-Wallpeaper-Blur.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
@@ -210,7 +210,7 @@ body{
  border-radius: 100px;
 }
 
-.user_img_box{ 
+.userImage{ 
  border-radius: 100px;
  width: 40px;
  height: 40px;
@@ -225,6 +225,7 @@ body{
     width: 100%;
     height: 50px;
     position: fixed;top: 0;left: 0;
+    display: flex;justify-content: center;align-items: center;
 }
 
 /* Newwwwwwwwwwwwwwwwww */
@@ -254,6 +255,10 @@ body{
 
 .title{
     font-size: 70px;
+    color: var(--soloColor);
+}
+
+.titleIcon{
     color: var(--soloColor);
 }
 
@@ -400,13 +405,6 @@ body{
     cursor: pointer;
 }
 
-.videos_section{  
-    width:90%;
-    margin-left: 10%;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-}
 
 .footer_style{
  margin-top: 100px;
@@ -448,12 +446,6 @@ body{
  }
  
 
-
-        .movie_box{ 
-            position: relative;
-            width: 350px;
-            cursor: pointer;
-        }
         .videoTime{
             position: absolute;
             right: 0;bottom: 0;margin-bottom: 120px;margin-right: 10px;
@@ -464,28 +456,7 @@ body{
             justify-content: center;align-items: center;
             color: var(--white_normal_color);border-radius: 7px;
         }
-        .banner_video{
-          width: 100%; 
-          height: 190px;
-          background-color: #000000;
-          background-size: 100%;
-          background-repeat: no-repeat;
-          background-position: center;  
-          margin-bottom: -20px;
-        }
-        .info_post_video{
-            width: 100%;
-            height: auto;
-        }
-
-        .box_text_video{
-            width: 100%;
-            background-color: #141414;
-            min-height: 60px;
-            height: auto;
-            display: flex;
-            align-items: center;
-        }
+        
 
         .show_more{
             width: 100px;
@@ -527,13 +498,6 @@ body{
             
         }
 
-        .channel_bar{
-            width: 100%;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            background-color: #0c0c0c;  
-        }
 
         .diverse_button{
          background-color: rgba(66, 66, 66, 0);  
@@ -653,13 +617,6 @@ body{
         align-items: center;
         }
 
-        .channel_box .user_img_box{
-         background-image: url('./images/icons/user_icon.png');
-         background-repeat: no-repeat;
-         background-position: center;
-         background-size: 100%;
-         margin-left: 10px; 
-        }
 
         .channel_box h5{
          margin-top: 0px; 

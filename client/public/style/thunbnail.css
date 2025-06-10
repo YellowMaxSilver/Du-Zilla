@@ -1,0 +1,55 @@
+@import url(style.css);
+
+.thunbsSection{  
+    width:90%;
+    padding-left: 20px;
+    display:flex;
+    flex-wrap: wrap;
+    gap:20px;
+}
+
+.thunbMainBox{ 
+    position: relative;
+    width: 360px;
+    cursor: pointer;
+}
+
+.thunbBanner{
+    width: 100%; 
+    height: 190px;
+    background-color: #000000;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;  
+    margin-bottom: -20px;
+}
+
+.thunbInfoBox{
+    width: 100%;
+    height: auto;
+}
+
+.thunbTitleBox{
+    width: 100%;
+    background-color: var(--bass_color);
+    min-height: 60px;
+    height: auto;
+    display: flex;
+    align-items: center;
+}
+
+.thunbUserBox{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    background-color: #0c0c0c;  
+}
+
+.thunbUserBox .userImage{
+    /* background-image: url('../images/user-icon.jpg'); */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin-left: 10px; 
+}
