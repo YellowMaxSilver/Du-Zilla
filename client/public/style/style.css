@@ -315,6 +315,35 @@ body{
 }
 
 
+.choseTemplatePanel{
+    width: calc(100% - 160px);
+    height: calc(100vh - 220px);
+    position: absolute;
+    pointer-events: none;
+    margin-top: 40px;
+    margin-left: 40px;
+    z-index: 3;
+    padding: 40px;
+}
+
+.searchTemplateBox{
+    width: 100%;
+    height: 70px;
+    display: flex;
+    align-items: center;
+}
+
+.templatesThunbnailLayout{
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    border: 2px solid green;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 100px;
+}
+
+
 
 /*Newwwwwwwwwwwwwwwwww */
 

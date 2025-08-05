@@ -53,3 +53,12 @@
     background-size: cover;
     margin-left: 10px; 
 }
+
+/* templateThunbNail */
+
+.templateThunbNail{
+    width: 250px;
+    height: 300px;
+    background-color: var(--soloColor);
+    border-radius: 20px;
+}
