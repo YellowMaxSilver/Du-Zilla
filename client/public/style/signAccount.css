@@ -23,19 +23,20 @@
 }
 
 .signBox{
-    width: 40%;
+    width: auto;
     height: 100%;
     background-color: var(--bass_color);
     position: relative;
 }
 
 .infoBox{
-    width: 60%;
+    width: 65%;
     height: 100%;
     background-image: url('../images/Du-Zilla-White-Vertical-Background.png');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+    margin-right: -5px;
 }
 
 .linkText{
