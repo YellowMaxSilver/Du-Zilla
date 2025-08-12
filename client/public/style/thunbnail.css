@@ -43,15 +43,91 @@
     height: 50px;
     display: flex;
     align-items: center;
-    background-color: #0c0c0c;  
+    background-color: #0c0c0c; 
+    position: relative; 
 }
 
-.thunbUserBox .userImage{
+.thunbUserBox .thunbUserImage{
     /* background-image: url('../images/user-icon.jpg'); */
+    border-radius: 100px;
+    width: 40px;
+    height: 40px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size:100%;
+    margin-left: 10px; 
+}
+
+.rateBox{
+    display: flex;
+    position: absolute;
+    right: 0;
+    margin-right: 10px;
+}
+
+.emptyStarRate{
+    width: 23px;
+    height: 23px;
+    background-image: url("../images/star_rate_icon.png");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    margin-left: 10px; 
+}
+
+.starRate{
+    width: 23px;
+    height: 23px;
+    background-image: url("../images/star_rate_all_icon.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.halfStarRate{
+    width: 23px;
+    height: 23px;
+    background-image: url("../images/star_rate_half_icon.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.redAlertIcon{
+    width: 23px;
+    height: 25px;
+    background-image: url("../images/red_alert_icon.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.yellowAlertIcon{
+    width: 23px;
+    height: 25px;
+    background-image: url("../images/yellow_alert_icon.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.noRateIcon{
+    width: auto;
+    height: auto;
+    padding: 5px;
+    border: 2px solid var(--soloColor);
+    color: var(--soloColor);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;   
+    word-break:normal;  
+    font-size: 13px;
+}
+
+.verifiedIcon{
+    width: 23px;
+    height: 25px;
+    background-image: url("../images/verified_icon.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
 
 /* templateThunbNail */

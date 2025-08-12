@@ -15,10 +15,10 @@
     </nav>
 
 
-    <section class="globalBox choseTemplatePanel">
+    <section class="globalBox choseTemplatePanel" style="display: none;">
       <div class="searchTemplateBox">
         <h1 class="normal_text panelTitle">Templates</h1>
-        <input class="inputSearch" type="text" placeholder="Search" autocomplete="off" style="margin-left: 20px;">
+        <input class="inputSearch" type="text" placeholder="Pesquisar" autocomplete="off" style="margin-left: 20px;">
         <div class="closeButton" style="position: absolute;top: 0;right: 0;margin-right: 40px;margin-top: 40px;"></div>
       </div>
       <div class="templatesThunbnailLayout">
@@ -34,9 +34,12 @@
     <section class="globalBox searchSection">
         <div>
             <div style="display: flex;justify-content: center;align-items: center;height: 50px;margin-top: 40px;margin-bottom: 40px;"><h1 class="title">Du-Zilla</h1></div>
-            <input class="inputSearch" type="text" placeholder="Search" autocomplete="off">
+            <div style="display: flex;">
+              <input class="inputSearch" type="text" placeholder="Pesquisar" autocomplete="off">
+              <div class="searchButton" style="margin-left: 10px;"></div>
+            </div>
             <div style="display: flex;justify-content: center;align-items: center;width: 100%;margin-top: 5%;">
-              <div class="createOwnButton"><h4 class="normal_text">Create my Own Dz-Page</h4></div>
+              <div class="createOwnButton"><h4 class="normal_text">Criar Dz-Curriculo</h4></div>
             </div>
         </div>
         <div class="signButtonsBox">
@@ -52,20 +55,18 @@
           <div class='thunbBanner' style="background-image: url('../images/image-icon.jpg')"></div>      
             <box class="thunbInfoBox">
                 <box class="thunbTitleBox">
-                  <div style="width:90%;margin-left: 20px;"><h4 class="normal_text">Movie name title</h4></div>  
+                  <div style="width:90%;margin-left: 20px;"><h4 class="normal_text">Nome do Curriculo</h4></div>  
                 </box>
                 <box class="thunbUserBox">
                   <img class="userImage" src="../images/user-icon.jpg" style="margin-right: 10px;margin-left: 10px;">
-                  <h5 class="normal_text">channel_name</h5>
-                  <h6 class="normal_text" style="margin-left: 15px;">000 views</h6>
-                      <!-- <div style="display: flex;position: absolute;right: 0;margin-right: 10px;">
-                      <div class="diverse_button" ></div>
-                        <ul class="show_more" id="show_more">
-                          <li><h5 class="normal_text">Report</h5></li>
-                          <li><h5 class="normal_text">Save</h5></li>
-                          <li><h5 class="normal_text">not interessed</h5></li>
-                        </ul>
-                     </div> -->
+                  <h5 class="normal_text">Nome do usuário</h5>
+                  <div class="rateBox">
+                    <div class="emptyStarRate"></div>
+                    <div class="emptyStarRate"></div>
+                    <div class="emptyStarRate"></div>
+                    <div class="emptyStarRate"></div>
+                    <div class="emptyStarRate"></div>
+                  </div>
                 </box>
             </box>   
         </box>

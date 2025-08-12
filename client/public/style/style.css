@@ -40,6 +40,9 @@
     --blurSize:5px;
     --shadowColor:#020202b9;
     --shadowSize:20px;
+    --grayTextNormalColor:#414141;
+    --redAlertColor:#cf2f21;
+    --yellowAlertColor:#f0972b;
 }
 
 
@@ -226,6 +229,7 @@ body{
     height: 50px;
     position: fixed;top: 0;left: 0;
     display: flex;justify-content: center;align-items: center;
+    z-index: 5;
 }
 
 /* Newwwwwwwwwwwwwwwwww */
@@ -375,12 +379,13 @@ body{
 }
 
 .searchButton{
-    background-color: var(--brightColor);
-    width: 35px;
-    height: 35px;
-    border-radius: 50px;
-    margin-left: 10px;
-    cursor: pointer;
+    width: 50px;height: 50px;
+    background-image: url("../images/search_icon.png");
+    background-position: center;
+    background-color: var(--soloColor);
+    background-size: 30px;
+    background-repeat: no-repeat;
+    border-radius: 70px;
 }
 
 
@@ -416,6 +421,12 @@ body{
 .normal_text{
     font-family: Verdana, Geneva, Tahoma, sans-serif;  
     color:var(--white_normal_color); 
+    word-break:normal;  
+}
+
+.grayNormalText{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;  
+    color:var(--grayTextNormalColor); 
     word-break:normal;  
 }
 
