@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style/style.css">
+    <link rel="stylesheet" href="./style/editPortfolio.css">
+    <title>Document</title>
+</head>
+<body class="editPortFolioBackground">
+     <nav class="topNav">
+      <h1 class="titleIcon">Du-Zilla</h1>
+    </nav>
+    <!-- <div class="topBar">  
+        <h2>Du-zilla</h2><h2 style="color:rgb(140, 0, 255);margin-left: 20px;">Sites</h2>
+    </div> -->
+
+
+    <section class="editPortfolioAction">
+        <input class="uploadElementInput" style="margin-left: 20px;" value="HelloWorld Project">
+        <div class="actionButton" id="saveButton" onclick="showHtml()" style="margin-left: 20px;margin-right: 20px;">
+          <h4 class="normal_text">Save</h4>
+        </div>
+        <div class="actionButton" onclick="saveUploadInformations()">
+          <h4 class="normal_text">Publish</h4>
+        </div>
+    </section>
+
+    <div class="previewOptions">
+            <h4 class="normal_text">Preview</h4>
+    </div>
+    
+    <section class="globalBox pagePreviewBox">
+
+        <div id="preview" class="editPreview">
+            <div id="selectedBox" class="previewSelected"></div>
+            <div id="clickedBox" class="previewClicked">
+                <div class="sizePoint bottomRight" id="sizePointBottomRight"></div>
+                <div class="sizePoint bottomLeft"></div>
+                <div class="sizePoint topRight"></div>
+                <div class="sizePoint topLeft"></div>
+            </div>
+            <div id="createPreviewContent" class="createPreviewContent"></div>
+        </div>
+        <!-- <iframe id="preview" class="createPreview"></iframe> -->
+    </section>
+    
+</body>
+</html>

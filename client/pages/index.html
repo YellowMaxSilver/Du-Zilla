@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/style/thunbnail.css">
     <link rel="stylesheet" href="/style/buttons.css">
     <link rel="icon" href="./images/Du-Zilla-icon.png">
+    <script type="module" src="../src/script/templateWindow.ts"></script>
     <title>Du-Zilla</title>
 </head>
 <body>
@@ -15,21 +16,15 @@
     </nav>
 
 
-    <section class="globalBox choseTemplatePanel" style="display: block;">
+    <section class="globalBox choseTemplatePanel" id="choseTemplatePanel" style="display: block;">
       <div class="searchTemplateBox">
         <h1 class="normal_text panelTitle">Templates</h1>
         <input class="inputSearch" type="text" placeholder="Pesquisar" autocomplete="off" style="margin-left: 20px;">
         <div class="searchButton" style="margin-left: 10px;"></div>
-        <div class="closeButton" style="position: absolute;top: 0;right: 0;margin-right: 40px;margin-top: 40px;"></div>
+        <div class="closeButton" id="choseTemplatePanelCloseButton" style="position: absolute;top: 0;right: 0;margin-right: 40px;margin-top: 40px;"></div>
       </div>
       <div class="templatesThunbnailLayout">
-        <div class="templateThunbNail"><div class="templateThunbNailNameBox">Nome do template</div></div>
-        <div class="templateThunbNail" style="background-image: url(https://marketplace.canva.com/EAE1EcNAC00/2/0/1131w/canva-curr%C3%ADculo-simples-_QcyXJNhyyw.jpg);"><div class="templateThunbNailNameBox">Simples</div></div>
-        <div class="templateThunbNail" style="background-image: url(https://cdn.dribbble.com/userupload/11112201/file/original-16c11ffaa0d5907243bfff2260fa974d.jpg?format=webp&resize=400x300&vertical=center);"><div class="templateThunbNailNameBox">Fancy</div></div>
-        <div class="templateThunbNail" style="background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuWTJxb7vSpzTvq5JW3ljm9Pear-4dy29F-g&s);"><div class="templateThunbNailNameBox">Ftrutiguer Metro</div></div>
-        <div class="templateThunbNail" style="background-image: url(https://preview.redd.it/i-recreated-this-subreddit-in-my-frutiger-aero-style-v0-6epuvurdluwe1.png?width=1080&crop=smart&auto=webp&s=b4304a776af9260cc5d47e89d4af28a26a1a315e);"><div class="templateThunbNailNameBox">Frutiger aero</div></div>
-        <div class="templateThunbNail" style="background-image: url(https://screamyell.com.br/site/wp-content/uploads/2011/01/newalbumreleases.jpg);"><div class="templateThunbNailNameBox">Pop</div></div>
-        <div class="templateThunbNail" style="background-image: url(https://i.pinimg.com/736x/c4/81/21/c481212536b34b4afa43f9850ab518f8.jpg);"><div class="templateThunbNailNameBox">White dragon</div></div>
+        <a href="createPortfolio?id=nweIdAleotery&template=facatemplate"><div class="templateThunbNail"><div class="templateThunbNailNameBox">Nome do template</div></div></a>
       </div>
     </section>
 
@@ -41,7 +36,7 @@
               <div class="searchButton" style="margin-left: 10px;"></div>
             </div>
             <div style="display: flex;justify-content: center;align-items: center;width: 100%;margin-top: 5%;">
-              <div class="createOwnButton"><h4 class="normal_text">Criar Dz-Curriculo</h4></div>
+              <div class="createOwnButton" id="createOwnButton"><h4 class="normal_text">Criar Dz-Curriculo</h4></div>
             </div>
         </div>
         <div class="signButtonsBox">

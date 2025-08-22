@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style/style.css">
+    <title>Document</title>
+</head>
+<body>
+    <script src="../src/script/createPortfolio.js"></script>
+
+    <!-- <div class="topBar">  
+        <h2>Du-zilla</h2><h2 style="color:rgb(140, 0, 255);margin-left: 20px;">Sites</h2>
+    </div> -->
+    <section class="tollBox">
+        <box style="display: flex;width: 100%;padding-left: 20px;height: 40px;align-items: center;margin-top: 20px;">
+            <h4 class="normal_text">Toll Box</h4>
+            <div class="selectPreviewBox" style="width: 70px;"><h5 class="normal_text">All</h5></div>
+        </box>
+        
+        <div class="objectsBox">
+            <div class="elementObject" onclick="pressed('text')">
+                <div class="iconUploadElement" style="background-image: url(./images/icons/user_icon.png);margin-left: 10px;"></div>
+                <h4 class="normal_text">Text</h4>
+            </div>
+
+            <div class="elementObject" onclick="pressed('button')">
+                <div class="iconUploadElement" style="background-image: url(./images/icons/user_icon.png);margin-left: 10px;"></div>
+                <h4 class="normal_text">Button</h4>
+            </div>
+
+            <div class="elementObject" onclick="pressed('input')">
+                <div class="iconUploadElement" style="background-image: url(./images/icons/user_icon.png);margin-left: 10px;"></div>
+                <h4 class="normal_text">Edit Text</h4>
+            </div>
+
+            <div class="elementObject" onclick="pressed('div')">
+                <div class="iconUploadElement" style="background-image: url(./images/icons/user_icon.png);margin-left: 10px;"></div>
+                <h4 class="normal_text">Box(div)</h4>
+            </div>
+        </div>
+
+    </section>
+
+    <div class="proprietyAtributesBox invisible" id="proprietyAtributesBox">
+        <div class="atribute"><h5 class="normal_text">Text</h5><input class="editInput" id="attributeEditText" value="Hello World"></div>
+        <div class="atribute"><h5 class="normal_text">Text Color</h5><input class="editInput" id="attributeEditTextColor" value="Hello World"></div>
+        <div class="atribute"><h5 class="normal_text">Text Size</h5><input class="editInput" id="attributeEditTextSize" value="Hello World"></div>
+        <div class="atribute"><h5 class="normal_text">Text Aligment</h5><input class="editInput" id="attributeEditTextAligment" value="Hello World"></div>
+        <div class="atribute"><h5 class="normal_text">Width</h5><input class="editInput" id="attributeEditWidth" value="0px"></div>
+        <div class="atribute"><h5 class="normal_text">Height</h5><input class="editInput" id="attributeEditHeight" value="0px"></div>
+        <div class="atribute"><h5 class="normal_text">Border Size</h5><input class="editInput" id="attributeEditBorderSize" value="0px"></div>
+        <div class="atribute"><h5 class="normal_text">Border Color</h5><input class="editInput" id="attributeEditBorderColor" value="0px"></div>
+        <div class="atribute"><h5 class="normal_text">Border Radius</h5><input class="editInput" id="attributeEditBorderRadius" value="0px"></div>
+        <div class="atribute"><h5 class="normal_text">Background Color</h5><input class="editInput" id="attributeEditBackgroundColor" value="0px"></div>
+        <button id="attributeEditSaveButton">save</button>
+    </div>
+
+    <div class="proprietyBox invisible" id="proprietyBox">
+        <h5 class="normal_text" style="margin-left: 10px;">ID</h5>
+        <input type="text" autocomplete="off" class="editInput textInput" style="margin-left: 10px;"
+        id="idTextInput">
+        <h5 class="normal_text" style="margin-left: 10px;">X</h5>
+        <input type="text" autocomplete="off" class="editInput numberInput" style="margin-left: 10px;" id="positionX">
+        <h5 class="normal_text" style="margin-left: 10px;">Y</h5>
+        <input type="text" autocomplete="off" class="editInput numberInput" style="margin-left: 10px;"  id="positionY">
+        <div class="proprietyButton" id="editProprietyButton"></div>
+        <div class="proprietyButton" id="deleteButton"></div>
+    </div>
+
+
+    <section class="actionSection" style="margin-top: 10px;width: 70%;margin-right: 50px;">
+        <input class="uploadElementInput" style="margin-left: 20px;" value="HelloWorld Project">
+        <div class="actionButton" id="saveButton" onclick="showHtml()" style="margin-left: 20px;margin-right: 20px;">
+          <h4 class="normal_text">Save</h4>
+        </div>
+        <div class="actionButton" onclick="saveUploadInformations()">
+          <h4 class="normal_text">Publish</h4>
+        </div>
+    </section>
+
+    
+    <sction class="globalBox pagePreviewBox">
+        <div class="previewOptions">
+            <h4 class="normal_text">Preview</h4>
+            <div class="selectPreviewBox"><h5 class="normal_text">HelloWorld.dz</h5></div>
+        </div>
+        <div id="preview" class="createPreview">
+            <div id="selectedBox" class="previewSelected"></div>
+            <div id="clickedBox" class="previewClicked">
+                <div class="sizePoint bottomRight" id="sizePointBottomRight"></div>
+                <div class="sizePoint bottomLeft"></div>
+                <div class="sizePoint topRight"></div>
+                <div class="sizePoint topLeft"></div>
+            </div>
+            <div id="createPreviewContent" class="createPreviewContent"></div>
+        </div>
+        <!-- <iframe id="preview" class="createPreview"></iframe> -->
+    </sction>
+    
+</body>
+</html>

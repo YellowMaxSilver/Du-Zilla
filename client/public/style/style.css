@@ -1100,23 +1100,6 @@ body{
     top: 0;left: 0;
 }
 
-.pagePreviewBox{
-    width: 70%;height:80vh;
-    background-color: var(--bass_color);
-    float: right;
-    margin-right: 50px;
-    box-shadow: 0px 0px 10px rgb(49, 49, 49);
-}
-
-.createPreview{
-    width: calc(100% - 40px);
-    margin-left: 20px;
-    height: calc(90% - 40px);
-    background-color: white;
-    position: relative;
-    overflow-x: hidden;
-    overflow-y: auto;
-}
 
 .previewSelected{
     border:1px solid orangered;

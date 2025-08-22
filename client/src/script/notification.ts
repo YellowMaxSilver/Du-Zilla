@@ -14,14 +14,22 @@ export function notification(icon:string,message:string){
   let number = String(Math.random());
   let linkIcon;
 
-  if(icon == "comment"){
-    linkIcon = "./images/icons/comment_icon.png";
-  }else if(icon == "save/blue"){
-    linkIcon = "./images/icons/see_later_icon.png";
-
-  }else{
-    linkIcon = "./images/icons/user_icon.png";
+  switch(icon){
+    case "comment":
+      linkIcon = "./images/comment_icon.png";
+      break;
+    case "save":
+      linkIcon = "./images/see_later_icon.png";
+      break;
+    case "dzIcon":
+      linkIcon = "./images/Du-Zilla-icon.png";
+      break;
+    default:
+      linkIcon = "./images/Du-Zilla-icon.png";
+      break;
   }
+
+
 
   let box = `<box class="notification_box" id='`+number+`'>
                 <div class="close_notification_box" onclick="close_notification_box('`+number+`')"></div>
