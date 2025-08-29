@@ -1,9 +1,7 @@
 "use strict";
 //
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = compiler;
-//{!}{text(element)}{text}{size}{color}{positionX}{positionY}{/!}
-const mainTemplate = "{!}{text}{hello World}{30}{#00000}{100}{200}{/!}{!}{text}{hello World again}{30}{#00000}{100}{200}{/!}";
+//{!}{text(element)}{text}{size}{color}{positionX}{positionY}{width}{height}{/!}
+const mainTemplate = "{!}{text}{hello World}{30}{#00000}{100}{200}{100}{100}{/!}{!}{text}{hello World again}{30}{#00000}{100}{200}{100}{100}{/!}";
 //compiler
 let startOfElement = null;
 let endOfElement = null;
@@ -11,7 +9,6 @@ compiler(mainTemplate);
 function compiler(template) {
     for (let i = 0; i < template.length; i++) {
         let potion = template.charAt(i);
-        let secondPotion = template.charAt(i);
         if (potion == '{' && template.charAt(i + 1) == '!' && template.charAt(i + 2) == '}') {
             //is an new element
             startOfElement = i + 3;
@@ -36,7 +33,16 @@ function readElement(element) {
     console.log(tag);
     switch (tag) {
         case "text":
-            getValuesOfElements(element, (firstField, secondField, thirdField, forthField, fivthField) => { });
+            //1 text
+            //2 size
+            //3 color
+            //4positionX
+            //5positionY
+            //6 width
+            //7 height
+            getValuesOfElements(element, (attributes) => {
+                console.log(attributes);
+            });
             break;
         case "box":
             break;
@@ -64,45 +70,25 @@ function getTagOfElement(element) {
 function getValuesOfElements(element, callback) {
     let startOfValue = null;
     let endOfValue = null;
-    let firstField = null;
-    let secondField = null;
-    let thirdField = null;
-    let forthField = null;
-    let fivthField = null;
+    let field = [];
     let numberOfField = 1;
     for (let i = 0; i < element.length; i++) {
         if (element.charAt(i) == '{') {
-            startOfValue = i;
+            startOfValue = i + 1;
         }
         if (element.charAt(i) == '}') {
             endOfValue = i;
         }
         if (startOfValue != null && endOfValue != null) {
             let thisValue = "";
-            for (let l = startOfValue; l < endOfValue; i++) {
+            for (let l = startOfValue; l < endOfValue; l++) {
                 thisValue += element.charAt(l);
             }
-            switch (numberOfField) {
-                case 1:
-                    firstField = thisValue;
-                    break;
-                case 2:
-                    secondField = thisValue;
-                    break;
-                case 3:
-                    thirdField = thisValue;
-                    break;
-                case 4:
-                    forthField = thisValue;
-                    break;
-                case 5:
-                    fivthField = thisValue;
-                    break;
-            }
             numberOfField++;
+            field.push(thisValue);
             startOfValue = null;
-            endOfElement = null;
+            endOfValue = null;
         }
     }
-    callback(firstField, secondField, thirdField, forthField, fivthField);
+    callback(field);
 }

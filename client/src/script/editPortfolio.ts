@@ -1,8 +1,8 @@
 //
 
-//{!}{text(element)}{text}{size}{color}{positionX}{positionY}{/!}
+//{!}{text(element)}{text}{size}{color}{positionX}{positionY}{width}{height}{/!}
 
-const mainTemplate:string = "{!}{text}{hello World}{30}{#00000}{100}{200}{/!}{!}{text}{hello World again}{30}{#00000}{100}{200}{/!}";
+const mainTemplate:string = "{!}{text}{hello World}{30}{#00000}{100}{200}{100}{100}{/!}{!}{text}{hello World again}{30}{#00000}{100}{200}{100}{100}{/!}";
 
 //compiler
 
@@ -12,10 +12,9 @@ let endOfElement:number|null = null;
 
 compiler(mainTemplate);
 
-export default function compiler(template:string){
+function compiler(template:string){
 for(let i = 0;i < template.length;i++){
         let potion = template.charAt(i);
-        let secondPotion = template.charAt(i);
 
         if(potion == '{' && template.charAt(i+1) == '!' && template.charAt(i+2) == '}'){
             //is an new element
@@ -44,7 +43,16 @@ function readElement(element:string){
     
     switch(tag){
         case "text":
-            getValuesOfElements(element, (firstField,secondField,thirdField,forthField,fivthField)=>{})
+            //1 text
+            //2 size
+            //3 color
+            //4positionX
+            //5positionY
+            //6 width
+            //7 height
+            getValuesOfElements(element,(attributes:string[])=>{
+                console.log(attributes)
+            });
             break;
         case "box":
             break;
@@ -52,8 +60,7 @@ function readElement(element:string){
 }
 
 
-type ValuesOfElement = (firstField:string|null,secondField:string|null,
-    thirdField:string|null,forthFiled:string|null,fivthField:string|null) => void;
+type ValuesOfElement = (attributes:string[]) => void;
 
 function getTagOfElement(element:string){
     let startOfTag:number|null = null;
@@ -76,21 +83,17 @@ function getTagOfElement(element:string){
     }
 }
 
-function getValuesOfElements(element:string, callback: ValuesOfElement){
+function getValuesOfElements(element:string,callback:ValuesOfElement){
     let startOfValue:number|null = null;
     let endOfValue:number|null = null;
 
-    let firstField:string|null = null;
-    let secondField:string|null = null;
-    let thirdField:string|null = null;
-    let forthField:string|null = null;
-    let fivthField:string|null = null;
+    let field:string[] = [];
 
     let numberOfField:number = 1;
 
     for(let i = 0;i< element.length;i++){
         if(element.charAt(i) == '{'){
-            startOfValue = i;
+            startOfValue = i+1;
         }
 
         if(element.charAt(i) == '}'){
@@ -99,30 +102,14 @@ function getValuesOfElements(element:string, callback: ValuesOfElement){
 
         if(startOfValue != null && endOfValue != null){
             let thisValue:string = "";
-            for(let l = startOfValue;l < endOfValue;i++){
+            for(let l = startOfValue;l < endOfValue;l++){
                 thisValue += element.charAt(l);
             }
-            switch (numberOfField){
-                case 1:
-                    firstField = thisValue
-                    break;
-                case 2:
-                    secondField = thisValue
-                    break;
-                case 3:
-                    thirdField = thisValue
-                    break;
-                case 4:
-                    forthField = thisValue
-                    break;
-                case 5:
-                    fivthField = thisValue
-                    break;
-            }
             numberOfField ++;
-            startOfValue = null;endOfElement = null;
+            field.push(thisValue);
+            startOfValue = null;endOfValue = null;
         }
     }
 
-    callback(firstField,secondField,thirdField,forthField,fivthField);
+    callback(field)
 }
