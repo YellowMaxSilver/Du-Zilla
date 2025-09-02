@@ -1,19 +1,14 @@
 .editPortFolioBackground{
-    background-color: rgb(233, 233, 233);
     /* background-color: rgb(54, 54, 54); */
-    overflow-x: hidden;   
-    background-image: url('../images/Du-zilla-Wallpeaper.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-    background-position-y: top;
+    overflow-x: hidden;  
+    overflow-y: hidden; 
 }
 
 .pagePreviewBox{
-    width: 70%;height:calc(100vh - 140px);
+    width: calc(100% + 20px);height:calc(100vh - 30px);
     background-color: var(--bass_color);
     box-shadow: 0px 0px 10px rgb(49, 49, 49);
-    margin-top: 20px;
+    margin-top: 40px;
     margin-left: auto;
     margin-right: auto;
     display: flex;
@@ -23,7 +18,7 @@
 
 .editPreview{
     width: calc(100%);
-    height: calc(90% - 40px);
+    height: calc(100% - 40px);
     margin-top: 20px;
     background-color: white;
     position: relative;
@@ -31,14 +26,19 @@
     overflow-y: auto;
     margin-left: 10px;
     margin-right: 10px;
+    border-radius: 20px;
 }
 
 .editPortfolioAction{
-    width: calc(100% - 80px);height:50px;
+    width: calc(50% - 80px);height:50px;
     background-color: var(--bass_color);
     border-radius: 20px;
     display: flex;align-items: center;
     margin-top: 60px;
     margin-left: auto;
     margin-right: auto;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 3;
 }
