@@ -9,7 +9,7 @@
     background-color: var(--bass_color);
     box-shadow: 0px 0px 10px rgb(49, 49, 49);
     margin-top: 40px;
-    margin-left: auto;
+    margin-left: -10px;
     margin-right: auto;
     display: flex;
     justify-content: center;
@@ -17,9 +17,9 @@
 }
 
 .editPreview{
-    width: calc(100%);
-    height: calc(100% - 40px);
-    margin-top: 20px;
+    width: calc(100% - 40px);
+    height: calc(100% - 50px);
+    margin-top: 10px;
     background-color: white;
     position: relative;
     overflow-x: hidden;
@@ -30,7 +30,7 @@
 }
 
 .editPortfolioAction{
-    width: calc(50% - 80px);height:50px;
+    width: auto;height:50px;
     background-color: var(--bass_color);
     border-radius: 20px;
     display: flex;align-items: center;
@@ -41,4 +41,40 @@
     top: 0;
     right: 0;
     z-index: 3;
+    padding: 10px;
+}
+
+.previewClicked{
+    border:2px solid rgb(0, 174, 255);
+    cursor: pointer;
+    position: absolute;
+    display: flex;
+    width: 100px;height: 50px;
+    z-index: 4;
+    pointer-events: none;
+}
+
+.sizePoint{
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 5px black;
+    width: 10px;height: 10px;
+    position: absolute;
+    z-index: 5;
+    border-radius: 20px;
+    pointer-events: all;
+    cursor:col-resize;
+}
+
+.previewSelected{
+    border:1px solid orangered;
+    position: absolute;
+    display: none;
+    z-index: 4;
+    pointer-events: none;
+}
+
+.attrbutesPanel{
+    width: 300px;
+    height: 500px;
+    background-color: var(--bass_color_blur);
 }
