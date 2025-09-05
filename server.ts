@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'path';
 import { createServer as createViteServer } from 'vite';
 import fs from 'fs';
+import accountAuthentication from './database/account_auth';
 
 const app = express();
 const port = 3000;
@@ -54,6 +55,8 @@ async function createServer(){
             res.send(`Welcome to the port ${port}`)
         }
     });
+
+    accountAuthentication();
 
     app.use(vite.middlewares);
 

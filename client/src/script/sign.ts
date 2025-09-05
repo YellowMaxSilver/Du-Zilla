@@ -1,4 +1,6 @@
 import { notification } from "./notification";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../../database/firebase_settings.ts";
 
 //setTimeout(()=>{notification(null,"Welcome")},500);
 
@@ -11,8 +13,14 @@ var passwordVisibilityStatus:boolean = false;
 
 console.log("getting started");
 
-(document.getElementById('loginButton') as HTMLElement ).addEventListener('click',signIn);
+//(document.getElementById('loginButton') as HTMLElement ).addEventListener('click',signIn);
+
 visibilityButton.addEventListener('click',changePasswordVisibility);
+
+setTimeout(()=>{
+    (document.getElementById("signUpButton") as HTMLElement).addEventListener("click",signUp);
+},1000)
+
 
 //getPage();
 
@@ -42,6 +50,63 @@ function signIn(){
     notification("","Error.");
     console.log('unavailbe')
    }
+}
+
+async function signUp(){
+    const name = document.getElementById("nameInput") as HTMLInputElement;
+    const nameId = document.getElementById("nameIdInput") as HTMLInputElement;
+
+    console.log("activate")
+    if(!validEmail(email.value) && !validNameId(nameId.value) && !validPassword(password.value)){
+        console.log("invalid fields")
+        return;
+    }
+
+
+    try{
+        const credential = await createUserWithEmailAndPassword(auth, email.value, password.value);
+        const token = await credential.user.getIdToken();
+        const res = await fetch("/api/account/signUp",{
+            method: "POST",
+            headers:{
+                Authorization:`Bearer ${token}`,
+                "Content-type":"application/json"
+            },
+            body: JSON.stringify({
+                ["name"]:name.value,
+                "nameId":nameId.value,
+                "email":email.value,
+                "cpf_cnpj":null,
+            })
+        })
+        console.log("answer: ",await res.json());
+    }catch(e){
+        console.log(e)
+    }
+}
+
+function validEmail(email:string):boolean{
+    if(email.length > 3){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+function validNameId(name:string):boolean{
+    if(name.length > 3){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+function validPassword(password:string):boolean{
+    if(password.length > 3){
+        return true;
+    }else{
+        return false;
+    }
 }
 
 function changePasswordVisibility(){

@@ -36,8 +36,8 @@ function readElement(element) {
             //1 text
             //2 size
             //3 color
-            //4positionX
-            //5positionY
+            //4 positionX
+            //5 positionY
             //6 width
             //7 height
             getValuesOfElements(element, (attributes) => {
@@ -91,4 +91,6 @@ function getValuesOfElements(element, callback) {
         }
     }
     callback(field);
+}
+function convertToTextHtml() {
 }

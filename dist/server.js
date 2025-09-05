@@ -16,6 +16,7 @@ const express_1 = __importDefault(require("express"));
 const path_1 = __importDefault(require("path"));
 const vite_1 = require("vite");
 const fs_1 = __importDefault(require("fs"));
+const account_auth_1 = __importDefault(require("./database/account_auth"));
 const app = (0, express_1.default)();
 const port = 3000;
 app.use(express_1.default.static(path_1.default.join(__dirname, "./public")));
@@ -60,6 +61,7 @@ function createServer() {
                 res.send(`Welcome to the port ${port}`);
             }
         }));
+        (0, account_auth_1.default)();
         app.use(vite.middlewares);
         app.listen(port, () => {
             console.log(`server running in the port ${port}`);
