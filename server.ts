@@ -2,12 +2,19 @@ import express from 'express';
 import path from 'path';
 import { createServer as createViteServer } from 'vite';
 import fs from 'fs';
-import accountAuthentication from './database/account_auth';
+import router from './database/account_auth';
+
+import Express from "express";
+import admin from "./database/firebase_admin";
+import { db } from "./database/firebase_admin";
+
+
 
 const app = express();
 const port = 3000;
 
 app.use(express.static(path.join(__dirname,"./public")))
+app.use(express.json())
 
 
 
@@ -56,7 +63,8 @@ async function createServer(){
         }
     });
 
-    accountAuthentication();
+
+    app.use("/api/account",router)
 
     app.use(vite.middlewares);
 
