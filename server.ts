@@ -7,7 +7,7 @@ import router from './database/account_auth';
 import Express from "express";
 import admin from "./database/firebase_admin";
 import { db } from "./database/firebase_admin";
-
+import cookieParse from "cookie-parser";
 
 
 const app = express();
@@ -15,6 +15,7 @@ const port = 3000;
 
 app.use(express.static(path.join(__dirname,"./public")))
 app.use(express.json())
+app.use(cookieParse());
 
 
 

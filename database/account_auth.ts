@@ -50,6 +50,7 @@ import { db } from "./firebase_admin";
                         ["city"]:null,
                         ["address"]:null
                     })
+
                     res.status(201).json({message:"account created with success: not verified"})
                 }
     
@@ -58,6 +59,35 @@ import { db } from "./firebase_admin";
            } 
     })
     
+    router.get("/getcurrentsession",async (req,res)=>{
+        try{
+            const currentSession = req.cookies["session"];
+            const descodedClains = await admin.auth().verifySessionCookie(currentSession, true);
+
+            res.status(200).json({message:descodedClains.uid})
+        }catch(e){
+            res.status(401).json({message:`error: ${e}`})
+        }
+    })
+
+    router.post("/setcurrentsession",async (req,res)=>{
+        const token = req.body["token"];
+        const expiresIn = 60*60*24*1000;
+        try{
+            const sessionCookie = await admin.auth().createSessionCookie(token,{expiresIn});
+
+            res.cookie('session',sessionCookie,{
+                maxAge:expiresIn,
+                httpOnly:true,
+                secure:false,
+                sameSite:"strict"
+            });
+            
+            res.status(200).json({message:`current session set`})
+        }catch(e){
+            res.status(401).json({message:`error: ${e}`})
+        }
+    })
 
     router.get("/getaccountattributes/:userUid",async (req,res)=>{
         const userUid = req.params.userUid;
@@ -92,8 +122,15 @@ import { db } from "./firebase_admin";
         }
     })
 
-    router.patch("/api/account/setsoftattributes",(req,res)=>{
-
+    router.patch("/setsoftattributes",async (req,res)=>{
+        const {name,uid,description,cpf_cnpj,contry,state,city,address} = req.body;
+        try{
+            const userRef = db.collection("Accounts");
+            const querySnapshot = await userRef.where("uid","==",uid).get();
+        }catch(e){
+            console.log(e)
+            res.status(500)
+        }
     })
 
     router.get("/finduserbyname",()=>{
@@ -104,8 +141,8 @@ import { db } from "./firebase_admin";
 
     })
 
-    function setCookiesSession(uid:string){
-
+    async function setCookiesSession(req:any,res:any){
+        
     }
 
     export default router;

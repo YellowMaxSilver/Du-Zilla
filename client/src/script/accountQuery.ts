@@ -28,14 +28,51 @@ export async function getAccountAttributeByUid(accountUid:string,user:UserAttrib
         })
         if(res.status == 200){
             await res.json().then(data=>{
-                console.log(data);
-                console.log(data.name);
-                console.log(data.email)
+                user(
+                    data.name,
+                    data.nameId,
+                    data.email,
+                    data.description,
+                    data.uid,
+                    data.createDate,
+                    data.cpf_cnpj,
+                    data.verified,
+                    data.contry,
+                    data.state,
+                    data.city,
+                    data.address
+                )
             })
         }else{
             
         }
     }catch(e){
         console.error("erro to find user ",e)
+    }
+}
+
+type User = (userUid:string|null) => void;
+
+export async function getCurrentSession(call: User){
+    try{
+        const res = await fetch("/api/account/getcurrentsession",{
+            method: "GET",
+            credentials: 'include',
+            headers:{
+                "Content-Type":"application/json"
+            }
+        })
+        if(res.status == 200){
+            res.json().then(data=>{
+                console.log("aaa:",data.message);
+                call(data.message);
+            })
+        }else{
+            console.log("no account cookie", await res.json());
+            call(null)
+        }
+    }catch(e){
+        console.log("error to get account: ",e)
+        call(null)
     }
 }

@@ -1,5 +1,5 @@
 import { notification } from "./notification";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../database/firebase_settings.ts";
 import { getAccountAttributeByUid } from "./accountQuery.ts";
 
@@ -14,7 +14,7 @@ var passwordVisibilityStatus:boolean = false;
 
 console.log("getting started");
 
-//(document.getElementById('loginButton') as HTMLElement ).addEventListener('click',signIn);
+(document.getElementById('loginButton') as HTMLElement ).addEventListener('click',signIn);
 
 visibilityButton.addEventListener('click',changePasswordVisibility);
 
@@ -25,31 +25,43 @@ setTimeout(()=>{
 
 //getPage();
 
-function signIn(){
+async function signIn(){
 
    //verify availble email 
-   let hasA:boolean = false;
-   let hasCom:boolean = false;  
-   let goodPassword:boolean = false; 
-
-   for(let i = 0;i < email.value.length;i++){
-        let carater = email.value.charAt(i);
-        if(carater == '@'){
-            hasA = true;
-        }
-        if(carater == '.' && email.value.charAt(i+1) != ''){
-            hasCom = true;
-        }
-   }
-   if(password.value != ''){
-    goodPassword = true;
+   if(!validEmail(email.value)){
+    notification("error","invalid field email");
+    return;
    }
 
-   if(hasA && hasCom && goodPassword){
-    notification("","loged with successiful.");
-   }else{
-    notification("","Error.");
-    console.log('unavailbe')
+   if(!validPassword(password.value)){
+    notification("error","invalid field email");
+    return;
+   }
+
+   try{
+    const credential = await signInWithEmailAndPassword(auth, email.value, password.value);
+    const token = await credential.user.getIdToken();
+    const res = await fetch("/api/account/setcurrentsession",{
+        method: "POST",
+            credentials: 'include',
+            headers:{
+                "Authorization":`Bearer ${token}`,
+                "Content-Type":"application/json"
+            },
+        body:JSON.stringify({
+            token:token
+        })
+    })
+
+    if(res.status == 200){
+        notification("success","your in, success")
+    }else{
+        notification("error","error to set cookie")
+        console.log("error: ", await res.json())
+    }
+   }catch(e){
+        console.log(e)
+        notification("error","error to login")
    }
 }
 
