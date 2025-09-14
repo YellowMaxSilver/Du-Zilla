@@ -12,7 +12,7 @@
     "dev:backend": "ts-node-dev server.ts",
     "dev:tscCompiler": "tsc --watch",
     "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\" \"npm run dev:tscCompiler\"",
-    "start": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\" \"npm run dev:tscCompiler\""
+    "start": "chmod +x ./node_modules/.bin/ts-node-dev && concurrently \"npm run dev:frontend\" \"npm run dev:backend\" \"npm run dev:tscCompiler\""
   },
   "devDependencies": {
     "@types/express": "^5.0.1",
