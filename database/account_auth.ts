@@ -102,7 +102,7 @@ import { db } from "./firebase_admin";
 
                 res.status(200).json({
                     name:results[0].name,
-                    nameId:results[0].nameId,
+                    nameId:results[0]["name-id"],
                     email :results[0].email,
                     uid:results[0].uid,
                     cpf_cnpj:results[0]["cpf-cnpj"],

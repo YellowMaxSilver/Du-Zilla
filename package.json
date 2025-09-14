@@ -15,7 +15,8 @@
     "dev:frontend": "cd client && npm run dev",
     "dev:backend": "ts-node-dev server.ts",
     "dev:tscCompiler": "tsc --watch",
-    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\" \"npm run dev:tscCompiler\""
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\" \"npm run dev:tscCompiler\"",
+    "start": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\" \"npm run dev:tscCompiler\""
   },
   "devDependencies": {
     "@types/express": "^5.0.1",
