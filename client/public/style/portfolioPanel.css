@@ -1,0 +1,176 @@
+@import url(style.css);
+
+.bodyPanelStyle{
+    background-color: var(--bass_color);
+    background-image: none;
+    display: flex;
+}
+
+.attributesPanel{
+    width: 45%;
+    height: auto;
+    position: relative;
+    margin-top: 70px;
+    padding-left: 40px;
+}
+
+.portfolioPanel{
+    width: 50%;
+    position: absolute;
+    margin-top: 70px;
+    right: 0;
+    top: 0;
+    padding-right: 40px;
+}
+
+.editTextBox{
+    background-color: #000000;
+    border: 2px solid var(--soloColor);
+    border-radius: 5px;
+    width: calc(100% - 20px);
+    height: 60px;
+    margin-top: 40px;
+    position: relative;
+}
+
+.editTextBox .textTitleBox{
+    width: 100%;height: 20px;
+    background-color: var(--soloBassColor);
+    position: absolute;top: 0;left: 0;
+    display: flex;align-items: center;
+    opacity: 0.5;
+}
+
+.editTextBox .textTitleBox p{
+    font-size: 15px;
+}
+
+.editTextBox input{
+    width: 100%;
+    height: calc(100% - 20px);
+    margin-top: 20px;
+    outline: none;
+    background-color: #00000000;
+    color: var(--whiteTextColor);
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-style: normal;
+    font-family: "Roboto", sans-serif;
+    font-weight: 200;
+    font-size: 25px;
+    border: 0px;
+}
+
+.description{
+    width: calc(100% - 30px);
+    height: 200px;
+}
+
+.tags{
+    width: calc(100% - 30px);
+    height: 150px;
+}
+
+.description textarea{
+    resize: none;
+    width: 100%;
+    height: calc(100% - 20px);
+    margin-top: 20px;
+    outline: none;
+    background-color: #00000000;
+    color: var(--whiteTextColor);
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-style: normal;
+    font-family: "Roboto", sans-serif;
+    font-weight: 200;
+    font-size: 25px;
+    border: 0px;
+}
+
+.dropDownBox{
+    background-color: #000000;
+    border: 2px solid var(--soloColor);
+    border-radius: 5px;
+    width: 100px;
+    height: 50px;
+    margin-top: 10px;
+    position: relative;
+    display: flex;
+    align-items: center;justify-content: center;
+    margin-top: 40px;
+}
+
+.uploadImage{
+    width: 300px;
+    height: 200px;
+    border: 2px solid var(--soloColor);
+    border-radius: 5px;
+    position: relative;
+    margin-top: 40px;
+}
+
+.uploadImage .textTitleBox{
+    width: 100%;height: 20px;
+    background-color: var(--soloBassColor);
+    position: absolute;top: 0;left: 0;
+    display: flex;align-items: center;
+    opacity: 0.8;
+}
+
+.uploadImage .textTitleBox p{
+    font-size: 15px;
+}
+
+.uploadImage .blackFilter{
+    width: 100%;height: 100%;
+    background-color: #000000;
+    opacity: 0.5;
+    position: absolute;
+    top: 0;left: 0;
+}
+
+.uploadImage .background{
+    width: 100%;height: 100%;
+    background-image: url('../images/image-icon.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.editPortfolioBox{
+    width: 700px;
+    height: 400px;
+    border: 2px solid var(--soloColor);
+    border-radius: 5px;
+    margin-top: 40px;
+    position: relative;
+    float: right;
+}
+
+.editPortfolioBox .blackFilter{
+    width: 100%;height: 100%;
+    background-color: #000000;
+    opacity: 0.5;
+    position: absolute;
+    top: 0;left: 0;
+}
+
+.editPortfolioBox .background{
+    width: 100%;height: 100%;
+    background-image: url('../images/image-icon.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.editPortfolioBox .textTitleBox{
+    width: 100%;height: 20px;
+    background-color: var(--soloBassColor);
+    position: absolute;top: 0;left: 0;
+    display: flex;align-items: center;
+    opacity: 0.8;
+}
+
+.editPortfolioBox .textTitleBox p{
+    font-size: 15px;
+}
+
