@@ -73,8 +73,26 @@
     pointer-events: none;
 }
 
-.attrbutesPanel{
+.attributesPanel{
     width: 300px;
     height: 500px;
     background-color: var(--bass_color_blur);
+    position: absolute;
+    z-index: 5;
+    top: 80px;
+    right: 40px;
+}
+
+.attributesPanel .closeButton{
+    width: 30px;
+    height: 30px;
+    border: 2px solid green;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.attributesPanel .attributeInput{
+    
 }
