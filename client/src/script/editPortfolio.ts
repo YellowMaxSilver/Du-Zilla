@@ -8,6 +8,9 @@ var overBox = document.getElementById("selectedBox") as HTMLElement;
 
 const attributesPanel = document.querySelector('#attributesPanel') as HTMLElement;
 const attributesPanelTextInput = attributesPanel.querySelector('#textInput') as HTMLInputElement;
+const attributesPanelFontSizeInput = attributesPanel.querySelector('#fontSizeInput') as HTMLInputElement;
+const attributesPanelColorInput = attributesPanel.querySelector('#colorInput') as HTMLInputElement;
+
 const attributesPanelCloseButton = document.querySelector("#attributesPanelCloseButton") as HTMLElement;
 var widgetIdOfAttributePanel:string|undefined = undefined;
 
@@ -102,7 +105,8 @@ function setAttributePanel(){
         if(widgetIdOfAttributePanel == undefined){
             return;
         }
-        (document.getElementById(widgetIdOfAttributePanel) as HTMLElement).innerHTML = attributesPanelTextInput.value;
+        (document.getElementById(widgetIdOfAttributePanel) as HTMLElement)
+        .innerHTML = attributesPanelTextInput.value;
     },1000)
 }
 

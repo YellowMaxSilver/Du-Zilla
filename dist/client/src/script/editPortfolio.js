@@ -10,6 +10,8 @@ var clickedBox = document.getElementById("clickedBox");
 var overBox = document.getElementById("selectedBox");
 const attributesPanel = document.querySelector('#attributesPanel');
 const attributesPanelTextInput = attributesPanel.querySelector('#textInput');
+const attributesPanelFontSizeInput = attributesPanel.querySelector('#fontSizeInput');
+const attributesPanelColorInput = attributesPanel.querySelector('#colorInput');
 const attributesPanelCloseButton = document.querySelector("#attributesPanelCloseButton");
 var widgetIdOfAttributePanel = undefined;
 attributesPanelCloseButton.addEventListener('click', () => {
@@ -80,7 +82,8 @@ function setAttributePanel() {
         if (widgetIdOfAttributePanel == undefined) {
             return;
         }
-        document.getElementById(widgetIdOfAttributePanel).innerHTML = attributesPanelTextInput.value;
+        document.getElementById(widgetIdOfAttributePanel)
+            .innerHTML = attributesPanelTextInput.value;
     }, 1000);
 }
 //{!}{text(element)}{text}{size}{color}{positionX}{positionY}{width}{height}{/!}
