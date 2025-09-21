@@ -6,7 +6,14 @@ import fs from 'fs';
 const app = express();
 const port = 3000;
 
-app.use(express.static(path.join(__dirname,"./public")))
+
+// Serve arquivos estáticos do build Vite
+app.use(express.static(path.join(__dirname,'public', 'client', 'dist')));
+
+// Serve imagens e CSS da pasta public
+app.use('/assets/', express.static(path.join(__dirname,'client','dist', 'assets')));
+app.use('/images', express.static(path.join(__dirname, 'client', 'public', 'images')));
+app.use('/style', express.static(path.join(__dirname, 'client', 'public', 'style')));
 
 
 

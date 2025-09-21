@@ -92,5 +92,3 @@ function getValuesOfElements(element, callback) {
     }
     callback(field);
 }
-function convertToTextHtml() {
-}

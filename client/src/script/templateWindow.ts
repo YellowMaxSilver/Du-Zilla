@@ -1,5 +1,5 @@
 import { notification } from "./notification";
-
+console.log("hello");
 const templatePanel = document.getElementById("choseTemplatePanel") as HTMLElement;
 const closeTemplatePanel = document.getElementById("choseTemplatePanelCloseButton") as HTMLElement;
 

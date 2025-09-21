@@ -18,7 +18,12 @@ const vite_1 = require("vite");
 const fs_1 = __importDefault(require("fs"));
 const app = (0, express_1.default)();
 const port = 3000;
-app.use(express_1.default.static(path_1.default.join(__dirname, "./public")));
+// Serve arquivos estáticos do build Vite
+app.use(express_1.default.static(path_1.default.join(__dirname, 'public', 'client', 'dist')));
+// Serve imagens e CSS da pasta public
+app.use('/assets/', express_1.default.static(path_1.default.join(__dirname, 'client', 'dist', 'assets')));
+app.use('/images', express_1.default.static(path_1.default.join(__dirname, 'client', 'public', 'images')));
+app.use('/style', express_1.default.static(path_1.default.join(__dirname, 'client', 'public', 'style')));
 // app.get('/',(req,res)=>{
 //     res.sendFile(path.join(__dirname,'./public/index.html'));
 // });

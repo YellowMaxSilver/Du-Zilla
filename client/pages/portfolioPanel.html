@@ -3,13 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style/thunbnail.css">
     <link rel="stylesheet" href="/style/portfolioPanel.css">
     <title>Portfolio name</title>
 </head>
-<body class="bodyPanelStyle">
+<body>
+    <section class="bodyPanelStyle"></section>
     <nav class="topNav">
       <h1 class="titleIcon">Du-Zilla</h1>
+      <div class="accountBox" style="display: none;">
+        <div class="icon"></div>
+        <p class="normal_text">Account Name</p>
+      </div>
+      <div class="signButtonsBox">
+          <a href="login"><div class="signInButton"><h4 class="normal_text">Sign in</h4></div></a>
+          <a href="signUp"><div class="signUpButton"><h4 class="normal_text">Sign Up</h4></div></a>
+      </div>
     </nav>
+
+    <section class="actionBar">
+        <h3 class="normal_text">Portfolio name</h3>
+        <h3 class="normal_text">https://link.com/</h3>
+        <div class="buttonBox">
+            <div class="dropDownBox">
+                <div class="icon public"></div>
+                <p class="normal_text">Public</p>
+                <div class="arrow down"></div>
+            </div>
+            <ul class="dropDown">
+                <li>Public</li>
+                <li>Private</li>
+                <li>Just me</li>
+            </ul>
+            <div class="button"><p>Save</p></div>
+            <div class="button"><p>Publish</p></div>
+        </div>
+    </section>
 
     <section class="attributesPanel">
         <div class="editTextBox">
@@ -19,38 +48,118 @@
 
         <div class="dropDownBox">
             <p class="normal_text">Personal</p>
+            <div class="arrow down"></div>
         </div>
+        <ul class="dropDown">
+            <li>Buisness</li>
+            <li>Personal</li>
+            <li>Hiring</li>
+            <li>Store</li>
+            <li>Other</li>
+        </ul>
 
-        <div class="editTextBox description">
+        <div class="editTextBoxDescription">
             <div class="textTitleBox"><p class="normal_text">Description</p></div>
             <textarea placeholder="Description" autocomplete="off"></textarea>
         </div>
 
-        <div class="editTextBox description tags">
+        <div class="editTextBoxDescription">
             <div class="textTitleBox"><p class="normal_text">Tags</p></div>
             <textarea placeholder="Tags" autocomplete="off"></textarea>
         </div>
 
         <div class="uploadImage">
             <div class="textTitleBox"><p class="normal_text">Banner</p></div>
+            <div class="icon"></div>
+            <div class="info"><p>Upload image</p></div>
             <div class="blackFilter"></div>
             <div class="background"></div>
         </div>
 
-        <div class="dropDownBox">
-            <p class="normal_text">Public</p>
-        </div>
+        <section class="previewBox">
+            <div class="textTitleBox"><p class="normal_text">Preview</p></div>
 
+            <box class="thunbMainBox">
+                <div class='thunbBanner' style="background-image: url('../images/image-icon.jpg')"></div>      
+                <box class="thunbInfoBox">
+                    <box class="thunbTitleBox">
+                    <div style="width:90%;margin-left: 20px;"><h4 class="normal_text">Nome do Curriculo</h4></div>  
+                    </box>
+                    <box class="thunbUserBox">
+                    <img class="userImage" src="../images/user-icon.jpg" style="margin-right: 10px;margin-left: 10px;">
+                    <h5 class="normal_text">Nome do usuário</h5>
+                    <div class="rateBox">
+                        <div class="emptyStarRate"></div>
+                        <div class="emptyStarRate"></div>
+                        <div class="emptyStarRate"></div>
+                        <div class="emptyStarRate"></div>
+                        <div class="emptyStarRate"></div>
+                    </div>
+                    </box>
+                </box>   
+            </box>
+
+        </section>
     </section>
 
     <section class="portfolioPanel">
 
         <div class="editPortfolioBox">
             <div class="textTitleBox"><p class="normal_text">Portfolio</p></div>
+            <div class="icon"></div>
+            <div class="info"><p>Edit Portfolio</p></div>
             <div class="blackFilter"></div>
             <div class="background"></div>
         </div>
+
+        <div class="formsPanel">
+            <div class="textTitleBox"><p class="normal_text">Forms</p></div>
+        </div>
         
+        <div class="ratesPanel">
+            <div class="textTitleBox"><p class="normal_text">Rates</p></div>
+
+            <div class="rateBox">
+                <div class="starIcon"></div>
+                <p>5</p>
+                <div class="rateLevelBar">
+                    <div class="percent"></div>
+                </div>
+            </div>
+
+
+            <div class="rateBox">
+                <div class="starIcon"></div>
+                <p>4</p>
+                <div class="rateLevelBar">
+                    <div class="percent"></div>
+                </div>
+            </div>
+
+            <div class="rateBox">
+                <div class="starIcon"></div>
+                <p>3</p>
+                <div class="rateLevelBar">
+                    <div class="percent"></div>
+                </div>
+            </div>
+
+            <div class="rateBox">
+                <div class="starIcon"></div>
+                <p>2</p>
+                <div class="rateLevelBar">
+                    <div class="percent"></div>
+                </div>
+            </div>
+
+            <div class="rateBox">
+                <div class="starIcon"></div>
+                <p>1</p>
+                <div class="rateLevelBar">
+                    <div class="percent"></div>
+                </div>
+            </div>
+        </div>
     </section>
 </body>
 </html>

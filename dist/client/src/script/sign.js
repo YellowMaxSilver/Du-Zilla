@@ -52,20 +52,3 @@ function changePasswordVisibility() {
         //turn to visible
     }
 }
-function getPage() {
-    const queryString = window.location.search;
-    const params = new URLSearchParams(queryString);
-    const pageType = params.get("a");
-    console.log(window.location.search);
-    switch (pageType) {
-        case ("login"):
-            console.log("ok");
-            break;
-        case ("signUp"):
-            console.log("sign up ok");
-            break;
-        default:
-            console.log("nothing but ok");
-            break;
-    }
-}

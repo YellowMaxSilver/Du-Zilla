@@ -114,6 +114,3 @@ function getValuesOfElements(element:string,callback:ValuesOfElement){
     callback(field)
 }
 
-function convertToTextHtml(){
-
-}

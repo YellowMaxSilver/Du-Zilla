@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const notification_1 = require("./notification");
+console.log("hello");
 const templatePanel = document.getElementById("choseTemplatePanel");
 const closeTemplatePanel = document.getElementById("choseTemplatePanelCloseButton");
 const createOwnButton = document.getElementById("createOwnButton");

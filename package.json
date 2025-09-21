@@ -13,10 +13,10 @@
     "dev:tscCompiler": "tsc --watch",
     "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\" \"npm run dev:tscCompiler\"",
 
-    "start:frontend": "cd client && npm start",
+    "start:frontend": "cd client && npm run build && npm start",
     "start:backend": "ts-node server.ts",
     "start:tscCompiler": "tsc",
-    "start": "chmod +x ./node_modules/.bin/concurrently && chmod +x ./node_modules/.bin/ts-node && chmod +x ./node_modules/.bin/tsc && concurrently \"npm run start:frontend\" \"npm run start:backend\" \"npm run start:tscCompiler\""
+    "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\" \"npm run start:tscCompiler\""
   },
   "devDependencies": {
     "@types/express": "^5.0.1",

@@ -7,12 +7,21 @@
     <link rel="stylesheet" href="/style/thunbnail.css">
     <link rel="stylesheet" href="/style/buttons.css">
     <link rel="icon" href="./images/Du-Zilla-icon.png">
-    <script type="module" src="../src/script/templateWindow.ts"></script>
+    <script type="module" src="/src/script/templateWindow.ts"></script>
+    <script type="module" src="/assets/index-DzurZ9o5.js"></script>
     <title>Du-Zilla</title>
 </head>
 <body>
     <nav class="topNav">
       <h1 class="titleIcon">Du-Zilla</h1>
+      <div class="accountBox">
+        <div class="icon"></div>
+        <p class="normal_text">Account Name</p>
+      </div>
+      <div class="signButtonsBox" style="display: none;">
+          <a href="login"><div class="signInButton"><h4 class="normal_text">Sign in</h4></div></a>
+          <a href="signUp"><div class="signUpButton"><h4 class="normal_text">Sign Up</h4></div></a>
+      </div>
     </nav>
 
 
@@ -33,7 +42,7 @@
             <div style="display: flex;justify-content: center;align-items: center;height: 50px;margin-top: 40px;margin-bottom: 40px;"><h1 class="title">Du-Zilla</h1></div>
             <div style="display: flex;">
               <input class="inputSearch" type="text" placeholder="Pesquisar" autocomplete="off">
-              <div class="searchButton" style="margin-left: 10px;"></div>
+              <a href="/search?q=hello"><div class="searchButton" style="margin-left: 10px;"></div></a>
             </div>
             <div style="display: flex;justify-content: center;align-items: center;width: 100%;margin-top: 5%;">
               <div class="createOwnButton" id="createOwnButton"><h4 class="normal_text">Criar Dz-Curriculo</h4></div>

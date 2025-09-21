@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 require("./style.css");
+require("./script/templateWindow.ts");
 const typescript_svg_1 = __importDefault(require("./typescript.svg"));
 const vite_svg_1 = __importDefault(require("/vite.svg"));
 const counter_ts_1 = require("./counter.ts");
