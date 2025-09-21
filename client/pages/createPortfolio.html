@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style/style.css">
-    <link rel="stylesheet" href="./style/editPortfolio.css">
+    <link rel="stylesheet" href="/style/style.css">
+    <link rel="stylesheet" href="/style/editPortfolio.css">
     <script type="module" src="../src/script/editPortfolio.ts"></script>
     <title>Document</title>
 </head>
@@ -27,8 +27,32 @@
         </div>
     </section>
 
-    
-    <section class="globalBox pagePreviewBox">
+    <section class="attributesPanel" id="attributesPanel">
+        <div class="closeButton" id="attributesPanelCloseButton"></div>
+        <h3 class="normal_text" style="margin-left: 20px;">Attributes</h3>
+        <div class="attributeInputBox">
+            <h4 class="normal_text">Text</h4>
+            <input class="attributeInput" id="textInput" placeholder="Text">
+        </div>
+        <div class="attributeInputBox">
+            <h4 class="normal_text">Font Size</h4>
+            <input class="attributeInput" id="fontSizeInput" placeholder="Font Size">
+        </div>
+        <div class="attributeInputBox">
+            <h4 class="normal_text">Color</h4>
+            <input type="color" class="attributeInput" id="colorInput" placeholder="Color" value="#000000">
+        </div>
+        <!-- <div class="attributeInputBox">
+            <h4 class="normal_text">Width</h4>
+            <input class="attributeInput" id="widthInput" placeholder="Width">
+        </div>
+        <div class="attributeInputBox">
+            <h4 class="normal_text">Height</h4>
+            <input class="attributeInput" id="heightInput" placeholder="Height">
+        </div> -->
+    </section>
+
+    <section class="pagePreviewBox">
 
         <div id="preview" class="editPreview">
             <div id="selectedBox" class="previewSelected"></div>

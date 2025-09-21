@@ -3,13 +3,11 @@
 .mainBox{
     width: 70%;
     height: 90vh;
-    margin-left: 15%;
-    margin-right: 15%;
+    margin-left: auto;
+    margin-right: auto;
     margin-top: 5vh;
-    position: absolute;
-    top: 0;
+    position: relative;
     /* background-image: radial-gradient(500px,var(--soloBassColor),var(--bass_color)); */
-    box-shadow: 0px 0px var(--shadowSize) var(--shadowColor);
     display: flex;
     align-items: center;
 }
@@ -23,14 +21,15 @@
 }
 
 .signBox{
-    width: auto;
+    width: calc(40% + 20px);
     height: 100%;
     background-color: var(--bass_color);
     position: relative;
+    overflow-y: auto;
 }
 
 .infoBox{
-    width: 65%;
+    width: 60%;
     height: 100%;
     background-image: url('../images/Du-Zilla-White-Vertical-Background.png');
     background-position: center;
@@ -60,15 +59,29 @@
 }
 
 .loginButton{
-    height: 80px;
-    width: 250px;
+    height: 50px;
+    width: 200px;
     background-color: #00000000;
     border: 2px solid var(--brightColor);
     border-radius: 20px;
     color: var(--white_normal_color);
     display: flex;justify-content: center;align-items: center;
     cursor: pointer;
-    margin-left: 10px;
+    margin-left: auto;margin-right: auto;
+    margin-top: 50px;
+}
+
+.loginButton:hover{
+    height: 50px;
+    width: 200px;
+    background-color: var(--soloColor);
+    border: 2px solid var(--soloColor);
+    border-radius: 20px;
+    color: var(--white_normal_color);
+    display: flex;justify-content: center;align-items: center;
+    cursor: pointer;
+    margin-left: auto;margin-right: auto;
+    margin-top: 50px;
 }
 
 .visibilityButton{
