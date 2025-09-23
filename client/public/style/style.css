@@ -30,6 +30,7 @@
 
 :root{
     --bass_color_blur: rgba(36, 36, 36, 0.836);
+    --blackFilterColorBlur:#000000b0;
     --bass_color: rgb(37, 37, 37);
     --soloBassColor: #494949;
     --bassColorHover: #222222;
@@ -46,6 +47,7 @@
     --whiteTextColor:#eeeeee;
     --darkTextColor:#141414;
     --containerEffect:radial-gradient(500px,var(--soloBassColor),var(--bass_color));
+    --containerEffect2:radial-gradient(500px,#ffffff1a,transparent);
 }
 
 

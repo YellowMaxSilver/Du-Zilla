@@ -42,25 +42,46 @@ async function createServer(){
         }
     })
 
-    app.get('/:page',async (req,res)=>{
+    app.get('/studio/:page',async (req,res)=>{
         const urlPage = req.params.page;
         const url = req.originalUrl;
-        if(urlPage != null){
-            try{
-            const templatePath = path.resolve(__dirname,`./client/pages/${urlPage}.html`);
-            let template = fs.readFileSync(templatePath, 'utf-8');
-            template = await vite.transformIndexHtml(url, template);
-
-            res.status(200).set({'Content-Type':'text/html'}).end(template);
-            }
-            catch(e){
-                res.send('not found');
-                console.error("error: ",e);
-            }
-        }else{
-            res.send(`Welcome to the port ${port}`)
+        
+        switch(urlPage){
+            case "panel":
+                openHtmlFile(req,res,"portfolioPanel");
+                break;
+            case "edit":
+                openHtmlFile(req,res,"editPortfolio");
+                break;
+            case "my-projects":
+                openHtmlFile(req,res,"myProjects");
+                break;
+            default:
+                res.redirect("/studio/my-projects")
+                break;
         }
     });
+
+    app.get('/login',async (req,res)=>{
+        openHtmlFile(req,res,"login");
+    });
+
+    app.get('/register',async (req,res)=>{
+        openHtmlFile(req,res,"signUp");
+    });
+
+    app.get('/account/settings',async (req,res)=>{
+        res.send("em andamento")
+    })
+
+    async function openHtmlFile(req:any,res:any,file:string){
+        const fullPath = path.resolve(__dirname,`./client/pages/${file}.html`);
+        const url = req.originalUrl;
+        let template = fs.readFileSync(fullPath, 'utf-8');
+        template = await vite.transformIndexHtml(url, template);
+
+        res.status(200).set({'Content-Type':'text/html'}).end(template);
+    }
 
     app.use(vite.middlewares);
 

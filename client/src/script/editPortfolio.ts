@@ -110,10 +110,10 @@ class Widget {
             </div>
             <div class="attribute"> 
                 <h3 class="normal_text">Contact:</h3>
-                <input type="text" autocomplete="off" placeholder="Email or phone number">
+                <input type="text" autocomplete="off" placeholder="Email or phone number" readonly>
             </div>
-            <div class="attributeDescription"><h3 class="normal_text">Description:</h3><textarea class="normal_text" type="text" autocomplete="off" placeholder="Description"></textarea></div>
-            <buttom class="submitButton normal_text">Submit</buttom>
+            <div class="attributeDescription"><h3 class="normal_text">Description:</h3><textarea class="normal_text" type="text" autocomplete="off" placeholder="Description" readonly></textarea></div>
+            <div class="normal_text inactiveSubmitButton">Submit</div>
             <div class="dzIcon"></div>
             </div>
             `;

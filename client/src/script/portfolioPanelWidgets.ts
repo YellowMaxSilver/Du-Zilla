@@ -1,3 +1,4 @@
+import { portfolioRandomId } from "./idGenerete";
 
 const visibilityDropDownButton = document.querySelector("#visibilityDropDownButton") as HTMLElement;
 const visibilityDropDown = document.querySelector("#visibilityDropDown") as HTMLElement;
@@ -66,7 +67,8 @@ visibilityDropDownButton.addEventListener("click",(event)=>{
 
 const editPortfolioBox = document.querySelector("#editPortfolioBox") as HTMLElement;
 editPortfolioBox.addEventListener("click",()=>{
-    window.location.href = "/editPortfolio/?id=portfolioId";
+    const testId = portfolioRandomId();
+    window.location.href = `/studio/edit/?id=${testId}`;
 });
 
 

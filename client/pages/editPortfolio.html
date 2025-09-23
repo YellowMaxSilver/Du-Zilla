@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style/style.css">
     <link rel="stylesheet" href="/style/editPortfolio.css">
-    <script type="module" src="../src/script/editPortfolio.ts"></script>
-    <link rel="icon" href="./images/Du-Zilla-icon.png">
+    <script type="module" src="/src/script/editPortfolio.ts"></script>
+    <link rel="icon" href="../images/Du-Zilla-icon.png">
     <title>Dz studio: portfolioName</title>
 </head>
 <body class="editPortFolioBackground">
@@ -17,16 +17,6 @@
         <h2>Du-zilla</h2><h2 style="color:rgb(140, 0, 255);margin-left: 20px;">Sites</h2>
     </div> -->
 
-
-    <section class="editPortfolioAction">
-        <input class="uploadElementInput" style="margin-left: 20px;" value="HelloWorld Project">
-        <div class="actionButton" id="saveButton" onclick="showHtml()" style="margin-left: 20px;margin-right: 20px;">
-          <h4 class="normal_text">Save</h4>
-        </div>
-        <div class="actionButton" onclick="saveUploadInformations()">
-          <h4 class="normal_text">Publish</h4>
-        </div>
-    </section>
 
     <section class="attributesPanel" id="attributesPanel" style="display: none;">
         <div class="closeButton" id="attributesPanelCloseButton"></div>
@@ -80,7 +70,17 @@
     </section>
 
     <section class="pagePreviewBox">
-
+        <div class="topBarEdit">
+            <div class="pageNameBox">
+                <h2 class="normal_text" id="pageName">portfolioName</h2>
+                <input type="text" id="pageNameInput" class="pageNameInput normal_text" placeholder="Page Name" style="display: none;">
+            </div>
+            <div class="topBarButtons">
+                <button class="topBarButton normal_text" id="addElementButton">Add Element</button>
+                <button class="topBarButton normal_text" id="saveButton">Save</button>
+                <button class="topBarButton normal_text" id="viewButton">View</button>
+            </div>
+        </div>
         <div id="preview" class="editPreview">
             <div id="selectedBox" class="previewSelected"></div>
             <div id="clickedBox" class="previewClicked">

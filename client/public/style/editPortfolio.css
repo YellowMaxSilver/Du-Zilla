@@ -5,26 +5,23 @@
 }
 
 .pagePreviewBox{
-    width: calc(100% + 20px);height:calc(100vh - 30px);
+    width: calc(100% - 40px);height:calc(100vh - 70px);
     background-color: var(--bassColorHover);
     margin-top: 40px;
-    margin-left: -10px;
-    margin-right: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 50px 20px 20px 20px;
 }
 
 .editPreview{
-    width: calc(100% - 50px);
-    height: calc(100% - 80px);
-    margin-top: 10px;
+    width: calc(100% - 20px);
+    height: calc(100% - 40px);
     background-color: white;
     position: relative;
     overflow-x: hidden;
     overflow-y: auto;
     margin-left: 10px;
-    margin-right: 10px;
     border-radius: 20px;
 }
 
@@ -41,6 +38,22 @@
     right: 0;
     z-index: 3;
     padding: 10px;
+}
+
+.topBarEdit{
+    width: calc(100% - 80px);
+    height: 40px;
+    background-color: transparent;
+    border-radius: 20px;
+    display: flex;align-items: center;justify-content: space-between;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    position: absolute;
+    top: 0;
+    left: 20px;
+    z-index: 3;
+    padding: 0 20px;
 }
 
 .previewClicked{
@@ -208,6 +221,21 @@
     display: flex;
     align-items: center;justify-content: center;
     cursor: pointer;
+}
+
+.inactiveSubmitButton{
+    width: 150px;
+    height: 50px;
+    border-radius: 10px;
+    background-color: gray;
+    color: var(--whiteTextColor);
+    position: absolute;
+    right: 15px;
+    bottom: 15px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;justify-content: center;
+    cursor: not-allowed;
 }
 
 .portfolioFormBox .dzIcon{

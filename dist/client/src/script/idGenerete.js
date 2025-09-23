@@ -1,8 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.elementRandomId = elementRandomId;
+exports.portfolioRandomId = portfolioRandomId;
 function elementRandomId() {
     return randomCharacter() + getRandomNumber(1, 9999) + randomCharacter() + randomCharacter() + randomCharacter() + getRandomNumber(1, 999999) + randomCharacter();
+}
+function portfolioRandomId() {
+    var id = "";
+    for (let i = 0; i < getRandomNumber(10, 30); i++) {
+        if (getRandomNumber(1, 2) % 2 == 0) {
+            id += randomCharacter();
+        }
+        else {
+            id += getRandomNumber(1, 99);
+        }
+    }
+    return id;
 }
 function randomCharacter() {
     const number = getRandomNumber(1, 16);

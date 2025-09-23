@@ -1,4 +1,6 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const idGenerete_1 = require("./idGenerete");
 const visibilityDropDownButton = document.querySelector("#visibilityDropDownButton");
 const visibilityDropDown = document.querySelector("#visibilityDropDown");
 const Public = visibilityDropDown.querySelector("li:nth-child(1)");
@@ -55,7 +57,8 @@ visibilityDropDownButton.addEventListener("click", (event) => {
 });
 const editPortfolioBox = document.querySelector("#editPortfolioBox");
 editPortfolioBox.addEventListener("click", () => {
-    window.location.href = "/editPortfolio/?id=portfolioId";
+    const testId = (0, idGenerete_1.portfolioRandomId)();
+    window.location.href = `/studio/edit/?id=${testId}`;
 });
 function showDropDown(dropDown) {
     dropDown.style.display = "block";
