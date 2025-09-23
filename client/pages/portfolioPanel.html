@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style/thunbnail.css">
     <link rel="stylesheet" href="/style/portfolioPanel.css">
+    <link rel="icon" href="./images/Du-Zilla-icon.png">
     <title>Portfolio name</title>
+    <script type="module" src="../src/script/portfolioPanelWidgets.ts"></script>
 </head>
 <body>
     <section class="bodyPanelStyle"></section>
@@ -25,12 +27,12 @@
         <h3 class="normal_text">Portfolio name</h3>
         <h3 class="normal_text">https://link.com/</h3>
         <div class="buttonBox">
-            <div class="dropDownBox">
+            <div class="dropDownBox" id="visibilityDropDownButton">
                 <div class="icon public"></div>
                 <p class="normal_text">Public</p>
                 <div class="arrow down"></div>
             </div>
-            <ul class="dropDown">
+            <ul class="dropDown" id="visibilityDropDown">
                 <li>Public</li>
                 <li>Private</li>
                 <li>Just me</li>
@@ -46,16 +48,16 @@
             <input placeholder="Portfolio Name" autocomplete="off">
         </div>
 
-        <div class="dropDownBox">
+        <div class="dropDownBox" id="categoryDropDownButton">
             <p class="normal_text">Personal</p>
             <div class="arrow down"></div>
         </div>
-        <ul class="dropDown">
-            <li>Buisness</li>
-            <li>Personal</li>
-            <li>Hiring</li>
-            <li>Store</li>
-            <li>Other</li>
+        <ul class="dropDown" id="categoryDropDown">
+            <li id="buisness">Buisness</li>
+            <li id="personal">Personal</li>
+            <li id="hiring">Hiring</li>
+            <li id="store">Store</li>
+            <li id="other">Other</li>
         </ul>
 
         <div class="editTextBoxDescription">
@@ -104,7 +106,7 @@
 
     <section class="portfolioPanel">
 
-        <div class="editPortfolioBox">
+        <div class="editPortfolioBox" id="editPortfolioBox">
             <div class="textTitleBox"><p class="normal_text">Portfolio</p></div>
             <div class="icon"></div>
             <div class="info"><p>Edit Portfolio</p></div>

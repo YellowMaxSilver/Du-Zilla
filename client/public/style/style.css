@@ -40,10 +40,12 @@
     --blurSize:5px;
     --shadowColor:#020202b9;
     --shadowSize:10px;
-    --grayTextNormalColor:#414141;
-    --redAlertColor:#cf2f21;
-    --yellowAlertColor:#f0972b;
+    --grayTextNormalColor:#535353;
+    --alertColor:#cf2f21;
+    --warningColor:#f0972b;
     --whiteTextColor:#eeeeee;
+    --darkTextColor:#141414;
+    --containerEffect:radial-gradient(500px,var(--soloBassColor),var(--bass_color));
 }
 
 

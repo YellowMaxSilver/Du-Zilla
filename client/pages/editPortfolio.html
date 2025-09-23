@@ -6,7 +6,8 @@
     <link rel="stylesheet" href="/style/style.css">
     <link rel="stylesheet" href="/style/editPortfolio.css">
     <script type="module" src="../src/script/editPortfolio.ts"></script>
-    <title>Document</title>
+    <link rel="icon" href="./images/Du-Zilla-icon.png">
+    <title>Dz studio: portfolioName</title>
 </head>
 <body class="editPortFolioBackground">
      <nav class="topNav">
@@ -27,21 +28,34 @@
         </div>
     </section>
 
-    <section class="attributesPanel" id="attributesPanel">
+    <section class="attributesPanel" id="attributesPanel" style="display: none;">
         <div class="closeButton" id="attributesPanelCloseButton"></div>
         <h3 class="normal_text" style="margin-left: 20px;">Attributes</h3>
         <div class="attributeInputBox">
             <h4 class="normal_text">Text</h4>
-            <input class="attributeInput" id="textInput" placeholder="Text">
-        </div>
-        <div class="attributeInputBox">
-            <h4 class="normal_text">Font Size</h4>
-            <input class="attributeInput" id="fontSizeInput" placeholder="Font Size">
+            <textarea class="attributeInput normal_text" id="textInput" placeholder="Text"></textarea>
         </div>
         <div class="attributeInputBox">
             <h4 class="normal_text">Color</h4>
-            <input type="color" class="attributeInput" id="colorInput" placeholder="Color" value="#000000">
+            <input type="color" class="attributeColorInput normal_text" id="colorInput" placeholder="Color" value="#000000">
         </div>
+        <div class="attributeInputBox">
+            <h4 class="normal_text">Font Size</h4>
+            <input class="attributeInput normal_text" id="fontSizeInput" placeholder="Font Size" type="number" min="1" max="1000">
+        </div>
+        <div class="attributeInputBox">
+            <h4 class="normal_text">Font Weight</h4>
+            <input class="attributeInput normal_text" id="fontWeightInput" placeholder="Font Weight" type="number" min="100" max="900" step="100">
+        </div>
+        <div class="attributeInputBox">
+            <h4 class="normal_text">Font Algn</h4>
+            <input class="attributeInput normal_text" id="fontWeightInput" placeholder="Font Weight" type="number" min="100" max="900" step="100">
+        </div>
+        <div class="attributeInputBox">
+            <h4 class="normal_text">Background Color</h4>
+            <input type="color" class="attributeColorInput normal_text" id="backgroundColorInput" placeholder="Background Color" value="#ffffff">
+        </div>
+
         <!-- <div class="attributeInputBox">
             <h4 class="normal_text">Width</h4>
             <input class="attributeInput" id="widthInput" placeholder="Width">
@@ -50,6 +64,19 @@
             <h4 class="normal_text">Height</h4>
             <input class="attributeInput" id="heightInput" placeholder="Height">
         </div> -->
+    </section>
+
+    <section class="attributesPanel" id="formAttributesPanel" style="display: none;">
+        <div class="closeButton" id="formAttributesPanelCloseButton"></div>
+        <h3 class="normal_text" style="margin-left: 20px;">Form Attributes</h3>
+        <div class="attributeInputBox">
+            <h4 class="normal_text">Form Name</h4>
+            <input class="attributeInput normal_text" id="formNameInput" placeholder="Form Name"></input>
+        </div>
+        <div class="attributeInputBox">
+            <h4 class="normal_text">Form Description</h4>
+            <input class="attributeInput normal_text" id="formDescriptionInput" placeholder="Form Description"></input>
+        </div>
     </section>
 
     <section class="pagePreviewBox">

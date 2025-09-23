@@ -6,8 +6,7 @@
 
 .pagePreviewBox{
     width: calc(100% + 20px);height:calc(100vh - 30px);
-    background-color: var(--bass_color);
-    box-shadow: 0px 0px 10px rgb(49, 49, 49);
+    background-color: var(--bassColorHover);
     margin-top: 40px;
     margin-left: -10px;
     margin-right: auto;
@@ -17,8 +16,8 @@
 }
 
 .editPreview{
-    width: calc(100% - 40px);
-    height: calc(100% - 50px);
+    width: calc(100% - 50px);
+    height: calc(100% - 80px);
     margin-top: 10px;
     background-color: white;
     position: relative;
@@ -74,25 +73,243 @@
 }
 
 .attributesPanel{
-    width: 300px;
+    width: 400px;
     height: 500px;
     background-color: var(--bass_color_blur);
     position: absolute;
     z-index: 5;
-    top: 80px;
+    top: 200px;
     right: 40px;
+    padding: 20px;
+    border-radius: 20px;
 }
 
 .attributesPanel .closeButton{
     width: 30px;
     height: 30px;
-    border: 2px solid green;
+    background-image: url('../images/close_icon_white.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
     position: absolute;
     top: 10px;
     right: 10px;
     cursor: pointer;
 }
 
+.attributesPanel .attributeInputBox{
+    margin-top: 40px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+}
+
+.attributesPanel .attributeInputBox h4{
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+    font-size: 16px;
+    width: 140px;
+}
+
 .attributesPanel .attributeInput{
+    outline: none;
+    width: calc(100% - 140px - 10px);
+    background-color: transparent;
+    border: 1px solid var(--whiteTextColor);
+    border-radius: 3px;
+    color: var(--whiteTextColor);
+    padding: 5px;
+}
+
+.attributesPanel .attributeColorInput{
+    outline: none;
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+    border: 1px solid var(--whiteTextColor);
+    border-radius: 3px;
+    color: var(--whiteTextColor);
+}
+
+.portfolioFormBox{
+    width: 700px;
+    height: auto;
+    background-color: var(--bass_color);
+    background-image: var(--containerEffect);
+    border-radius: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 15px;
+    position: relative;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+
+.portfolioFormBox h2{
+    width: 100%;
+    margin: 0px;
+    color: var(--soloColor);
+}
+
+.portfolioFormBox .attribute{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    position: relative;
+    align-items: center;
+}
+
+.portfolioFormBox .attributeDescription{
+    width: 100%;
+    height: 150px;
+    display: flex;
+    position: relative;
+    align-items: top;
+    margin-top: 10px;
+    margin-bottom: 60px;
+}
+
+.portfolioFormBox .attribute h3,.portfolioFormBox .attributeDescription h3 {
+    width: 150px;
+    margin: 0px;
+}
+
+.portfolioFormBox .attribute input, .portfolioFormBox .attributeDescription textarea{
+    width:100%;
+    height: calc(100% - 20px);
+    resize: none;
+    outline: none;
+    color: var(--darkTextColor);
+    padding: 5px;
+    font-size: 18px;
+}
+
+.portfolioFormBox .attributeDescription textarea{
+    width:100%;
+    height: calc(100% - 20px);
+    resize: none;
+    outline: none;
+}
+
+.portfolioFormBox .submitButton{
+    width: 150px;
+    height: 50px;
+    border-radius: 10px;
+    background-color: var(--soloColor);
+    color: var(--whiteTextColor);
+    position: absolute;
+    right: 15px;
+    bottom: 15px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;justify-content: center;
+    cursor: pointer;
+}
+
+.portfolioFormBox .dzIcon{
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    left: 15px;
+    bottom: 15px;
+    background-image: url('../images/Du-Zilla-icon.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.portfolioFormBox .accountBox{
+    width: calc(100% - 10px);
+    height: calc(50px - 10px);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background-color: var(--bassColorHover);
+    border-radius: 10px;
+    position: relative;
+    padding: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.portfolioFormBox .accountBox .icon{
+    margin: 0;
+    padding: 0;
+}
+
+.portfolioFormBox .accountBox .accountName, .portfolioFormBox .accountBox .accountId{
+    margin: 0;
+    padding: 0;    
+}
+.portfolioFormBox .accountBox .accountId{
+    margin: 0;
+    padding: 0;
+    color: var(--grayTextNormalColor);
     
+}
+
+.portfolioFormBox .formSignBox{
+    width: calc(100% - 40px);
+    height: calc(200px - 40px);
+    background-color: var(--bassColorHover);
+    border-radius: 20px;
+    position: relative;
+    padding: 20px;
+}
+
+.portfolioFormBox .formSignBox h2{
+    width: 100%;
+    height: 50px;
+    text-align: center;
+}
+
+.portfolioFormBox .formSignBox .formSignButtons{
+    width: calc(100% - 120px);
+    display: flex;
+    align-items: center;
+    padding-left: 60px;
+    padding-right: 60px;
+    position: relative;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.portfolioFormBox .formSignBox .formSignButtons .signInButton,.portfolioFormBox .formSignBox .formSignButtons .signUpButton{
+    width: 200px;
+    height: 60px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.portfolioFormBox .notVerifiedAccount{
+    width: calc(100% - 10px);
+    height: calc(100px - 10px);
+    background-color: var(--bass_color);
+    border-radius: 10px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.portfolioFormBox .notVerifiedAccount .warningIcon{
+    width: 40px;
+    height: 40px;
+    background-image: url('../images/yellow_alert_icon.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.portfolioFormBox .notVerifiedAccount h3{
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    color: var(--warningColor);
 }

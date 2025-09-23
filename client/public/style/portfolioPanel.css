@@ -114,6 +114,7 @@ body{
     gap: 10px;
     padding-left: 10px;
     padding-right: 10px;
+    cursor: pointer;
 }
 
 .dropDownBox .arrow{
@@ -277,12 +278,14 @@ body{
 
 
 .ratesPanel{
-    width: 100%;
+    width: calc(100% - 80px);
     height: calc(400px - 40px);
     background-color: var(--bass_color);
     box-shadow: 0px 0px 20px black;
     position: relative;
     padding-top: 40px;
+    padding-left: 40px;
+    padding-right: 40px;
 }
 
 .ratesPanel .rateBox{
