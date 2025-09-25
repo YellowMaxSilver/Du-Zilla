@@ -12,12 +12,46 @@ const attributesPanel = document.querySelector('#attributesPanel');
 const attributesPanelTextInput = attributesPanel.querySelector('#textInput');
 const attributesPanelFontSizeInput = attributesPanel.querySelector('#fontSizeInput');
 const attributesPanelColorInput = attributesPanel.querySelector('#colorInput');
+const attrributesPanelFontWeightInput = attributesPanel.querySelector('#fontWeightInput');
+const attributesPanelAlgnLeftButton = attributesPanel.querySelector('#attributePanelAlgnLeftButton');
+const attributesPanelAlgnCenterButton = attributesPanel.querySelector('#attributesPanelAlgnCenterButton');
+const attributesPanelAlgnRightButton = attributesPanel.querySelector('#attributesPanelAlgnRightButton');
+const attributesPanelFontFamilyDropDownButton = attributesPanel.querySelector('#fontFamilyDropDownButton');
+const attributesPanelFontFamilyDropDown = attributesPanel.querySelector('#fontFamilyDropDown');
+//fonts buttons
+const attributesPanelFontArialButton = attributesPanel.querySelector('#fontArialButton');
+const attributesPanelFontVerdanaButton = attributesPanel.querySelector('#fontVerdanaButton');
+const attributesPanelFontCambriaButton = attributesPanel.querySelector('#fontCambriaButton');
+const attributesPanelFontTimesNewRomanButton = attributesPanel.querySelector('#fontTimesNewRomanButton');
+const attributesPanelFontCourierButton = attributesPanel.querySelector('#fontCourierButton');
+const attributesPanelFontLucidaConsoleButton = attributesPanel.querySelector('#fontLucidaConsoleButton');
+const attributesPanelFontBrushScriptMTButton = attributesPanel.querySelector('#fontBrushScriptMTButton');
+const attributesPanelFontLucidaHandwritingButton = attributesPanel.querySelector('#fontLucidaHandwritingButton');
+const attributesPanelFontComicSansMSButton = attributesPanel.querySelector('#fontComicSansMSButton');
+const attributesPanelFontImpactButton = attributesPanel.querySelector('#fontImpactButton');
+const attributesPanelFontGeorgiaButton = attributesPanel.querySelector('#fontGeorgiaButton');
+//const attributesPanelFontStyleInput = attributesPanel.querySelector('#fontStyleInput') as HTMLInputElement;
 const formAttributesPanel = document.querySelector('#formAttributesPanel');
 const formAttributesPanelFormNameInput = formAttributesPanel.querySelector('#formNameInput');
 const formAttributesPanelFormDescriptionInput = formAttributesPanel.querySelector('#formDescriptionInput');
 const attributesPanelCloseButton = document.querySelector("#attributesPanelCloseButton");
 const formAttributesPanelCloseButton = document.querySelector("#formAttributesPanelCloseButton");
 var widgetIdOfAttributePanel = undefined;
+var formIdOfAttributePanel = undefined;
+//drop down font family
+attributesPanelFontFamilyDropDownButton.addEventListener('click', () => {
+    if (attributesPanelFontFamilyDropDown.style.display == "block") {
+        attributesPanelFontFamilyDropDown.style.display = "none";
+    }
+    else {
+        attributesPanelFontFamilyDropDown.style.display = "block";
+    }
+    document.addEventListener('click', (event) => {
+        if (!attributesPanelFontFamilyDropDown.contains(event.target) && event.target !== attributesPanelFontFamilyDropDownButton) {
+            attributesPanelFontFamilyDropDown.style.display = "none";
+        }
+    });
+});
 attributesPanelCloseButton.addEventListener('click', () => {
     attributesPanel.style.display = "none";
 });
@@ -27,21 +61,33 @@ formAttributesPanelCloseButton.addEventListener('click', () => {
 const elementsList = undefined;
 //form =>  {!}{form}{formId}{formName}{formDescription}
 class Widget {
-    constructor(widgetType, text, size, color, positionX, positionY, width, height) {
+    constructor(widgetType, argument1, argument2, argument3, argument4, argument5, argument6, argument7) {
         let elementId = (0, idGenerete_1.elementRandomId)();
         let active = false;
         if (widgetType != 'form') {
             elementsList === null || elementsList === void 0 ? void 0 : elementsList.push([widgetType, elementId]);
             //text, image, video, audio, button, divider, spacer, social media icons
+            //text -->
+            //argument1 = text
+            //argument2 = font size
+            //argument3 = color
+            //argument4 = alignment
+            //argument5 = weight
+            //argument6 = font style
+            //argument7 = font family
+            //argument8 = width
+            //argument9 = height
             let htmlEdit = `<${widgetNameToHtmlTag(widgetType)} id="${elementId}" 
             style="
-            margin-left:${positionX}px;
-            margin-top:${positionY}px;
-            font-size:${size}px;
-            color:${color};
+            font-size:${argument2}px;
+            color:${argument3};
+            text-align:${argument4};
+            font-weight:${argument5};
+            font-style:${argument6};
+            font-family:${argument7};
             width:auto;
             height:auto;
-            ">${text}</${widgetNameToHtmlTag(widgetType)}>`;
+            ">${argument1}</${widgetNameToHtmlTag(widgetType)}>`;
             mainView.insertAdjacentHTML('beforeend', htmlEdit);
             let element = mainView.querySelector(`#${elementId}`);
             if (element) {
@@ -59,46 +105,49 @@ class Widget {
         }
         else {
             //form -->
+            //argument1 = formId
+            //argument2 = formName
+            //argument3 = formDescription
             //=====> normal form
-            // let htmlEdit: string = `<div id="${elementId}" class="portfolioFormBox">
-            // <h2 class="normal_text" id="title">Form 1</h2>
-            // <h3 class="formDescription normal_text" id="description">This is my web dz form description</h3>
-            // <div class="accountBox">
-            //     <div class="icon"></div>
-            //     <h4 class="accountName normal_text">Account Name</h4>
-            //     <h5 class="accountId normal_text">AccountId</h5>
-            // </div>
-            // <div class="attribute"> 
-            //     <h3 class="normal_text">Contact:</h3>
-            //     <input type="text" autocomplete="off" placeholder="Email or phone number">
-            // </div>
-            // <div class="attributeDescription"><h3 class="normal_text">Description:</h3><textarea class="normal_text" type="text" autocomplete="off" placeholder="Description"></textarea></div>
-            // <buttom class="submitButton normal_text">Submit</buttom>
-            // <div class="dzIcon"></div>
-            // </div>
-            // `;
-            //====> not verified account form
             let htmlEdit = `<div id="${elementId}" class="portfolioFormBox">
-            <h2 class="normal_text" id="title">Form 1</h2>
-            <h3 class="formDescription normal_text" id="description">This is my web dz form description</h3>
-            <div class="notVerifiedAccount">
-                <div class="warningIcon"></div>
-                <h3 class="normal_text">Your account is not verified. Please verify your account to receive form submissions. <a>Verify Now</a></h3>
-            </div>
-            <div class="accountBox">;
+            <h2 class="normal_text" id="title">${argument2}</h2>
+            <h3 class="formDescription normal_text" id="description">${argument3}</h3>
+            <div class="accountBox">
                 <div class="icon"></div>
                 <h4 class="accountName normal_text">Account Name</h4>
                 <h5 class="accountId normal_text">AccountId</h5>
             </div>
             <div class="attribute"> 
                 <h3 class="normal_text">Contact:</h3>
-                <input type="text" autocomplete="off" placeholder="Email or phone number" readonly>
+                <input type="text" autocomplete="off" placeholder="Email or phone number">
             </div>
-            <div class="attributeDescription"><h3 class="normal_text">Description:</h3><textarea class="normal_text" type="text" autocomplete="off" placeholder="Description" readonly></textarea></div>
-            <div class="normal_text inactiveSubmitButton">Submit</div>
+            <div class="attributeDescription"><h3 class="normal_text">Description:</h3><textarea class="normal_text" type="text" autocomplete="off" placeholder="Description"></textarea></div>
+            <buttom class="submitButton normal_text">Submit</buttom>
             <div class="dzIcon"></div>
             </div>
             `;
+            //====> not verified account form
+            // let htmlEdit: string = `<div id="${elementId}" class="portfolioFormBox">
+            // <h2 class="normal_text" id="title">${argument2}</h2>
+            // <h3 class="formDescription normal_text" id="description">${argument3}</h3>
+            // <div class="notVerifiedAccount">
+            //     <div class="warningIcon"></div>
+            //     <h3 class="normal_text">Your account is not verified. Please verify your account to receive form submissions. <a>Verify Now</a></h3>
+            // </div>
+            // <div class="accountBox">;
+            //     <div class="icon"></div>
+            //     <h4 class="accountName normal_text">Account Name</h4>
+            //     <h5 class="accountId normal_text">AccountId</h5>
+            // </div>
+            // <div class="attribute"> 
+            //     <h3 class="normal_text">Contact:</h3>
+            //     <input type="text" autocomplete="off" placeholder="Email or phone number" readonly>
+            // </div>
+            // <div class="attributeDescription"><h3 class="normal_text">Description:</h3><textarea class="normal_text" type="text" autocomplete="off" placeholder="Description" readonly></textarea></div>
+            // <div class="normal_text inactiveSubmitButton">Submit</div>
+            // <div class="dzIcon"></div>
+            // </div>
+            // `;
             //====> no account sign in form
             // let htmlEdit: string = `<div id="${elementId}" class="portfolioFormBox">
             // <h2 class="normal_text" id="title">Form 1</h2>
@@ -158,21 +207,20 @@ function onWidgetClicked(widgetId, widgetType) {
     else {
         formAttributesPanel.style.display = "block";
         attributesPanel.style.display = "none";
-        widgetIdOfAttributePanel = widgetId;
+        formIdOfAttributePanel = widgetId;
         setFormAttributePanel();
     }
     //console.log(widget.textContent);
-}
-function refresh(widgetId) {
-    let widget = document.getElementById(widgetId);
 }
 function setAttributePanel() {
     if (widgetIdOfAttributePanel == undefined) {
         return;
     }
+    const thisId = widgetIdOfAttributePanel;
     let widget = document.getElementById(widgetIdOfAttributePanel);
     attributesPanelTextInput.value = widget.textContent;
     attributesPanelFontSizeInput.value = String(widget.style.fontSize).replace("px", "");
+    attrributesPanelFontWeightInput.value = widget.style.fontWeight;
     let colorValue = widget.style.color;
     // Ensure colorValue is a valid hex color, otherwise set to #000000
     if (!/^#([0-9A-F]{3}){1,2}$/i.test(colorValue)) {
@@ -189,11 +237,205 @@ function setAttributePanel() {
         }
     }
     attributesPanelColorInput.value = colorValue;
+    //algn
+    switch (widget.style.textAlign) {
+        case "left":
+            attributesPanelAlgnLeftButton.classList.add("activeIconButton");
+            attributesPanelAlgnCenterButton.classList.remove("activeIconButton");
+            attributesPanelAlgnRightButton.classList.remove("activeIconButton");
+            break;
+        case "center":
+            attributesPanelAlgnCenterButton.classList.add("activeIconButton");
+            attributesPanelAlgnLeftButton.classList.remove("activeIconButton");
+            attributesPanelAlgnRightButton.classList.remove("activeIconButton");
+            break;
+        case "right":
+            attributesPanelAlgnRightButton.classList.add("activeIconButton");
+            attributesPanelAlgnLeftButton.classList.remove("activeIconButton");
+            attributesPanelAlgnCenterButton.classList.remove("activeIconButton");
+            break;
+        default:
+            attributesPanelAlgnLeftButton.classList.add("activeIconButton");
+            attributesPanelAlgnCenterButton.classList.remove("activeIconButton");
+            attributesPanelAlgnRightButton.classList.remove("activeIconButton");
+            break;
+    }
+    verifyCurrentFontFamily();
+    attributesPanelAlgnCenterButton.addEventListener('click', () => {
+        changeWidgetAlgn("center");
+    });
+    attributesPanelAlgnLeftButton.addEventListener('click', () => {
+        changeWidgetAlgn("left");
+    });
+    attributesPanelAlgnRightButton.addEventListener('click', () => {
+        changeWidgetAlgn("right");
+    });
+    console.log(widget.style.fontFamily);
+    attributesPanelFontArialButton.addEventListener('click', () => {
+        attributesPanelFontFamilyDropDownButton.textContent = "Arial";
+        changeWidgetFontFamily("Arial, Helvetica, sans-serif");
+    });
+    attributesPanelFontVerdanaButton.addEventListener('click', () => {
+        attributesPanelFontFamilyDropDownButton.textContent = "Verdana";
+        changeWidgetFontFamily("Verdana, Geneva, Tahoma, sans-serif");
+    });
+    attributesPanelFontCambriaButton.addEventListener('click', () => {
+        attributesPanelFontFamilyDropDownButton.textContent = "Cambria";
+        changeWidgetFontFamily("Cambria, Cochin, Georgia, Times, 'Times New Roman', serif");
+    });
+    attributesPanelFontTimesNewRomanButton.addEventListener('click', () => {
+        attributesPanelFontFamilyDropDownButton.textContent = "Times New Roman";
+        changeWidgetFontFamily("'Times New Roman', Times, serif");
+    });
+    attributesPanelFontGeorgiaButton.addEventListener('click', () => {
+        attributesPanelFontFamilyDropDownButton.textContent = "Georgia";
+        changeWidgetFontFamily("Georgia, serif");
+    });
+    attributesPanelFontImpactButton.addEventListener('click', () => {
+        attributesPanelFontFamilyDropDownButton.textContent = "Impact";
+        changeWidgetFontFamily("Impact, Charcoal, sans-serif");
+    });
+    attributesPanelFontComicSansMSButton.addEventListener('click', () => {
+        attributesPanelFontFamilyDropDownButton.textContent = "Comic Sans MS";
+        changeWidgetFontFamily("'Comic Sans MS', cursive, sans-serif");
+    });
+    attributesPanelFontCourierButton.addEventListener('click', () => {
+        attributesPanelFontFamilyDropDownButton.textContent = "Courier";
+        changeWidgetFontFamily("'Courier New', Courier, monospace");
+    });
+    attributesPanelFontLucidaConsoleButton.addEventListener('click', () => {
+        attributesPanelFontFamilyDropDownButton.textContent = "Lucida Console";
+        changeWidgetFontFamily("'Lucida Console', Monaco, monospace");
+    });
+    attributesPanelFontBrushScriptMTButton.addEventListener('click', () => {
+        attributesPanelFontFamilyDropDownButton.textContent = "Brush Script MT";
+        changeWidgetFontFamily("'Brush Script MT', cursive");
+    });
+    attributesPanelFontLucidaHandwritingButton.addEventListener('click', () => {
+        attributesPanelFontFamilyDropDownButton.textContent = "Lucida Handwriting";
+        changeWidgetFontFamily("'Lucida Handwriting', cursive");
+    });
     document.addEventListener('keydown', (event) => {
         if (event.key === "Enter") {
             refresh();
         }
     });
+    setInterval(() => {
+        if (thisId == widgetIdOfAttributePanel) {
+            refresh();
+        }
+    }, 200);
+    function changeWidgetFontFamily(fontFamily) {
+        if (thisId == widgetIdOfAttributePanel) {
+            let widget = document.getElementById(widgetIdOfAttributePanel);
+            if (widget)
+                widget.style.fontFamily = fontFamily;
+            verifyCurrentFontFamily();
+            refresh();
+        }
+    }
+    function verifyCurrentFontFamily() {
+        if (thisId != widgetIdOfAttributePanel) {
+            return;
+        }
+        let widget = document.getElementById(widgetIdOfAttributePanel);
+        function removeClassOfAllElements() {
+            attributesPanelFontArialButton.classList.remove("dropDownElementSelected");
+            attributesPanelFontVerdanaButton.classList.remove("dropDownElementSelected");
+            attributesPanelFontCambriaButton.classList.remove("dropDownElementSelected");
+            attributesPanelFontTimesNewRomanButton.classList.remove("dropDownElementSelected");
+            attributesPanelFontGeorgiaButton.classList.remove("dropDownElementSelected");
+            attributesPanelFontImpactButton.classList.remove("dropDownElementSelected");
+            attributesPanelFontComicSansMSButton.classList.remove("dropDownElementSelected");
+            attributesPanelFontCourierButton.classList.remove("dropDownElementSelected");
+            attributesPanelFontLucidaConsoleButton.classList.remove("dropDownElementSelected");
+            attributesPanelFontBrushScriptMTButton.classList.remove("dropDownElementSelected");
+            attributesPanelFontLucidaHandwritingButton.classList.remove("dropDownElementSelected");
+        }
+        // Remove selection from all font buttons
+        removeClassOfAllElements();
+        // Normalize fontFamily string for comparison
+        const fontFamily = widget.style.fontFamily.replace(/\s+/g, '').toLowerCase();
+        console.log(fontFamily);
+        switch (true) {
+            case fontFamily.includes("arial,helvetica,sans-serif"):
+                attributesPanelFontFamilyDropDownButton.textContent = "Arial";
+                attributesPanelFontArialButton.classList.add("dropDownElementSelected");
+                break;
+            case fontFamily.includes("verdana,geneva,tahoma,sans-serif"):
+                attributesPanelFontFamilyDropDownButton.textContent = "Verdana";
+                attributesPanelFontVerdanaButton.classList.add("dropDownElementSelected");
+                break;
+            case fontFamily.includes("cambria,cochin,georgia,times,\"timesnewroman\",serif"):
+                attributesPanelFontFamilyDropDownButton.textContent = "Cambria";
+                attributesPanelFontCambriaButton.classList.add("dropDownElementSelected");
+                break;
+            case fontFamily.includes("\"timesnewroman\",times,serif"):
+                attributesPanelFontFamilyDropDownButton.textContent = "Times New Roman";
+                attributesPanelFontTimesNewRomanButton.classList.add("dropDownElementSelected");
+                break;
+            case fontFamily.includes("georgia,serif"):
+                attributesPanelFontFamilyDropDownButton.textContent = "Georgia";
+                attributesPanelFontGeorgiaButton.classList.add("dropDownElementSelected");
+                break;
+            case fontFamily.includes("impact,charcoal,sans-serif"):
+                attributesPanelFontFamilyDropDownButton.textContent = "Impact";
+                attributesPanelFontImpactButton.classList.add("dropDownElementSelected");
+                break;
+            case fontFamily.includes("\"comicsansms\",cursive,sans-serif"):
+                attributesPanelFontFamilyDropDownButton.textContent = "Comic Sans MS";
+                attributesPanelFontComicSansMSButton.classList.add("dropDownElementSelected");
+                break;
+            case fontFamily.includes("\"couriernew\",courier,monospace"):
+                attributesPanelFontFamilyDropDownButton.textContent = "Courier";
+                attributesPanelFontCourierButton.classList.add("dropDownElementSelected");
+                break;
+            case fontFamily.includes("\"lucidaconsole\",monaco,monospace"):
+                attributesPanelFontFamilyDropDownButton.textContent = "Lucida Console";
+                attributesPanelFontLucidaConsoleButton.classList.add("dropDownElementSelected");
+                break;
+            case fontFamily.includes("\"brushscriptmt\",cursive"):
+                attributesPanelFontFamilyDropDownButton.textContent = "Brush Script MT";
+                attributesPanelFontBrushScriptMTButton.classList.add("dropDownElementSelected");
+                break;
+            case fontFamily.includes("\"lucidahandwriting\",cursive"):
+                attributesPanelFontFamilyDropDownButton.textContent = "Lucida Handwriting";
+                attributesPanelFontLucidaHandwritingButton.classList.add("dropDownElementSelected");
+                break;
+            default:
+                break;
+        }
+    }
+    function changeWidgetAlgn(algn) {
+        if (thisId == widgetIdOfAttributePanel) {
+            let widget = document.getElementById(widgetIdOfAttributePanel);
+            if (widget)
+                widget.style.textAlign = algn;
+            refresh();
+            switch (widget.style.textAlign) {
+                case "left":
+                    attributesPanelAlgnLeftButton.classList.add("activeIconButton");
+                    attributesPanelAlgnCenterButton.classList.remove("activeIconButton");
+                    attributesPanelAlgnRightButton.classList.remove("activeIconButton");
+                    break;
+                case "center":
+                    attributesPanelAlgnCenterButton.classList.add("activeIconButton");
+                    attributesPanelAlgnLeftButton.classList.remove("activeIconButton");
+                    attributesPanelAlgnRightButton.classList.remove("activeIconButton");
+                    break;
+                case "right":
+                    attributesPanelAlgnRightButton.classList.add("activeIconButton");
+                    attributesPanelAlgnLeftButton.classList.remove("activeIconButton");
+                    attributesPanelAlgnCenterButton.classList.remove("activeIconButton");
+                    break;
+                default:
+                    attributesPanelAlgnLeftButton.classList.add("activeIconButton");
+                    attributesPanelAlgnCenterButton.classList.remove("activeIconButton");
+                    attributesPanelAlgnRightButton.classList.remove("activeIconButton");
+                    break;
+            }
+        }
+    }
     function refresh() {
         if (widgetIdOfAttributePanel == undefined) {
             return;
@@ -202,17 +444,19 @@ function setAttributePanel() {
         if (widget)
             widget.style.fontSize = attributesPanelFontSizeInput.value + "px";
         if (widget)
+            widget.style.fontWeight = attrributesPanelFontWeightInput.value;
+        if (widget)
             widget.style.color = attributesPanelColorInput.value;
         if (widget)
             widget.innerText = attributesPanelTextInput.value;
-        onWidgetClicked(widgetIdOfAttributePanel, "widget");
+        //onWidgetClicked(widgetIdOfAttributePanel,"widget");
     }
 }
 function setFormAttributePanel() {
-    if (widgetIdOfAttributePanel == undefined) {
+    if (formIdOfAttributePanel == undefined) {
         return;
     }
-    let widget = document.getElementById(widgetIdOfAttributePanel);
+    let widget = document.getElementById(formIdOfAttributePanel);
     const formTitle = widget === null || widget === void 0 ? void 0 : widget.querySelector('#title');
     const formDescription = widget === null || widget === void 0 ? void 0 : widget.querySelector('#description');
     formAttributesPanelFormNameInput.value = formTitle.textContent || '';
@@ -223,31 +467,28 @@ function setFormAttributePanel() {
         }
     });
     function refresh() {
-        if (widgetIdOfAttributePanel == undefined) {
+        if (formIdOfAttributePanel == undefined) {
             return;
         }
-        let widget = document.getElementById(widgetIdOfAttributePanel);
+        let widget = document.getElementById(formIdOfAttributePanel);
         const formTitle = widget === null || widget === void 0 ? void 0 : widget.querySelector('#title');
         const formDescription = widget === null || widget === void 0 ? void 0 : widget.querySelector('#description');
         if (formDescription)
             formDescription.textContent = formAttributesPanelFormDescriptionInput.value;
         if (formTitle)
             formTitle.textContent = formAttributesPanelFormNameInput.value;
-        onWidgetClicked(widgetIdOfAttributePanel, "form");
+        onWidgetClicked(formIdOfAttributePanel, "form");
     }
 }
 //{!}{text(element)}{text}{size}{color}{positionX}{positionY}{width}{height}{/!}
 const mainTemplate = "{!}{text}{hello World}{30}{#00000}{100}{200}{100}{100}{/!}{!}{text}{hello World again}{30}{#00000}{100}{200}{100}{100}{/!}";
 var widgets = (0, compiler_1.default)(mainTemplate);
-new Widget("text", "Title", 52, "#00000", 40, 40, 100, 100);
-new Widget("text", "Subtitle", 52, "#00000", 40, 0, 100, 100);
-new Widget("text", "Description", 32, "#00000", 40, 0, 100, 100);
-new Widget("form", "form1", 32, "#00000", 40, 0, 100, 100);
+new Widget("text", "Title", 52, "#00000", "center", 100, "normal", "Arial, Helvetica, sans-serif");
+new Widget("text", "Subtitle", 52, "#00000", "left", 100, "normal", "Arial, Helvetica, sans-serif");
+new Widget("text", "Description", 32, "#00000", "left", 100, "normal", "Arial, Helvetica, sans-serif");
+new Widget("form", "id", "formName", "description", null, null, null, null);
+new Widget("form", "id", "forName", "description", null, null, null, null);
 console.log(widgets);
-// .faca{color:red;
-// position:absolute;
-// top:0;
-// left:0;margin-left:100px;margin-top:100px;width:100px;height:100px;}
 function widgetNameToHtmlTag(widgetName) {
     switch (widgetName) {
         case "text":
@@ -258,8 +499,3 @@ function widgetNameToHtmlTag(widgetName) {
             break;
     }
 }
-//get portfolio id
-//verify if user is owner of portfolio, if not redirect portfolio view page
-//load portfolio data
-//show data in panel
-//save changes to server

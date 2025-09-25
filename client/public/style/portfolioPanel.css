@@ -13,6 +13,119 @@ body{
     position: fixed;top: 0;left: 0;
 }
 
+.formPopUpPanel{
+    width: calc(60% - 40px);
+    height: calc(100vh - 120px - 40px);
+    margin-left: 20%;margin-right: 20%;
+    margin-top: auto;margin-bottom: auto;
+    background-color: var(--bass_color);
+    background-image: var(--containerEffect2);
+    position: fixed;
+    z-index: 5;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.formPopUpPanel .closeButton{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 20px;
+    right: 20px; 
+    background-image:url('../images/close_icon_white.png') ;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat; 
+    cursor: pointer;
+}
+
+.formPopUpPanel .usersProposalPanel{
+    width: calc(100% - 20px);
+    height: calc(100% - 100px);
+    border: 2px solid var(--soloColor);
+    position: relative;
+    padding: 10px;
+    border-radius: 20px;
+    overflow-y: auto;
+}
+
+.usersProposalPanel .userProposalBox{
+    width: calc(100% - 42px);
+    height: calc(180px - 40px);
+    background-color: var(--bassColorHover);
+    border-radius: 10px;
+    position: relative;
+    padding: 20px;
+    border: 2px solid var(--whiteTextColor);
+    margin-bottom: 20px;
+}
+
+.userProposalBox .userBox{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    gap: 10px;
+}
+
+.userProposalBox .proposalBox{
+    width: 100%;
+    height: calc(100% - 50px);
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.userProposalBox .userIcon{
+    width: 50px;
+    height: 50px;
+    background-image: url('../images/user-icon.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 50px;
+}
+
+.userProposalBox .contact, .userProposalBox .proposalDescription{
+    width: calc(25% - 20px);
+    color: var(--whiteTextColor);
+    outline: none;
+    resize: none;
+    border: 2px solid var(--whiteTextColor);
+    background-color: transparent;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.userProposalBox .userNameId{
+    color: var(--grayTextNormalColor);
+}
+
+.userProposalBox .contact{
+    height: calc(40px - 20px);
+    margin-left: 20px;
+}
+
+.userProposalBox .proposalDescription{
+    width: calc(75% - 30px);
+    height: calc(100% - 20px);
+}
+
+.userProposalBox .profileButton{
+    width: 100px;
+    height: calc(100% - 10px);
+    position: absolute;
+    top: 0px;
+    right: 20px;
+    background-color: var(--soloColor);
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 5px;
+    display: flex;justify-content: center;align-items: center;
+}
+
 .blackFilter{
     width: 100%;
     height: 100%;
@@ -23,6 +136,7 @@ body{
     z-index: 4;
     background-color: var(--blackFilterColorBlur);
     backdrop-filter: blur(5px);
+    transition: 1s;
 }
 
 .attributesPanel{
@@ -48,12 +162,16 @@ body{
 
 .editTextBox{
     background-color: #000000;
-    border: 2px solid var(--soloColor);
+    border: 2px solid var(--whiteTextColor);
     border-radius: 5px;
     width: calc(100% - 20px);
     height: 60px;
     margin-top: 40px;
     position: relative;
+}
+
+.unavailable{
+    border: 2px solid var(--alertColor);
 }
 
 .textTitleBox{
@@ -95,7 +213,7 @@ body{
 
 .editTextBoxDescription{
     background-color: #000000;
-    border: 2px solid var(--soloColor);
+    border: 2px solid var(--whiteTextColor);
     border-radius: 5px;
     width: calc(100% - 20px);
     height: 300px;
@@ -114,7 +232,7 @@ body{
 
 .dropDownBox{
     background-color: #000000;
-    border: 2px solid var(--soloColor);
+    border: 2px solid var(--whiteTextColor);
     border-radius: 5px;
     width: 120px;
     height: 50px;
@@ -464,6 +582,11 @@ body{
     font-weight: 150;
     font-size: 20px;
     text-shadow: 0px 0px 30px var(--whiteTextColor);
+}
+
+.disabled{
+    background-color: var(--grayTextNormalColor);
+    cursor: default;
 }
 
 .actionBar .link{

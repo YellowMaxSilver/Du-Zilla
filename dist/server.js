@@ -48,7 +48,6 @@ function createServer() {
         }));
         app.get('/studio/:page', (req, res) => __awaiter(this, void 0, void 0, function* () {
             const urlPage = req.params.page;
-            const url = req.originalUrl;
             switch (urlPage) {
                 case "panel":
                     openHtmlFile(req, res, "portfolioPanel");
@@ -57,13 +56,17 @@ function createServer() {
                     openHtmlFile(req, res, "editPortfolio");
                     break;
                 case "my-projects":
-                    openHtmlFile(req, res, "myProjects");
+                    //openHtmlFile(req,res,"myProjects");
+                    res.send("thats my projects page");
                     break;
                 default:
                     res.redirect("/studio/my-projects");
                     break;
             }
         }));
+        app.get('/studio', (_req, res) => {
+            res.redirect('/studio/my-projects');
+        });
         app.get('/login', (req, res) => __awaiter(this, void 0, void 0, function* () {
             openHtmlFile(req, res, "login");
         }));

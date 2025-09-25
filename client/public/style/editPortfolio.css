@@ -42,7 +42,7 @@
 
 .topBarEdit{
     width: calc(100% - 80px);
-    height: 40px;
+    height: 30px;
     background-color: transparent;
     border-radius: 20px;
     display: flex;align-items: center;justify-content: space-between;
@@ -54,6 +54,23 @@
     left: 20px;
     z-index: 3;
     padding: 0 20px;
+}
+
+.topBarEdit .topBarButtons{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.topBarEdit .topBarButtons .topBarButton{
+    height: 100%;
+    background-color: var(--soloColor);
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 0;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 .previewClicked{
@@ -89,11 +106,15 @@
     width: 400px;
     height: 500px;
     background-color: var(--bass_color_blur);
+    background-image: var(--containerEffect2);
+    backdrop-filter: blur(3px);
     position: absolute;
     z-index: 5;
-    top: 200px;
+    top: calc(50% - 250px);
     right: 40px;
-    padding: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 5px;
     border-radius: 20px;
 }
 
@@ -145,6 +166,115 @@
     border: 1px solid var(--whiteTextColor);
     border-radius: 3px;
     color: var(--whiteTextColor);
+}
+
+.attributesPanel .attributeInputBox .itens{
+    width: calc(100% - 140px - 10px);
+    height: 40px;
+    display: flex;
+    gap: 10px;
+    top: 30px;
+}
+
+.attributesPanel .dropDownButton{
+    width: calc(100% - 140px - 10px);
+    height: 100%;
+    border: 1px solid var(--whiteTextColor);
+    border-radius: 3px;
+    display: flex;justify-content: space-between;align-items: center;
+    padding-left: 5px;
+    cursor: pointer;
+}
+
+.attributesPanel .dropDownButton::after{
+    content: '';
+    width: 0; 
+    height: 0; 
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid var(--whiteTextColor);
+    margin-right: 5px;
+    transition: transform 0.2s;
+}
+
+.attributesPanel .dropDownButton.open::after {
+    transform: rotate(180deg);
+}
+
+.dropDown{
+    width: calc(100% - 140px - 10px);
+    max-height: 150px;
+    background-color: var(--bass_color);
+    background-image: var(--containerEffect2);
+    border: 1px solid var(--whiteTextColor);
+    border-radius: 3px;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    z-index: 6;
+    display: none;
+    flex-direction: column;
+    list-style-type: none;
+    padding: 0;
+    overflow-y: auto;
+}
+
+.dropDownElement{
+    width: calc(100% - 5px);
+    height: 40px;
+    display: flex;align-items: center;gap: 10px;
+    padding-left: 5px;
+    cursor: pointer;
+    color: var(--whiteTextColor);
+}
+
+.dropDownElement:hover{
+    background-color: var(--bassColorHover);
+}
+
+.dropDownElement .fontIcon{
+    width: 30px;
+    height: 30px;
+    background-color: var(--whiteTextColor);
+    color: var(--darkTextColor);
+    border-radius: 3px;
+    display: flex;align-items: center;justify-content: center;
+    font-size: 20px;
+}
+
+.dropDownElementSelected{
+    background-color: var(--soloColor);
+}
+
+.dropDownElementSelected:hover{
+    background-color: var(--soloColorHover);
+}
+
+.iconButton{
+    width: 40px;
+    height: 40px;
+    background-color: transparent;
+    border: 1px solid var(--whiteTextColor);
+    border-radius: 5px;
+    cursor: pointer;
+    background-size: 35px 35px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.activeIconButton{
+    border: 2px solid var(--soloColor);
+    background-color: var(--soloColor);
+}
+
+.algnLeftIcon{
+    background-image: url('../images/format_align_left_icon.png');
+}
+.algnCenterIcon{
+    background-image: url('../images/format_align_center_icon.png');
+}
+.algnRightIcon{
+    background-image: url('../images/format_align_right_icon.png');
 }
 
 .portfolioFormBox{

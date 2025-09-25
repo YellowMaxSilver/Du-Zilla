@@ -1,5 +1,19 @@
 import { portfolioRandomId } from "./idGenerete";
 
+
+function getQueryVariable() {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+    return id;
+}
+
+const portfolioId:string|null = getQueryVariable();
+
+
+if(portfolioId == null){
+    window.location.href = "/studio";
+}
+
 const visibilityDropDownButton = document.querySelector("#visibilityDropDownButton") as HTMLElement;
 const visibilityDropDown = document.querySelector("#visibilityDropDown") as HTMLElement;
 
@@ -71,6 +85,54 @@ editPortfolioBox.addEventListener("click",()=>{
     window.location.href = `/studio/edit/?id=${testId}`;
 });
 
+const formPopUpPanel = document.querySelector("#formPopUpPanel") as HTMLElement;
+const blackFilter = document.querySelector("#blackFilter") as HTMLElement;
+const formPopUpCloseButton = document.querySelector("#formPopUpCloseButton") as HTMLElement;
+formPopUpCloseButton.addEventListener('click',()=>{
+    formPopUpPanel.style.display = "none";
+    blackFilter.style.display = "none";
+});
+
+const portfolioNameBox = document.querySelector("#portfolioNameBox") as HTMLElement;
+const portfolioDescriptionBox = document.querySelector("#portfolioDescriptionBox") as HTMLElement;
+const tagsBox = document.querySelector("#tagsBox") as HTMLElement;
+
+const portfolioNameInput = document.querySelector("#portfolioNameInput") as HTMLInputElement;
+const portfolioDescriptionInput = document.querySelector("#portfolioDescriptionInput") as HTMLInputElement;
+const tagsInput = document.querySelector("#tagsInput") as HTMLInputElement;
+
+//const saveButton = document.querySelector("#saveButton") as HTMLElement;
+const publishButton = document.querySelector("#publishButton") as HTMLElement;
+
+setInterval(verifyInputs,500);
+publishButton.addEventListener("click",()=>{
+    if(publishButton.classList.contains("disabled")) return;
+    publishPortfolio();
+    //save portfolio
+});
+
+function publishPortfolio(){
+    //const portfolioId = urlParams.get('id');
+    const name = portfolioNameInput.value;
+    const description = portfolioDescriptionInput.value;
+    const tags = tagsInput.value;
+    const visibility = visibilityMode;
+    const category = categoryMode;
+}
+
+function verifyInputs(){
+    if(portfolioNameInput.value == " " || portfolioNameInput.value == undefined){
+        //saveButton.classList.add("disabled");
+        publishButton.classList.add("disabled");
+        portfolioNameBox.classList.add("unavailable");
+        return false;
+    }
+    
+    portfolioNameBox.classList.remove("unavailable");
+    // saveButton.classList.remove("disabled");
+    publishButton.classList.remove("disabled");
+    return true;
+}
 
 function showDropDown(dropDown: HTMLElement) {
     dropDown.style.display = "block";
@@ -100,8 +162,5 @@ function setCategoryMode(mode:string){
 }
 
 //get portfolio id from url
-let urlParams = new URLSearchParams(window.location.search);
-let portfolioId = urlParams.get('id');
-
 //verify if is logged in
 //verify if user is owner of portfolio, if not redirect portfolio view page

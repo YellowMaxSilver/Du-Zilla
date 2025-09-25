@@ -42,10 +42,9 @@ async function createServer(){
         }
     })
 
+
     app.get('/studio/:page',async (req,res)=>{
         const urlPage = req.params.page;
-        const url = req.originalUrl;
-        
         switch(urlPage){
             case "panel":
                 openHtmlFile(req,res,"portfolioPanel");
@@ -54,13 +53,19 @@ async function createServer(){
                 openHtmlFile(req,res,"editPortfolio");
                 break;
             case "my-projects":
-                openHtmlFile(req,res,"myProjects");
+                //openHtmlFile(req,res,"myProjects");
+                res.send("thats my projects page");
                 break;
             default:
                 res.redirect("/studio/my-projects")
                 break;
         }
     });
+
+    app.get('/studio', (_req, res) => {
+        res.redirect('/studio/my-projects');
+    });
+
 
     app.get('/login',async (req,res)=>{
         openHtmlFile(req,res,"login");

@@ -23,8 +23,25 @@
       </div>
     </nav>
 
-    <section class="formPopUpPanel"></section>
-    <section class="blackFilter"></section>
+    <section class="formPopUpPanel" id="formPopUpPanel">
+        <div class="closeButton" id="formPopUpCloseButton"></div>
+        <h2 class="formName normal_text">Form name1</h2>
+        <div class="usersProposalPanel">
+            <div class="userProposalBox">
+                <div class="userBox">
+                <div class="userIcon"></div>
+                    <h4 class="userName normal_text">User Name</h4>
+                    <h5 class="userNameId normal_text">userNameId</h5>
+                    <div class="profileButton normal_text">See profile</div>
+                </div>
+                <div class="proposalBox">
+                    <input class="contact normal_text" value="user email or phone number" readonly>
+                    <textarea class="proposalDescription normal_text" readonly>Sou capaz</textarea>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="blackFilter" id="blackFilter"></section>
 
     <section class="actionBar">
         <h3 class="normal_text">Portfolio name</h3>
@@ -40,15 +57,15 @@
                 <li>Private</li>
                 <li>Just me</li>
             </ul>
-            <div class="button"><p>Save</p></div>
-            <div class="button"><p>Publish</p></div>
+            <!-- <div class="button" id="saveButton"><p>Save</p></div> -->
+            <div class="button" id="publishButton"><p>Publish</p></div>
         </div>
     </section>
 
     <section class="attributesPanel">
-        <div class="editTextBox">
+        <div class="editTextBox" id="portfolioNameBox">
             <div class="textTitleBox"><p class="normal_text">Portfolio Name</p></div>
-            <input placeholder="Portfolio Name" autocomplete="off">
+            <input id="portfolioNameInput" placeholder="Portfolio Name" autocomplete="off">
         </div>
 
         <div class="dropDownBox" id="categoryDropDownButton">
@@ -63,14 +80,14 @@
             <li id="other">Other</li>
         </ul>
 
-        <div class="editTextBoxDescription">
+        <div class="editTextBoxDescription" id="portfolioDescriptionBox">
             <div class="textTitleBox"><p class="normal_text">Description</p></div>
-            <textarea placeholder="Description" autocomplete="off"></textarea>
+            <textarea id="portfolioDescriptionInput" placeholder="Description" autocomplete="off"></textarea>
         </div>
 
-        <div class="editTextBoxDescription">
+        <div class="editTextBoxDescription" id="tagsBox">
             <div class="textTitleBox"><p class="normal_text">Tags</p></div>
-            <textarea placeholder="Tags" autocomplete="off"></textarea>
+            <textarea id="tagsInput" placeholder="Tags" autocomplete="off"></textarea>
         </div>
 
         <div class="uploadImage">
