@@ -16,6 +16,7 @@ const express_1 = __importDefault(require("express"));
 const path_1 = __importDefault(require("path"));
 const vite_1 = require("vite");
 const fs_1 = __importDefault(require("fs"));
+const account_auth_1 = __importDefault(require("./database/account_auth"));
 const app = (0, express_1.default)();
 const port = 3000;
 // Serve arquivos estáticos do build Vite
@@ -88,6 +89,7 @@ function createServer() {
                 res.status(200).set({ 'Content-Type': 'text/html' }).end(template);
             });
         }
+        (0, account_auth_1.default)();
         app.use(vite.middlewares);
         app.listen(port, () => {
             console.log(`server running in the port ${port}`);

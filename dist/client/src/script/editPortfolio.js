@@ -542,3 +542,5 @@ function getCode() {
     }
     return code;
 }
+function convertToTextHtml() {
+}

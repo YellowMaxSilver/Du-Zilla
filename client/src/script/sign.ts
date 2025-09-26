@@ -1,4 +1,7 @@
 import { notification } from "./notification";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../../database/firebase_settings.ts";
+import { getAccountAttributeByUid } from "./accountQuery.ts";
 
 //setTimeout(()=>{notification(null,"Welcome")},500);
 
@@ -12,36 +15,145 @@ var passwordVisibilityStatus:boolean = false;
 console.log("getting started");
 
 (document.getElementById('loginButton') as HTMLElement ).addEventListener('click',signIn);
+
 visibilityButton.addEventListener('click',changePasswordVisibility);
+
+setTimeout(()=>{
+    (document.getElementById("signUpButton") as HTMLElement).addEventListener("click",signUp);
+},1000)
+
 
 //getPage();
 
-function signIn(){
+async function signIn(){
 
    //verify availble email 
-   let hasA:boolean = false;
-   let hasCom:boolean = false;  
-   let goodPassword:boolean = false; 
-
-   for(let i = 0;i < email.value.length;i++){
-        let carater = email.value.charAt(i);
-        if(carater == '@'){
-            hasA = true;
-        }
-        if(carater == '.' && email.value.charAt(i+1) != ''){
-            hasCom = true;
-        }
-   }
-   if(password.value != ''){
-    goodPassword = true;
+   if(!validEmail(email.value)){
+    notification("error","invalid field email");
+    return;
    }
 
-   if(hasA && hasCom && goodPassword){
-    notification("","loged with successiful.");
-   }else{
-    notification("","Error.");
-    console.log('unavailbe')
+   if(!validPassword(password.value)){
+    notification("error","invalid field email");
+    return;
    }
+
+   try{
+    const credential = await signInWithEmailAndPassword(auth, email.value, password.value);
+    const token = await credential.user.getIdToken();
+    const res = await fetch("/api/account/setcurrentsession",{
+        method: "POST",
+            credentials: 'include',
+            headers:{
+                "Authorization":`Bearer ${token}`,
+                "Content-Type":"application/json"
+            },
+        body:JSON.stringify({
+            token:token
+        })
+    })
+
+    if(res.status == 200){
+        notification("success","your in, success")
+    }else{
+        notification("error","error to set cookie")
+        console.log("error: ", await res.json())
+    }
+   }catch(e){
+        console.log(e)
+        notification("error","error to login")
+   }
+}
+
+async function signUp(){
+    const name = document.getElementById("nameInput") as HTMLInputElement;
+    const nameId = document.getElementById("nameIdInput") as HTMLInputElement;
+    getAccountAttributeByUid("6TZptgdc7hYHNKncKuHGxxJ5Uuf2", ()=>{});
+    console.log("activate")
+
+    if(!validName(name.value)){
+        notification("error","invalid field name");
+        return;
+    }
+
+    if(!validNameId(nameId.value)){
+        notification("error","invalid field nameId");
+        return;
+    }
+
+    if(!validEmail(email.value)){
+        notification("error","invalid field email");
+        //console.log("invalid fields")
+        return;
+    }
+
+    if(!validPassword(password.value)){
+        notification("error","invalid field password");
+        return;
+    }
+
+
+
+
+
+    try{
+        console.log(name.value+" "+nameId.value+" "+email.value+" "+password.value);
+        const credential = await createUserWithEmailAndPassword(auth, email.value, password.value);
+        const token = await credential.user.getIdToken();
+        const res = await fetch("/api/account/signup",{
+            method: "POST",
+            credentials: 'include',
+            headers:{
+                "Authorization":`Bearer ${token}`,
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify({
+                name:name.value,
+                nameId:nameId.value,
+                email:email.value,
+                cpf_cnpj:null,
+            })
+        })
+        if(res.status == 201){
+            notification("success","Account created with success");
+        }else{
+            notification("error","Error to create accont")
+        }
+    }catch(e){
+        notification("error","Error in network")
+    }
+}
+
+function validEmail(email:string):boolean{
+    if(email.length >= 6 && email.match('@') && email.match('.')){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+function validNameId(name:string):boolean{
+    if(name.length > 3){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+function validName(name:string):boolean{
+    if(name.length > 3){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+function validPassword(password:string):boolean{
+    if(password.length >= 6){
+        return true;
+    }else{
+        return false;
+    }
 }
 
 function changePasswordVisibility(){

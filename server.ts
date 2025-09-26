@@ -2,6 +2,13 @@ import express from 'express';
 import path from 'path';
 import { createServer as createViteServer } from 'vite';
 import fs from 'fs';
+import router from './database/account_auth';
+
+import Express from "express";
+import admin from "./database/firebase_admin";
+import { db } from "./database/firebase_admin";
+import cookieParse from "cookie-parser";
+
 
 const app = express();
 const port = 3000;
@@ -14,6 +21,9 @@ app.use(express.static(path.join(__dirname,'public', 'client', 'dist')));
 app.use('/assets/', express.static(path.join(__dirname,'client','dist', 'assets')));
 app.use('/images', express.static(path.join(__dirname, 'client', 'public', 'images')));
 app.use('/style', express.static(path.join(__dirname, 'client', 'public', 'style')));
+app.use(express.static(path.join(__dirname,"./public")))
+app.use(express.json())
+app.use(cookieParse());
 
 
 
@@ -91,6 +101,9 @@ async function createServer(){
 
         res.status(200).set({'Content-Type':'text/html'}).end(template);
     }
+
+
+    app.use("/api/account",router)
 
     app.use(vite.middlewares);
 

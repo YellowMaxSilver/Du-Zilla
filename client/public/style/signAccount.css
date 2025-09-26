@@ -7,6 +7,7 @@
     margin-right: auto;
     margin-top: 5vh;
     position: relative;
+    top: 0;
     /* background-image: radial-gradient(500px,var(--soloBassColor),var(--bass_color)); */
     display: flex;
     align-items: center;
@@ -82,6 +83,9 @@
     cursor: pointer;
     margin-left: auto;margin-right: auto;
     margin-top: 50px;
+    margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .visibilityButton{
