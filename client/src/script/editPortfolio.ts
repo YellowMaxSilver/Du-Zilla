@@ -66,7 +66,14 @@ formAttributesPanelCloseButton.addEventListener('click',()=>{
     formAttributesPanel.style.display = "none";
 });
 
-const elementsList:string[][]|undefined = undefined;
+const saveButton = document.querySelector("#saveButton") as HTMLElement;
+
+saveButton.addEventListener('click',()=>{
+    const code:string|undefined = getCode();
+    console.log(code);
+})
+
+var elementsList:string[][]|undefined = undefined;
 //form =>  {!}{form}{formId}{formName}{formDescription}
 
 class Widget {
@@ -84,8 +91,12 @@ class Widget {
         let elementId: string = elementRandomId();
         let active: boolean = false;
 
+        if(elementsList == undefined){
+            elementsList = [[widgetType,elementId]]; 
+        }else{
+            elementsList.push([widgetType,elementId]);
+        }
         if(widgetType != 'form'){
-            elementsList?.push([widgetType,elementId]);
             //text, image, video, audio, button, divider, spacer, social media icons
 
             //text -->
@@ -556,4 +567,38 @@ function widgetNameToHtmlTag(widgetName: string): string {
             return "div";
             break;
     }
+}
+
+function getCode():string|undefined{
+    var code:string = "";
+    if(elementsList == undefined){
+        return undefined;
+    }
+    for(let i = 0;i < elementsList.length; i++){
+        let thisElement = elementsList[i];
+        let element = mainView.querySelector("#"+thisElement[1]) as HTMLElement;
+        let thisCode = "{!}"
+        switch(thisElement[0]){
+            case "text":
+                thisCode += `{${thisElement[0]}}`
+                thisCode += `{${element.innerHTML}}`;
+                thisCode += `{${element.style.fontSize}}`;
+                thisCode += `{${element.style.color}}`;
+                thisCode += `{${element.style.textAlign}}`;
+                thisCode += `{${element.style.fontWeight}}`;
+                thisCode += `{${element.style.fontStyle}}`;
+                thisCode += `{${element.style.fontFamily}}`;
+                thisCode += "{/!}"
+                code += thisCode;
+            break;
+            case "form":
+                thisCode += `{${thisElement[0]}}`
+                thisCode += `{${(element.querySelector("#title") as HTMLElement).textContent}}`;
+                thisCode += `{${(element.querySelector("#description") as HTMLElement).textContent}}`;
+                thisCode += "{/!}"
+                code += thisCode;
+            break;
+        }
+    }
+    return code;
 }

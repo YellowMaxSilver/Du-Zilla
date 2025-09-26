@@ -34,24 +34,9 @@ function compilerToString(template) {
 function readElement(element) {
     let widgets = [];
     let tag = getTagOfElement(element);
-    console.log(tag);
-    switch (tag) {
-        case "text":
-            //1 text
-            //2 size
-            //3 color
-            //4 positionX
-            //5 positionY
-            //6 width
-            //7 height
-            getValuesOfElements(element, (attributes) => {
-                widgets = [attributes[0], attributes[1], attributes[2], attributes[3],
-                    attributes[4], attributes[5], attributes[6], attributes[7]];
-            });
-            break;
-        case "box":
-            break;
-    }
+    getValuesOfElements(element, (attributes) => {
+        widgets = attributes;
+    });
     return widgets;
 }
 function getTagOfElement(element) {

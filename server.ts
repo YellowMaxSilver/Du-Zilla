@@ -79,6 +79,10 @@ async function createServer(){
         res.send("em andamento")
     })
 
+    app.get('/portfolio',async (req,res)=>{
+        openHtmlFile(req,res,"portfolio");
+    })
+
     async function openHtmlFile(req:any,res:any,file:string){
         const fullPath = path.resolve(__dirname,`./client/pages/${file}.html`);
         const url = req.originalUrl;

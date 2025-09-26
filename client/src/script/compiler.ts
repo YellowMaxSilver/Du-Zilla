@@ -41,24 +41,9 @@ function readElement(element:string){
     let widgets:string[]= [];
     let tag:string|undefined = getTagOfElement(element);
 
-    console.log(tag);
-    switch(tag){
-        case "text":
-            //1 text
-            //2 size
-            //3 color
-            //4 positionX
-            //5 positionY
-            //6 width
-            //7 height
-            getValuesOfElements(element,(attributes:string[])=>{
-                widgets = [attributes[0],attributes[1],attributes[2],attributes[3]
-                ,attributes[4],attributes[5],attributes[6],attributes[7]]
+    getValuesOfElements(element,(attributes:string[])=>{
+                widgets = attributes;
             });
-            break;
-        case "box":
-            break;
-    }
     return widgets;
 }
 

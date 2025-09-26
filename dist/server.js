@@ -76,6 +76,9 @@ function createServer() {
         app.get('/account/settings', (req, res) => __awaiter(this, void 0, void 0, function* () {
             res.send("em andamento");
         }));
+        app.get('/portfolio', (req, res) => __awaiter(this, void 0, void 0, function* () {
+            openHtmlFile(req, res, "portfolio");
+        }));
         function openHtmlFile(req, res, file) {
             return __awaiter(this, void 0, void 0, function* () {
                 const fullPath = path_1.default.resolve(__dirname, `./client/pages/${file}.html`);

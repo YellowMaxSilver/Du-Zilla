@@ -1,0 +1,68 @@
+.topNav .page{
+    height: 15px;
+    position: absolute;
+    left: 20px;
+    top: calc(50% - 10px);
+    margin: 0;
+}
+
+.main{
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 40px;
+    left: 0;
+    background-color: white;
+}
+
+.infoAboutBox{
+    width: calc(250px - 20px);
+    height: calc(50px - 20px);
+    background-color: var(--bass_color_blur);
+    background-image: var(--conteinerEffect2);
+    border-radius: 10px;
+    position: fixed;
+    top: calc(40px + 30px + 10px);
+    right: 20px;
+    z-index: 4;
+    display: flex;align-items: center;
+    gap: 10px;
+    padding: 10px;
+    opacity: 0.3;
+    transition: 0.3s;
+}
+
+.infoAboutBox:hover{
+    opacity: 1;
+    transition: 0.3s;
+}
+
+.infoAboutBox .userIcon{
+    width: 40px;
+    height: 40px;
+    background-image: url('../images/user-icon.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 40px;
+}
+
+.infoAboutBox .dropDownButton{
+    width: 30px;
+    height: 30px;
+    background-image: url('../images/arrow_down_icon.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+    position: absolute;
+    border-radius: 30px;
+    top: calc(50% - 15px);
+    right: 10px;
+    transition: 0.3s;
+}
+
+.infoAboutBox .dropDownButton:hover{
+    background-color: var(--bassColorHover);
+    transition: 0.3s;
+}
