@@ -289,14 +289,20 @@ body{
 
 /* Sign accounts sections */
 .accountBox{
-    width: 200px;height: calc(100% - 10px);
+    min-width: calc(200px - 20px);
+    max-width: calc(300px - 20px);
+    height: calc(100% - 10px - 5px);
     position: absolute;
-    top: 0;
-    right: 0;
-    margin-right: 40px;
+    top: 2.5px;
+    right: 30px;
     padding-top: 5px;
     padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
     display: flex;align-items: center;
+    gap: 10px;
+    background-color: #000000;
+    border-radius: 10px;
 }
 
 .accountBox .icon{
@@ -304,9 +310,10 @@ body{
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    width: 40px;height: 40px;
+    width: 30px;height: 30px;
     border-radius: 30px;
-    margin-right: 20px;
+    position: absolute;
+    right: 10px;
 }
 
 .signInButton{

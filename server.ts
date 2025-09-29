@@ -10,9 +10,14 @@ import { db } from "./database/firebase_admin";
 import cookieParse from "cookie-parser";
 
 
-const app = express();
-const port = 3000;
+import { connectDB } from "./database/mongodbConnection"
+import { PortfolioDocument } from './database/portfolioInterface';
+import { portfolioRouter } from './database/portfolio';
+import { error } from 'console';
 
+const app = express();
+const port = process.env.PORT || 3000;
+const COLLECTION_NAME = "portfolios"
 
 // Serve arquivos estáticos do build Vite
 app.use(express.static(path.join(__dirname,'public', 'client', 'dist')));
@@ -26,6 +31,14 @@ app.use(express.json())
 app.use(cookieParse());
 
 
+connectDB().then(db =>{
+    const portfolioCollection = db.collection<PortfolioDocument>(COLLECTION_NAME);
+
+    app.use('/api/portfolio',portfolioRouter(portfolioCollection));
+    
+}).catch(error => {
+    console.error("DB fatal error: "+error)
+})
 
 // app.get('/',(req,res)=>{
 //     res.sendFile(path.join(__dirname,'./public/index.html'));

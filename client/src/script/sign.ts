@@ -1,7 +1,7 @@
 import { notification } from "./notification";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../database/firebase_settings.ts";
-import { getAccountAttributeByUid } from "./accountQuery.ts";
+import { getAccountAttributeByUid } from "./querys/accountQuery.ts";
 
 //setTimeout(()=>{notification(null,"Welcome")},500);
 

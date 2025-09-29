@@ -14,26 +14,26 @@
 <body>
     <nav class="topNav">
       <h1 class="titleIcon">Du-Zilla</h1>
-      <div class="accountBox">
+      <div class="accountBox" id="logedBox" style="display: none;">        
+        <p class="normal_text" id="accountName">Account Name</p>
         <div class="icon"></div>
-        <p class="normal_text">Account Name</p>
       </div>
-      <div class="signButtonsBox" style="display: none;">
+      <div class="signButtonsBox" id="notLogedBox" style="display: none;">  
           <a href="login"><div class="signInButton"><h4 class="normal_text">Sign in</h4></div></a>
           <a href="signUp"><div class="signUpButton"><h4 class="normal_text">Sign Up</h4></div></a>
       </div>
     </nav>
 
 
-    <section class="globalBox choseTemplatePanel" id="choseTemplatePanel" style="display: block;">
+    <section class="globalBox choseTemplatePanel" id="choseTemplatePanel" style="display: none;">
       <div class="searchTemplateBox">
         <h1 class="normal_text panelTitle">Templates</h1>
         <input class="inputSearch" type="text" placeholder="Pesquisar" autocomplete="off" style="margin-left: 20px;">
         <div class="searchButton" style="margin-left: 10px;"></div>
         <div class="closeButton" id="choseTemplatePanelCloseButton" style="position: absolute;top: 0;right: 0;margin-right: 40px;margin-top: 40px;"></div>
       </div>
-      <div class="templatesThunbnailLayout">
-        <a href="createPortfolio?id=nweIdAleotery&template=facatemplate"><div class="templateThunbNail"><div class="templateThunbNailNameBox">Nome do template</div></div></a>
+      <div class="templatesThunbnailLayout" id="templateBasic">
+        <a><div class="templateThunbNail"><div class="templateThunbNailNameBox">Nome do template</div></div></a>
       </div>
     </section>
 
