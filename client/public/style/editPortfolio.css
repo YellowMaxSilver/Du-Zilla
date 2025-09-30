@@ -380,7 +380,7 @@
     background-position: center;
 }
 
-.portfolioFormBox .accountBox{
+.portfolioFormBox .accountFormBox{
     width: calc(100% - 10px);
     height: calc(50px - 10px);
     display: flex;
@@ -393,16 +393,22 @@
     margin-top: 10px;
     margin-bottom: 10px;
 }
-.portfolioFormBox .accountBox .icon{
+.portfolioFormBox .accountFormBox .icon{
+    background-image: url('../images/user-icon.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 30px;height: 30px;
+    border-radius: 30px;
     margin: 0;
     padding: 0;
 }
 
-.portfolioFormBox .accountBox .accountName, .portfolioFormBox .accountBox .accountId{
+.portfolioFormBox .accountFormBox .accountName, .portfolioFormBox .accountFormBox .accountId{
     margin: 0;
     padding: 0;    
 }
-.portfolioFormBox .accountBox .accountId{
+.portfolioFormBox .accountFormBox .accountId{
     margin: 0;
     padding: 0;
     color: var(--grayTextNormalColor);

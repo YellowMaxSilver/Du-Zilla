@@ -75,6 +75,7 @@ async function createTemplate(){
     createNewPortfolio(portfolio).then(createdPortfolio => {
         console.log("Success to create portfolio: ", createdPortfolio);
         console.log("Portfolio Id:",createdPortfolio._id);
+        window.location.href = `/studio/panel?id=${createdPortfolio._id}`;
     }).catch(error => {
         console.error("Error in portfolio creation: ",error);
     })

@@ -1,0 +1,45 @@
+@import url('style.css');
+
+.projectsSection{
+    width: calc(100% - 40px);
+    height: calc(100% - 40px);
+    margin-top: 50px;
+    padding: 20px;
+}
+
+.projectBox{
+    width: calc(100% - 40px);
+    min-height: calc(200px - 20px);
+    max-height: calc(300px - 20px);
+    background-color: var(--bass_color);
+    background-image: var(--containerEffect2);
+    border-radius: 20px;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.projectBox .infoBox{
+    border: 2px solid green;
+    height: 100%;
+}
+
+.portfolioPreview{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    scale: 0.4;
+    pointer-events: none;
+    margin: 0;
+}
+
+
+.projectBox h2, .projectBox h3, .projectBox h4{
+    margin: 20px 0px 0px 0px;
+}

@@ -469,7 +469,8 @@ body{
     font-family: Verdana, Geneva, Tahoma, sans-serif;  
     color:var(--white_normal_color); 
     font-weight: 150;
-    word-break:normal;  
+    word-break:normal; 
+    margin: 0; 
 }
 
 .grayNormalText{

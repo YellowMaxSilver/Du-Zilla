@@ -77,7 +77,7 @@ async function createServer(){
                 break;
             case "my-projects":
                 //openHtmlFile(req,res,"myProjects");
-                res.send("thats my projects page");
+                openHtmlFile(req,res,"myProjects");
                 break;
             default:
                 res.redirect("/studio/my-projects")
