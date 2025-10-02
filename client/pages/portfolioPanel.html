@@ -7,17 +7,21 @@
     <link rel="stylesheet" href="/style/portfolioPanel.css">
     <link rel="icon" href="../images/Du-Zilla-icon.png">
     <title>Portfolio name</title>
-    <script type="module" src="../src/script/portfolioPanelWidgets.ts"></script>
+    <script type="module" src="../src/script/portfolioPanel.ts"></script>
+    <script type="module" src="../src/script/main.ts"></script>
 </head>
 <body>
     <section class="bodyPanelStyle"></section>
+
     <nav class="topNav">
-      <h1 class="titleIcon">Du-Zilla</h1>
-      <div class="accountBox" style="display: none;">
-        <div class="icon"></div>
-        <p class="normal_text">Account Name</p>
+      <h2 class="titleIcon">Du-Zilla</h2>
+      <div class="loadingBox" id="loadingBox" style="display: none;">
       </div>
-      <div class="signButtonsBox">
+      <div class="accountBox" id="logedBox" style="display: none;">        
+        <p class="normal_text" id="accountName">Account Name</p>
+        <div class="icon"></div>
+      </div>
+      <div class="signButtonsBox" id="notLogedBox" style="display: none;">  
           <a href="login"><div class="signInButton"><h4 class="normal_text">Sign in</h4></div></a>
           <a href="signUp"><div class="signUpButton"><h4 class="normal_text">Sign Up</h4></div></a>
       </div>
@@ -44,8 +48,8 @@
     <section class="blackFilter" id="blackFilter"></section>
 
     <section class="actionBar">
-        <h3 class="normal_text">Portfolio name</h3>
-        <h3 class="normal_text">https://link.com/</h3>
+        <h3 class="normal_text" id="projectName">Portfolio name</h3>
+        <!-- <h3 class="normal_text">https://link.com/</h3> -->
         <div class="buttonBox">
             <div class="dropDownBox" id="visibilityDropDownButton">
                 <div class="icon public"></div>

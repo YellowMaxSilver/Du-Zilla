@@ -1,3 +1,4 @@
+import { getPortfolioById } from "./portfolioQuery";
 
 type Process = (success:boolean, status:number) => void;
 
@@ -53,7 +54,7 @@ export async function getAccountAttributeByUid(accountUid:string,user:UserAttrib
 
 type User = (userUid:string|null) => void;
 
-export async function getCurrentSession(call: User){
+export async function getCurrentSession(call:User){
     try{
         const res = await fetch("/api/account/getcurrentsession",{
             method: "GET",
@@ -75,4 +76,38 @@ export async function getCurrentSession(call: User){
         console.log("error to get account: ",e)
         call(null)
     }
+}
+
+export function verifyIfUserIsOwnerOfPortfolio(portfolioId:string, callback:(isOwner:boolean)=>void){
+    let currentSession:string|null = null;
+    let portfolioCreatorId:string|null = null;
+
+    getCurrentSession((session)=>{
+        console.log("session "+session);
+        currentSession = session;
+
+        getPortfolioById(portfolioId).then(portfolio=>{
+            portfolioCreatorId = portfolio.creator;
+            console.log("creator: "+portfolioCreatorId+" "+portfolio.creator);
+        
+            if(currentSession == null){
+                console.error("null current session");
+                callback(false);
+            }
+            if(portfolioCreatorId == null){
+                console.error("null portfolio id")
+                callback(false);
+            }
+
+            if(currentSession == portfolioCreatorId){
+                callback(true);
+            }else{
+                console.error("user is not the owner of the portfolio");
+                callback(false);
+            }   
+        }).catch(error=>{
+            console.error(error);
+            callback(false);
+        });
+    })
 }

@@ -239,6 +239,18 @@ body{
     z-index: 5;
 }
 
+.topNav .loadingBox{
+    width: 200px;
+    margin: 0px;
+    margin-top: 5px;
+    background-color: var(--blackFilterColorBlur);
+    border-radius: 10px;
+    height: calc(100% - 5px);
+    position: absolute;
+    top: 2.5px;
+    right: 30px;
+}
+
 .topNav .signButtonsBox{
     height: calc(100% - 15px);
     margin: 0px;

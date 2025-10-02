@@ -1,5 +1,8 @@
 import { portfolioRandomId } from "./idGenerete";
-
+import { getPortfolioById, updatePortfolio } from "./querys/portfolioQuery";
+import type { PortfolioDocument, PortfolioDocumentUpdate } from "../../../database/portfolioInterface";
+import { notification } from "./notification";
+import { verifyIfUserIsOwnerOfPortfolio } from "./querys/accountQuery";
 
 function getQueryVariable() {
     const params = new URLSearchParams(window.location.search);
@@ -13,6 +16,8 @@ const portfolioId:string|null = getQueryVariable();
 if(portfolioId == null){
     window.location.href = "/studio";
 }
+
+const projectName = document.querySelector("#projectName") as HTMLElement;
 
 const visibilityDropDownButton = document.querySelector("#visibilityDropDownButton") as HTMLElement;
 const visibilityDropDown = document.querySelector("#visibilityDropDown") as HTMLElement;
@@ -105,6 +110,9 @@ const tagsInput = document.querySelector("#tagsInput") as HTMLInputElement;
 const publishButton = document.querySelector("#publishButton") as HTMLElement;
 
 setInterval(verifyInputs,500);
+
+setAttributes();
+
 publishButton.addEventListener("click",()=>{
     if(publishButton.classList.contains("disabled")) return;
     publishPortfolio();
@@ -113,11 +121,30 @@ publishButton.addEventListener("click",()=>{
 
 function publishPortfolio(){
     //const portfolioId = urlParams.get('id');
+    if(portfolioId == null){
+        return;
+    }
+     
     const name = portfolioNameInput.value;
     const description = portfolioDescriptionInput.value;
-    const tags = tagsInput.value;
+    const tags:string[] = [];
     const visibility = visibilityMode;
     const category = categoryMode;
+
+    const newPortfolio: PortfolioDocumentUpdate = {
+        name:name,
+        description:description,
+        tag:tags,
+        visibility:visibility,
+        type:categoryMode,
+    }
+
+    updatePortfolio(portfolioId, newPortfolio).then(newPortfolioUpdated=>{
+        notification("success","The portfolio has been publishied with success");
+    }).catch(error=>{
+        console.error(error);
+        notification("error","Error to publishied your portfolio. try again later");
+    })
 }
 
 function verifyInputs(){
@@ -160,6 +187,30 @@ function setCategoryMode(mode:string){
     let text = categoryDropDownButton.querySelector("p") as HTMLElement;
     text.innerText = mode;
 }
+
+function setAttributes(){
+    if(portfolioId == null){
+        return;
+    }
+    verifyIfUserIsOwnerOfPortfolio(portfolioId,(isOwner)=>{
+        if(isOwner){
+            getPortfolioById(portfolioId).then(portfolio=>{
+                console.log(portfolio)
+                projectName.textContent = portfolio.name;
+                portfolioNameInput.value = portfolio.name;
+                portfolioDescriptionInput.value = portfolio.description != null ? portfolio.description : "";
+                setCategoryMode(portfolio.type)
+                setVisibilityMode(portfolio.visibility)
+            }).catch(error=>{
+                console.error(error)
+            });
+        }else{
+            notification("error","you are not the owner");
+        }
+    })
+        
+}
+
 
 //get portfolio id from url
 //verify if is logged in

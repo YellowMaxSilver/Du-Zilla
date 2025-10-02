@@ -25,3 +25,14 @@ export interface PortfolioInput{
     code:string;
     tag?:string[];
 }
+
+export interface PortfolioDocumentUpdate{
+    name?: string;
+    description?:string;
+    creator?:string;
+    visibility?:string;
+    type?:string;
+    views?:number;
+    code?:string;
+    tag?:string[];
+}

@@ -80,7 +80,8 @@ import { db } from "./firebase_admin";
                 maxAge:expiresIn,
                 httpOnly:true,
                 secure:false,
-                sameSite:"strict"
+                sameSite:"lax",
+                path:"/"
             });
             
             res.status(200).json({message:`current session set`})

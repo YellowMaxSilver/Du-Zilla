@@ -94,6 +94,10 @@ async function createServer(){
         openHtmlFile(req,res,"login");
     });
 
+    app.get('/signup',async (req,res)=>{
+        openHtmlFile(req,res,"signup");
+    });
+
     app.get('/register',async (req,res)=>{
         openHtmlFile(req,res,"signUp");
     });
@@ -119,6 +123,10 @@ async function createServer(){
     app.use("/api/account",router)
 
     app.use(vite.middlewares);
+
+    app.use((req,res,next)=>{
+        res.status(404).send("<h1>not found page</h1>");
+    })
 
     app.listen(port,()=>{
     console.log(`server running in the port ${port}`)
