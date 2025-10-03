@@ -1,6 +1,19 @@
 import { elementRandomId } from "./idGenerete";
 import compilerToString from "./compiler";
+import { getPortfolioById } from "./querys/portfolioQuery";
+import { notification } from "./notification";
 const mainView = document.querySelector("#main") as HTMLElement;
+
+function getQueryVariable() {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+    return id;
+}
+
+const portfolioId:string|null = getQueryVariable();
+
+
+const portfolioNameTitle = document.querySelector("#portfolioName") as HTMLElement;
 
 class Widget {
     constructor(
@@ -53,7 +66,7 @@ class Widget {
             let htmlEdit: string = `<div id="${elementId}" class="portfolioFormBox">
             <h2 class="normal_text" id="title">${argument1}</h2>
             <h3 class="formDescription normal_text" id="description">${argument2}</h3>
-            <div class="accountBox">
+            <div class="accountFormBox">
                 <div class="icon"></div>
                 <h4 class="accountName normal_text">Account Name</h4>
                 <h5 class="accountId normal_text">AccountId</h5>
@@ -111,8 +124,7 @@ class Widget {
 
 }
 
-function loadPage(){
-    let code = `{!}{text}{super test 96}{63px}{rgb(102, 0, 255)}{center}{100}{normal}{"Times New Roman", Times, serif}{/!}{!}{text}{supertitle}{52px}{rgb(255, 115, 0)}{left}{100}{normal}{"Comic Sans MS", cursive, sans-serif}{/!}{!}{text}{Description}{29px}{rgb(255, 0, 0)}{center}{600}{normal}{Arial, Helvetica, sans-serif}{/!}{!}{form}{super test from}{SE INSCREVA!!!!}{/!}{!}{form}{SUPER FROM}{É ISSO}{/!}`;
+function loadPage(code:string){
     let elements:string[][] = compilerToString(code);
     for(let i = 0;i < elements.length;i++){
         let thisElement = elements[i];
@@ -120,8 +132,21 @@ function loadPage(){
     }
 }
 
-loadPage();
 
+function getPortfolio(){
+    if(portfolioId == null){
+        return;
+    }
+    getPortfolioById(portfolioId).then(portfolio=>{
+        portfolioNameTitle.textContent = portfolio.name;
+        loadPage(portfolio.code);
+    }).catch(error=>{
+        console.error("Error: ",error)
+        notification("error","error to get portfolio");
+    })
+}
+
+getPortfolio();
 
 
 function widgetNameToHtmlTag(widgetName: string): string {

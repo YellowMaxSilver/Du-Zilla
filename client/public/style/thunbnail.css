@@ -5,8 +5,10 @@
     display: flex;
     flex-wrap: wrap;
     gap: 30px;
-    justify-content: center;
+    justify-content: left;
     padding: 20px 0;
+    padding-left: 40px;
+    padding-right: 40px;
 }
 
 .thunbMainBox{ 

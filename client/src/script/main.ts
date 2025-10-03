@@ -17,17 +17,12 @@ getCurrentSession((uid:string|null)=>{
     accountUid = uid
     console.log(accountUid)
     if(accountUid != null){
-        getAccountAttributeByUid(accountUid,(
-        nameP,
-        nameIdP,
-        email,
-        description,
-        uid)=>{
+        getAccountAttributeByUid(accountUid,(fullAccount)=>{
             
-        name = nameP;
-        nameId = nameIdP;
-        accountUid = uid;
-        console.log("user: "+nameP+" "+nameId+" "+email+" "+description+" "+uid)    
+        name = fullAccount.name;
+        nameId = fullAccount.nameId;
+        accountUid = fullAccount.uid;
+        console.log("user: "+name+" "+nameId+" "+fullAccount.email+" "+fullAccount.description+" "+uid)    
         accontSet();
         })  
     }else{

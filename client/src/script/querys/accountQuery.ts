@@ -1,23 +1,11 @@
 import { getPortfolioById } from "./portfolioQuery";
+import type { AccountDocument } from "../../../../database/accountInterface";
 
 type Process = (success:boolean, status:number) => void;
 
-type UserAttribute = (
-    name:string|null|undefined,
-    nameId:string|null|undefined,
-    email:string|null|undefined,
-    description:string|null|undefined,
-    uid:string|null|undefined,
-    createDate:string|null|undefined,
-    cpf_cnpj:string|null|undefined,
-    verified:boolean|null|undefined,
-    contry:string|null|undefined,
-    state:string|null|undefined,
-    city:string|null|undefined,
-    address:string|null|undefined
-    ) => void;
+type Account = (account:AccountDocument) => void;
 
-export async function getAccountAttributeByUid(accountUid:string,user:UserAttribute){
+export async function getAccountAttributeByUid(accountUid:string,user:Account){
     console.log("started")
     try{
         const res = await fetch(`/api/account/getaccountattributes/${accountUid}`,{
@@ -29,20 +17,7 @@ export async function getAccountAttributeByUid(accountUid:string,user:UserAttrib
         })
         if(res.status == 200){
             await res.json().then(data=>{
-                user(
-                    data.name,
-                    data.nameId,
-                    data.email,
-                    data.description,
-                    data.uid,
-                    data.createDate,
-                    data.cpf_cnpj,
-                    data.verified,
-                    data.contry,
-                    data.state,
-                    data.city,
-                    data.address
-                )
+                user(data)
             })
         }else{
             

@@ -22,19 +22,14 @@ getCurrentSession((uid:string|null)=>{
     accountUid = uid
     console.log(accountUid)
     if(accountUid != null){
-        getAccountAttributeByUid(accountUid,(
-        nameP,
-        nameIdP,
-        email,
-        description,
-        uid)=>{
-            
-        name = nameP;
-        nameId = nameIdP;
+        getAccountAttributeByUid(accountUid,(fullAccount)=>{
+        name = fullAccount.name;
+        nameId = fullAccount.nameId;
         accountUid = uid;
 
         notification("dz-icon",`How's going, ${name}?`);
         })  
+        
     }
 })
 
@@ -42,8 +37,9 @@ getAllPortfolios().then((portfolios:PortfolioDocument[])=>{
     console.log(portfolios)
     for(let i = 0;i< portfolios.length;i++){
        let thisPortfolio = portfolios[i];
-    //    getAccountAttributeByUid(thisPortfolio.creator)
-       portfoliosThunbNailsSection.append(portfolioThunbNail(String(thisPortfolio._id),thisPortfolio.name,"facates")) 
+       getAccountAttributeByUid(thisPortfolio.creator,(fullAccount)=>{
+        portfoliosThunbNailsSection.append(portfolioThunbNail(String(thisPortfolio._id),thisPortfolio.name,fullAccount.name)) 
+       })
     }
 }).catch(error=>{
     console.log("error to get all portfolios ",error)
