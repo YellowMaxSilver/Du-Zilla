@@ -1,8 +1,8 @@
 import {getAccountAttributeByUid, getCurrentSession } from "./querys/accountQuery";
 import { notification } from "./notification";
-import { createNewPortfolio } from "./querys/portfolioQuery";
+import { createNewPortfolio, getAllPortfolios } from "./querys/portfolioQuery";
 import type { PortfolioInput, PortfolioDocument } from "../../../database/portfolioInterface";
-
+import { portfolioThunbNail } from "./widgets";
 
 var name:string|null|undefined = null;
 var nameId:string|null|undefined = null;
@@ -10,6 +10,7 @@ var accountUid:string|null|undefined = null;
 
 const logedBox = document.querySelector("#logedBox") as HTMLElement;
 
+const portfoliosThunbNailsSection = document.querySelector("#portfoliosThunbNails") as HTMLElement;
 //templates
 const templateBasic = document.querySelector("#templateBasic") as HTMLElement;
 
@@ -17,6 +18,36 @@ templateBasic.addEventListener("click",()=>{
     createTemplate();
 });
 
+getCurrentSession((uid:string|null)=>{
+    accountUid = uid
+    console.log(accountUid)
+    if(accountUid != null){
+        getAccountAttributeByUid(accountUid,(
+        nameP,
+        nameIdP,
+        email,
+        description,
+        uid)=>{
+            
+        name = nameP;
+        nameId = nameIdP;
+        accountUid = uid;
+
+        notification("dz-icon",`How's going, ${name}?`);
+        })  
+    }
+})
+
+getAllPortfolios().then((portfolios:PortfolioDocument[])=>{
+    console.log(portfolios)
+    for(let i = 0;i< portfolios.length;i++){
+       let thisPortfolio = portfolios[i];
+    //    getAccountAttributeByUid(thisPortfolio.creator)
+       portfoliosThunbNailsSection.append(portfolioThunbNail(String(thisPortfolio._id),thisPortfolio.name,"facates")) 
+    }
+}).catch(error=>{
+    console.log("error to get all portfolios ",error)
+})
 
 async function createTemplate(){
     console.log("active "+nameId)
@@ -30,7 +61,7 @@ async function createTemplate(){
         visibility: "just-me",
         type:"personal",
         views:0,
-        code:"{!}{/!}",
+        code:"{!}{!}{text}{Title}{52px}{rgb(54, 54, 54)}{center}{100}{normal}{Arial, Helvetica, sans-serif}{/!}{!}{text}{Subtitle}{44px}{rgb(34, 32, 32)}{left}{100}{normal}{Arial, Helvetica, sans-serif}{/!}{!}{text}{Description}{30px}{rgb(0, 0, 0)}{left}{100}{normal}{Arial, Helvetica, sans-serif}{/!}{!}{form}{formName}{description}{/!}{/!}",
     }
 
     createNewPortfolio(portfolio).then(createdPortfolio => {

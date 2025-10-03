@@ -14,7 +14,9 @@ var passwordVisibilityStatus:boolean = false;
 
 console.log("getting started");
 
-(document.getElementById('loginButton') as HTMLElement ).addEventListener('click',signIn);
+if((document.getElementById('loginButton') as HTMLElement)!=null){
+    (document.getElementById('loginButton') as HTMLElement ).addEventListener('click',signIn);
+}
 
 visibilityButton.addEventListener('click',changePasswordVisibility);
 

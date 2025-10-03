@@ -124,9 +124,9 @@ async function createServer(){
 
     app.use(vite.middlewares);
 
-    app.use((req,res,next)=>{
-        res.status(404).send("<h1>not found page</h1>");
-    })
+    // app.use((req,res,next)=>{
+    //     res.status(404).send("<h1>not found page</h1>");
+    // })
 
     app.listen(port,()=>{
     console.log(`server running in the port ${port}`)

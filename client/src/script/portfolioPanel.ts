@@ -87,7 +87,7 @@ visibilityDropDownButton.addEventListener("click",(event)=>{
 const editPortfolioBox = document.querySelector("#editPortfolioBox") as HTMLElement;
 editPortfolioBox.addEventListener("click",()=>{
     const testId = portfolioRandomId();
-    window.location.href = `/studio/edit/?id=${testId}`;
+    window.location.href = `/studio/edit/?id=${portfolioId}`;
 });
 
 const formPopUpPanel = document.querySelector("#formPopUpPanel") as HTMLElement;

@@ -1,6 +1,17 @@
 import compilerToString from "./compiler";
 import { elementRandomId } from "./idGenerete";
+import { getPortfolioById } from "./querys/portfolioQuery";
+import { verifyIfUserIsOwnerOfPortfolio } from "./querys/accountQuery";
+import { notification } from "./notification";
 
+function getQueryVariable() {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+    return id;
+}
+
+const portfolioId:string|null = getQueryVariable();
+var portfolioSavedCode:string|null = null;
 
 const mainView = document.getElementById("createPreviewContent") as HTMLElement;
 var clickedBox = document.getElementById("clickedBox") as HTMLElement;
@@ -74,7 +85,10 @@ saveButton.addEventListener('click',()=>{
 })
 
 var elementsList:string[][]|undefined = undefined;
-//form =>  {!}{form}{formId}{formName}{formDescription}
+
+getCodeSaved();
+
+//form =>  {!}{form}{formId}{formName}{formDescription
 
 class Widget {
     constructor(
@@ -113,7 +127,7 @@ class Widget {
 
             let htmlEdit: string = `<${widgetNameToHtmlTag(widgetType)} id="${elementId}" 
             style="
-            font-size:${argument2}px;
+            font-size:${argument2.replace("px","")}px;
             color:${argument3};
             text-align:${argument4};
             font-weight:${argument5};
@@ -550,13 +564,13 @@ const mainTemplate: string = "{!}{text}{hello World}{30}{#00000}{100}{200}{100}{
 
 var widgets: string[][] = compilerToString(mainTemplate);
 
-new Widget("text","Title", 52, "#00000","center",100,"normal","Arial, Helvetica, sans-serif");
-new Widget("text","Subtitle", 52, "#00000","left",100,"normal","Arial, Helvetica, sans-serif");
-new Widget("text","Description", 32, "#00000","left",100,"normal","Arial, Helvetica, sans-serif");
-new Widget("form","id", "formName", "description",null,null,null,null);
-new Widget("form","id", "forName", "description",null,null,null,null);
+// new Widget("text","Title", 52, "#00000","center",100,"normal","Arial, Helvetica, sans-serif");
+// new Widget("text","Subtitle", 52, "#00000","left",100,"normal","Arial, Helvetica, sans-serif");
+// new Widget("text","Description", 32, "#00000","left",100,"normal","Arial, Helvetica, sans-serif");
+// new Widget("form","id", "formName", "description",null,null,null,null);
+// new Widget("form","id", "forName", "description",null,null,null,null);
 
-console.log(widgets);
+//console.log(widgets);
 
 function widgetNameToHtmlTag(widgetName: string): string {
     switch (widgetName) {
@@ -601,4 +615,29 @@ function getCode():string|undefined{
         }
     }
     return code;
+}
+
+function getCodeSaved(){
+    if(portfolioId == null){
+            return;
+    }
+    verifyIfUserIsOwnerOfPortfolio(portfolioId,(isOwner)=>{
+            if(isOwner){
+                getPortfolioById(portfolioId).then(portfolio=>{
+                    console.log(portfolio)
+                    portfolioSavedCode = portfolio.code;
+
+                    let elements:string[][] = compilerToString(portfolioSavedCode);
+                    for(let i = 0;i < elements.length;i++){
+                        let thisElement = elements[i];
+                        new Widget(thisElement[0],thisElement[1],thisElement[2],thisElement[3],thisElement[4],thisElement[5],thisElement[6],thisElement[7]);
+                    }
+                }).catch(error=>{
+                    console.error(error)
+                    notification("error","Error to get portfolio save. Try again later");
+                });
+            }else{
+                notification("error","you are not the owner");
+            }
+    })
 }

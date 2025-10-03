@@ -98,6 +98,20 @@ export const portfolioRouter = (portfolioCollection: Collection<PortfolioDocumen
         }
     })
 
+    router.get("/getallportfoliosbycategory",async (req,res)=>{
+        try{
+            const result = await portfolioCollection.find().toArray();
+
+            if(result == null){
+                res.status(404).json({message:`no portfolios found`})
+            }
+
+            res.status(200).json(result);
+        }catch(error){
+            res.status(500).json({message:`Server error: ${error}`})
+        }   
+    })
+
     return router;
 }
 

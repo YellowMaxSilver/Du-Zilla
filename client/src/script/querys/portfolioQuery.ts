@@ -126,3 +126,21 @@ export async function updatePortfolio(portfolioId:string,newPortfolio:PortfolioD
         throw error;
     }
 }
+
+
+export async function getAllPortfolios(): Promise<PortfolioDocument[]>{
+    try{
+        const res = await fetch("/api/portfolio/getallportfoliosbycategory",{
+            method: "GET",
+            headers: {"Content-Type":"application/json"},
+        })
+
+        if(res.status == 200){
+            return await res.json();
+        }else{
+            throw new Error(`error: ${res.status} ${(await res.json()).message}`);
+        }
+    }catch(err){
+        throw err;
+    }
+}

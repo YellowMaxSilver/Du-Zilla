@@ -12,6 +12,7 @@ const loadingBox = document.querySelector("#loadingBox") as HTMLElement;
 const logedBoxAccountName = logedBox.querySelector("#accountName") as HTMLElement;
 
 setTimeout(()=>{loadingBox.style.display = "flex";},200);
+
 getCurrentSession((uid:string|null)=>{
     accountUid = uid
     console.log(accountUid)
@@ -26,7 +27,7 @@ getCurrentSession((uid:string|null)=>{
         name = nameP;
         nameId = nameIdP;
         accountUid = uid;
-        console.log(nameP+" "+nameId+" "+email+" "+description+" "+uid)    
+        console.log("user: "+nameP+" "+nameId+" "+email+" "+description+" "+uid)    
         accontSet();
         })  
     }else{
