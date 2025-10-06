@@ -1,8 +1,8 @@
 import {getAccountAttributeByUid, getCurrentSession } from "./querys/accountQuery";
 import { notification } from "./notification";
 import { createNewPortfolio, getAllPortfolios } from "./querys/portfolioQuery";
-import type { PortfolioInput, PortfolioDocument } from "../../../database/portfolioInterface";
-import { portfolioThunbNail } from "./widgets";
+import type { PortfolioInput, PortfolioDocument } from "../../../database/interface/portfolioInterface";
+import { portfolioThunbNail, loadingPortfolioThunbNailBox } from "./widgets";
 
 var name:string|null|undefined = null;
 var nameId:string|null|undefined = null;
@@ -36,9 +36,11 @@ getCurrentSession((uid:string|null)=>{
 getAllPortfolios().then((portfolios:PortfolioDocument[])=>{
     console.log(portfolios)
     for(let i = 0;i< portfolios.length;i++){
+       portfoliosThunbNailsSection.insertAdjacentElement("afterbegin",loadingPortfolioThunbNailBox(`loading${i}`))
        let thisPortfolio = portfolios[i];
        getAccountAttributeByUid(thisPortfolio.creator,(fullAccount)=>{
-        portfoliosThunbNailsSection.append(portfolioThunbNail(String(thisPortfolio._id),thisPortfolio.name,fullAccount.name)) 
+        (document.querySelector(`#loading${i}`) as HTMLElement).style.display = "none";
+        portfoliosThunbNailsSection.insertAdjacentElement("afterbegin",portfolioThunbNail(String(thisPortfolio._id),thisPortfolio.name,fullAccount.name,true)) 
        })
     }
 }).catch(error=>{

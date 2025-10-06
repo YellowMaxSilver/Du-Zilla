@@ -3,7 +3,7 @@ import { db } from "./firebase_admin";
 import Express from "express";
 import { Router, Request, Response } from "express";
 import { Collection, ObjectId } from "mongodb";
-import { PortfolioDocument, PortfolioInput, PortfolioDocumentUpdate } from "./portfolioInterface";
+import { PortfolioDocument, PortfolioInput, PortfolioDocumentUpdate } from "./interface/portfolioInterface";
 
 export const portfolioRouter = (portfolioCollection: Collection<PortfolioDocument>) => {
     const router = Router();
@@ -100,7 +100,7 @@ export const portfolioRouter = (portfolioCollection: Collection<PortfolioDocumen
 
     router.get("/getallportfoliosbycategory",async (req,res)=>{
         try{
-            const result = await portfolioCollection.find().toArray();
+            const result = await portfolioCollection.find({visibility:"Public"}).limit(20).toArray();
 
             if(result == null){
                 res.status(404).json({message:`no portfolios found`})
@@ -110,6 +110,51 @@ export const portfolioRouter = (portfolioCollection: Collection<PortfolioDocumen
         }catch(error){
             res.status(500).json({message:`Server error: ${error}`})
         }   
+    })
+
+    router.get("/searchportfoliobynameandtag/:query",async (req,res)=>{
+        const query = req.params.query;
+
+        if(!query){
+            res.status(400).json({message:`no value to search found`})
+        }
+        try{
+            const regexPattern = new RegExp(query,'i');
+
+            const result = await portfolioCollection.find({
+                name: {$regex: regexPattern},
+                visibility: "Public"
+            }).limit(20).toArray()
+
+            if(result == null){
+                res.status(404).json({message:`no portfolios found`})
+            }
+
+            res.status(200).json(result);
+        }catch(error){
+            res.status(500).json({message:`Server error: ${error}`})
+        }
+    })
+
+    router.get("/getallportfoliosbyuseruid/:uid",async (req,res)=>{
+        const userUid= req.params.uid;
+
+        if(!userUid){
+            res.status(400).json({message:`user uid not found`})
+        }
+        try{
+            const result = await portfolioCollection.find({
+                creator:userUid
+            }).limit(20).toArray()
+
+            if(result == null){
+                res.status(404).json({message:`no portfolios found`})
+            }
+
+            res.status(200).json(result);
+        }catch(error){
+            res.status(500).json({message:`Server error: ${error}`})
+        }
     })
 
     return router;

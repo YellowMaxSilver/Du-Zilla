@@ -14,6 +14,7 @@ const portfolioId:string|null = getQueryVariable();
 
 
 const portfolioNameTitle = document.querySelector("#portfolioName") as HTMLElement;
+const pageTitle = document.querySelector("#pageTitle") as HTMLElement;
 
 class Widget {
     constructor(
@@ -139,6 +140,7 @@ function getPortfolio(){
     }
     getPortfolioById(portfolioId).then(portfolio=>{
         portfolioNameTitle.textContent = portfolio.name;
+        pageTitle.textContent = portfolio.name+" - Dz";
         loadPage(portfolio.code);
     }).catch(error=>{
         console.error("Error: ",error)

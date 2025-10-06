@@ -1,5 +1,5 @@
 import { getPortfolioById } from "./portfolioQuery";
-import type { AccountDocument } from "../../../../database/accountInterface";
+import type { AccountDocument } from "../../../../database/interface/accountInterface";
 
 type Process = (success:boolean, status:number) => void;
 

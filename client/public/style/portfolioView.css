@@ -9,6 +9,7 @@
 .main{
     width: 100%;
     height: auto;
+    min-height: 100vh;
     position: absolute;
     top: 40px;
     left: 0;

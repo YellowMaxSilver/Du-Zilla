@@ -240,15 +240,28 @@ body{
 }
 
 .topNav .loadingBox{
-    width: 200px;
+    width: 150px;
     margin: 0px;
     margin-top: 5px;
     background-color: var(--blackFilterColorBlur);
     border-radius: 10px;
-    height: calc(100% - 5px);
+    height: calc(100% - 10px);
     position: absolute;
-    top: 2.5px;
+    top: 1px;
     right: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.topNav .loadingBox .loadingIcon2{
+    width:20px;
+    height:20px;
+}
+
+.topNav .loadingBox .loadingIcon3{
+    width:20px;
+    height:20px;
 }
 
 .topNav .signButtonsBox{
@@ -263,6 +276,27 @@ body{
 }
 
 
+.loadingIcon{
+    width:100px;
+    height:100px;
+    background-image: url('../images/loading.svg');
+    background-size: cover;
+    background-position: center;
+}
+.loadingIcon2{
+    width:100px;
+    height:100px;
+    background-image: url('../images/loading2.svg');
+    background-size: cover;
+    background-position: center;
+}
+.loadingIcon3{
+    width:100px;
+    height:100px;
+    background-image: url('../images/loading3.svg');
+    background-size: cover;
+    background-position: center;
+}
 
 
 /* Newwwwwwwwwwwwwwwwww */

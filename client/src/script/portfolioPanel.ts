@@ -1,6 +1,6 @@
 import { portfolioRandomId } from "./idGenerete";
 import { getPortfolioById, updatePortfolio } from "./querys/portfolioQuery";
-import type { PortfolioDocument, PortfolioDocumentUpdate } from "../../../database/portfolioInterface";
+import type { PortfolioDocument, PortfolioDocumentUpdate } from "../../../database/interface/portfolioInterface";
 import { notification } from "./notification";
 import { verifyIfUserIsOwnerOfPortfolio } from "./querys/accountQuery";
 
@@ -11,7 +11,7 @@ function getQueryVariable() {
 }
 
 const portfolioId:string|null = getQueryVariable();
-
+var portfolioOwner:boolean = false; 
 
 if(portfolioId == null){
     window.location.href = "/studio";
@@ -124,6 +124,9 @@ function publishPortfolio(){
     if(portfolioId == null){
         return;
     }
+    if(portfolioOwner == false){
+        return;
+    }
      
     const name = portfolioNameInput.value;
     const description = portfolioDescriptionInput.value;
@@ -194,6 +197,7 @@ function setAttributes(){
     }
     verifyIfUserIsOwnerOfPortfolio(portfolioId,(isOwner)=>{
         if(isOwner){
+            portfolioOwner = isOwner;
             getPortfolioById(portfolioId).then(portfolio=>{
                 console.log(portfolio)
                 projectName.textContent = portfolio.name;

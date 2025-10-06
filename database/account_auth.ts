@@ -1,7 +1,7 @@
 import Express from "express";
 import admin from "./firebase_admin";
 import { db } from "./firebase_admin";
-import { AccountDocument } from "./accountInterface";
+import { AccountDocument } from "./interface/accountInterface";
 
     const router = Express.Router();
 

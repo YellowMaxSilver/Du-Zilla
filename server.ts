@@ -11,7 +11,7 @@ import cookieParse from "cookie-parser";
 
 
 import { connectDB } from "./database/mongodbConnection"
-import { PortfolioDocument } from './database/portfolioInterface';
+import { PortfolioDocument } from './database/interface/portfolioInterface';
 import { portfolioRouter } from './database/portfolio';
 import { error } from 'console';
 
@@ -108,6 +108,10 @@ async function createServer(){
 
     app.get('/portfolio',async (req,res)=>{
         openHtmlFile(req,res,"portfolio");
+    })
+
+    app.get('/search',async (req,res)=>{
+        openHtmlFile(req,res,"search");
     })
 
     async function openHtmlFile(req:any,res:any,file:string){

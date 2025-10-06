@@ -21,6 +21,16 @@
     box-sizing: border-box;
 }
 
+.loadingThunbNailBox{
+    position: relative;
+    width: 360px;
+    height: 200px;
+    background-color: #00000075;
+    border-radius: 20px;
+    flex: 1 1 300px;
+    box-sizing: border-box;
+}
+
 .thunbBanner{
     width: 100%; 
     height: 190px;

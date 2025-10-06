@@ -35,4 +35,5 @@ export interface PortfolioDocumentUpdate{
     views?:number;
     code?:string;
     tag?:string[];
+    lastUpdated?:Date;
 }

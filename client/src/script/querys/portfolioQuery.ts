@@ -1,4 +1,4 @@
-import type { PortfolioInput, PortfolioDocument, PortfolioDocumentUpdate } from "../../../../database/portfolioInterface";
+import type { PortfolioInput, PortfolioDocument, PortfolioDocumentUpdate } from "../../../../database/interface/portfolioInterface";
 
 // export interface PortfolioDocument{
 //     _id: ObjectId;
@@ -63,47 +63,6 @@ export async function getPortfolioById(portfolioId: string): Promise<PortfolioDo
     }
 }
 
-export async function getAllPortfoliosByUserUid(portfolioId:string): Promise<PortfolioDocument>{
-    try{
-        const res = await fetch(`/api/portfolio/getallportfoliosbyuseruid/${portfolioId}`,{
-            method: "GET",
-            headers:{
-                "Content-Type":"application/json"
-            }
-        });
-
-        if(res.status == 200){
-            const portfolio:PortfolioDocument = await res.json()
-            return portfolio
-        }else{
-            const error = await res.json();
-            throw new Error(`Error: ${res.status} ${error.message}`);
-        }
-    }catch(error){
-        throw error;
-    }
-}
-
-export async function getPortfoliosByNameAndTag(portfolioId:string): Promise<PortfolioDocument>{
-    try{
-        const res = await fetch(`/api/portfolio/getportfoliosbynameandtag/${portfolioId}`,{
-            method: "GET",
-            headers:{
-                "Content-Type":"application/json"
-            }
-        });
-
-        if(res.status == 200){
-            const portfolio:PortfolioDocument = await res.json()
-            return portfolio
-        }else{
-            const error = await res.json();
-            throw new Error(`Error: ${res.status} ${error.message}`);
-        }
-    }catch(error){
-        throw error;
-    }
-}
 
 export async function updatePortfolio(portfolioId:string,newPortfolio:PortfolioDocumentUpdate): Promise<PortfolioDocument>{
     try{
@@ -127,10 +86,44 @@ export async function updatePortfolio(portfolioId:string,newPortfolio:PortfolioD
     }
 }
 
+export async function getAllPortfoliosProjectsByUid(uid:string): Promise<PortfolioDocument[]>{
+    try{
+        const res = await fetch(`/api/portfolio/getallportfoliosbyuseruid/${uid}`,{
+            method: "GET",
+            headers: {"Content-Type":"application/json"},
+        })
+
+        if(res.status == 200){
+            return await res.json();
+        }else{
+            throw new Error(`error: ${res.status} ${(await res.json()).message}`);
+        }
+    }catch(err){
+        throw err;
+    }
+}
+
 
 export async function getAllPortfolios(): Promise<PortfolioDocument[]>{
     try{
         const res = await fetch("/api/portfolio/getallportfoliosbycategory",{
+            method: "GET",
+            headers: {"Content-Type":"application/json"},
+        })
+
+        if(res.status == 200){
+            return await res.json();
+        }else{
+            throw new Error(`error: ${res.status} ${(await res.json()).message}`);
+        }
+    }catch(err){
+        throw err;
+    }
+}
+
+export async function searchPortfolio(query:string): Promise<PortfolioDocument[]>{
+    try{
+        const res = await fetch(`/api/portfolio/searchportfoliobynameandtag/${query}`,{
             method: "GET",
             headers: {"Content-Type":"application/json"},
         })

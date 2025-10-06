@@ -3,14 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/Du-Zilla-icon.png">
     <link rel="stylesheet" href="/style/style.css"/>
     <link rel="stylesheet" href="/style/myProjects.css"/>
     <link rel="stylesheet" href="/style/thunbnail.css">
+
+       <!-- <link rel="stylesheet" href="../public/style/style.css"/>
+    <link rel="stylesheet" href="../public/style/myProjects.css"/>
+    <link rel="stylesheet" href="../public/style/thunbnail.css"> -->
+    <script type="module" src="/src/script/myProjects.ts"></script>
+    <script type="module" src="/src/script/main.ts"></script>
     <title>My Projects</title>
 </head>
 <body>
     <nav class="topNav">
-      <h1 class="titleIcon">Du-Zilla</h1>
+      <a href="/"><h2 class="titleIcon">Du-Zilla</h2></a>
+      <div class="loadingBox" id="loadingBox"><div class="loadingIcon3"></div></div>
       <div class="accountBox" id="logedBox" style="display: none;">        
         <p class="normal_text" id="accountName">Account Name</p>
         <div class="icon"></div>
@@ -21,18 +29,21 @@
       </div>
     </nav>
 
-    <section class="projectsSection">
-        <div class="createNewPortfolioButton">Create New Portfolio</div>
-        <div class="projectBox normal_text">
+
+    <section class="projectsSection" id="projectsSection">
+        <div class="createNewPortfolioButton"><div class="icon"></div><h4 class="normal_text">Create New Portfolio</h4></div>
+
+        <!-- <div class="projectBox">
             <div class="infoBox">
-                <h2>Portfolio name</h2>
-                <h4>Personal</h4>
-                <h4>00/00/0000 - 00:00</h4>
-                <div class="attribute"><div class="icon publicIcon"></div>Public</div>
+                <h2 class="normal_text attributeText">Portfolio name</h2>
+                <h4 class="normal_text attributeText">Personal</h4>
+                <div class="attribute"><div class="publicIcon"></div><h4 class="normal_text">Public</h4></div>
+                <h5 class="normal_text attributeText">Created at: 00/00/0000 - 00:00</h5>
+                <h5 class="normal_text attributeText">Last UpdateAt at: 00/00/0000 - 00:00</h5>
             </div>
 
 
-            <box class="thunbMainBox">
+            <div class="thunbMainBox">
             <div class='thunbBanner' style="background-image: url('../images/image-icon.jpg')"></div>      
                 <box class="thunbInfoBox">
                     <box class="thunbTitleBox">
@@ -50,10 +61,10 @@
                     </div>
                     </box>
                 </box>   
-            </box>
+            </div>
 
-            <iframe class="portfolioPreview" src="index.html"></iframe>
         </div>
+        <div class="loadingProjectBox"><div class="loadingIcon2"></div></div> -->
 
     </section>
     

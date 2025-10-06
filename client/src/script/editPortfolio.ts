@@ -1,8 +1,9 @@
 import compilerToString from "./compiler";
 import { elementRandomId } from "./idGenerete";
-import { getPortfolioById } from "./querys/portfolioQuery";
+import { getPortfolioById, updatePortfolio } from "./querys/portfolioQuery";
 import { verifyIfUserIsOwnerOfPortfolio } from "./querys/accountQuery";
 import { notification } from "./notification";
+import type { PortfolioDocument, PortfolioDocumentUpdate } from "../../../database/interface/portfolioInterface";
 
 function getQueryVariable() {
     const params = new URLSearchParams(window.location.search);
@@ -12,6 +13,7 @@ function getQueryVariable() {
 
 const portfolioId:string|null = getQueryVariable();
 var portfolioSavedCode:string|null = null;
+var portfolioOwner:string|boolean = false;
 
 const mainView = document.getElementById("createPreviewContent") as HTMLElement;
 var clickedBox = document.getElementById("clickedBox") as HTMLElement;
@@ -80,8 +82,28 @@ formAttributesPanelCloseButton.addEventListener('click',()=>{
 const saveButton = document.querySelector("#saveButton") as HTMLElement;
 
 saveButton.addEventListener('click',()=>{
+    if(portfolioId == null){
+        return;
+    }
     const code:string|undefined = getCode();
     console.log(code);
+
+    if(!portfolioOwner){
+        notification("error","you are not the owner of the portfolio")
+        return;
+    }
+
+    const date = new Date();
+    const newPortfolio:PortfolioDocumentUpdate = {
+        code:code,
+        lastUpdated:date,
+    }
+
+    updatePortfolio(portfolioId,newPortfolio).then(newPortfolio=>{
+        notification("success","portfolio saved");
+    }).catch(err=>{
+        notification("error","error to update your portfolio");
+    })
 })
 
 var elementsList:string[][]|undefined = undefined;
@@ -623,6 +645,7 @@ function getCodeSaved(){
     }
     verifyIfUserIsOwnerOfPortfolio(portfolioId,(isOwner)=>{
             if(isOwner){
+                portfolioOwner = isOwner;
                 getPortfolioById(portfolioId).then(portfolio=>{
                     console.log(portfolio)
                     portfolioSavedCode = portfolio.code;
