@@ -59,7 +59,7 @@ async function createTemplate(){
         visibility: "just-me",
         type:"personal",
         views:0,
-        code:"{!}{!}{text}{Title}{52px}{rgb(54, 54, 54)}{center}{100}{normal}{Arial, Helvetica, sans-serif}{/!}{!}{text}{Subtitle}{44px}{rgb(34, 32, 32)}{left}{100}{normal}{Arial, Helvetica, sans-serif}{/!}{!}{text}{Description}{30px}{rgb(0, 0, 0)}{left}{100}{normal}{Arial, Helvetica, sans-serif}{/!}{!}{form}{formName}{description}{/!}{/!}",
+        code:"{!}{!}{text}{Title}{52px}{rgb(54, 54, 54)}{center}{100}{normal}{Arial, Helvetica, sans-serif}{/!}{!}{text}{Subtitle}{44px}{rgb(34, 32, 32)}{left}{100}{normal}{Arial, Helvetica, sans-serif}{/!}{!}{text}{Description}{30px}{rgb(0, 0, 0)}{left}{100}{normal}{Arial, Helvetica, sans-serif}{/!}{!}{form}{:/}{formName}{description}{/!}{/!}",
     }
 
     createNewPortfolio(portfolio).then(createdPortfolio => {

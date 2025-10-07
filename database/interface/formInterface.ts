@@ -5,7 +5,8 @@ export interface FormDocument{
     name:string,
     description?:string,
     creator:string,
-    portfolio_id:string
+    portfolio_id:string,
+    createdAt:Date
 }
 
 export interface FormInput{
@@ -18,6 +19,4 @@ export interface FormInput{
 export interface FormUpdate{
     name?:string,
     description?:string,
-    creator?:string,
-    portfolio_id?:string
 }

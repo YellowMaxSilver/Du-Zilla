@@ -34,7 +34,7 @@ function getPortfoliosProjects(){
             if(Account == null){
                 return;
             }
-            projectsSection.insertAdjacentElement("afterend",projectBox(
+            projectsSection.append(projectBox(
                 String(thisPortfolio._id),
                 thisPortfolio.name,
                 thisPortfolio.type,
@@ -42,7 +42,7 @@ function getPortfoliosProjects(){
                 thisPortfolio.createdAt,
                 thisPortfolio.lastUpdated,
                 Account.name
-            ))
+            ));
         }
     }).catch(error=>{
         console.error(error);

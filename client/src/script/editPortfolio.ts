@@ -4,12 +4,25 @@ import { getPortfolioById, updatePortfolio } from "./querys/portfolioQuery";
 import { verifyIfUserIsOwnerOfPortfolio } from "./querys/accountQuery";
 import { notification } from "./notification";
 import type { PortfolioDocument, PortfolioDocumentUpdate } from "../../../database/interface/portfolioInterface";
+import { createForm, verifyFormExistence, updateForm } from "./querys/formQuery";
+import type { FormDocument, FormInput, FormUpdate } from "../../../database/interface/formInterface";
+import { getCurrentSession, getAccountAttributeByUid } from "./querys/accountQuery";
+import type { AccountDocument } from "../../../database/interface/accountInterface";
 
 function getQueryVariable() {
     const params = new URLSearchParams(window.location.search);
     const id = params.get('id');
     return id;
 }
+
+var Account:AccountDocument|null = null;
+getCurrentSession((uid:string|null)=>{
+    if(uid != null){
+        getAccountAttributeByUid(uid,(fullAccount)=>{       
+            Account = fullAccount;
+        })  
+    }
+})
 
 const portfolioId:string|null = getQueryVariable();
 var portfolioSavedCode:string|null = null;
@@ -81,11 +94,11 @@ formAttributesPanelCloseButton.addEventListener('click',()=>{
 
 const saveButton = document.querySelector("#saveButton") as HTMLElement;
 
-saveButton.addEventListener('click',()=>{
+saveButton.addEventListener('click',async ()=>{
     if(portfolioId == null){
         return;
     }
-    const code:string|undefined = getCode();
+    const code:string|undefined = await getCode();
     console.log(code);
 
     if(!portfolioOwner){
@@ -183,7 +196,7 @@ class Widget {
             //argument3 = formDescription
 
             //=====> normal form
-            let htmlEdit: string = `<div id="${elementId}" class="portfolioFormBox">
+            let htmlEdit: string = `<div id="${elementId}" data-id="${argument1}" class="portfolioFormBox">
             <h2 class="normal_text" id="title">${argument2}</h2>
             <h3 class="formDescription normal_text" id="description">${argument3}</h3>
             <div class="accountFormBox">
@@ -605,7 +618,7 @@ function widgetNameToHtmlTag(widgetName: string): string {
     }
 }
 
-function getCode():string|undefined{
+async function getCode(): Promise<string|undefined>{
     var code:string = "";
     if(elementsList == undefined){
         return undefined;
@@ -628,11 +641,48 @@ function getCode():string|undefined{
                 code += thisCode;
             break;
             case "form":
-                thisCode += `{${thisElement[0]}}`
-                thisCode += `{${(element.querySelector("#title") as HTMLElement).textContent}}`;
-                thisCode += `{${(element.querySelector("#description") as HTMLElement).textContent}}`;
-                thisCode += "{/!}"
-                code += thisCode;
+                if(Account == null || portfolioId == null){return;}
+
+                let id:string|undefined = element.dataset.id;
+                let formName:string = (element.querySelector("#title") as HTMLElement).textContent;
+                let formDescription:string = (element.querySelector("#description") as HTMLElement).textContent;
+
+                console.log("id: ",id);
+                if(id != undefined && await verifyFormExistence(id)){
+                    console.log("already exist")
+                    const form:FormUpdate = {
+                        name:formName,
+                        description: formDescription
+                    }
+                    const newForm = await updateForm(id,form);
+                    thisCode += `{${thisElement[0]}}`//element
+                    thisCode += `{${newForm._id}}`;//id "objectId"
+                    thisCode += `{${newForm.name}}`;//name
+                    thisCode += `{${newForm.description}}`;//description
+                    thisCode += "{/!}"
+                    code += thisCode;
+                    console.log("form :",newForm);
+                    console.log("form code",thisCode);
+                    console.log(code);
+                }else{
+                    //there no forms with this id.
+                    const form:FormInput = {
+                        name:formName,
+                        description:formDescription,
+                        creator:Account.uid,
+                        portfolio_id: portfolioId
+                    }
+                    const newForm = await createForm(form);
+                    thisCode += `{${thisElement[0]}}`//element
+                    thisCode += `{${newForm._id}}`;//id "objectId"
+                    thisCode += `{${newForm.name}}`;//name
+                    thisCode += `{${newForm.description}}`;//description
+                    thisCode += "{/!}"
+                    code += thisCode;
+                    console.log("form :",newForm);
+                    console.log("form code",thisCode);
+                    console.log(code);
+                }
             break;
         }
     }
