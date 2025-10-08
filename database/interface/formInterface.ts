@@ -20,3 +20,19 @@ export interface FormUpdate{
     name?:string,
     description?:string,
 }
+
+export interface FormDataDocument{
+    _id:ObjectId,
+    userUid:string,
+    formId:string,
+    contact:string,
+    description?:string,
+    date:Date
+}
+
+export interface FormDataInput{
+    userUid:string,
+    formId:string,
+    contact:string,
+    description?:string,
+}

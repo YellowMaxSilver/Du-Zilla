@@ -2,6 +2,7 @@ import { elementRandomId } from "./idGenerete";
 import compilerToString from "./compiler";
 import { getPortfolioById } from "./querys/portfolioQuery";
 import { notification } from "./notification";
+import { form } from "./widgets";
 const mainView = document.querySelector("#main") as HTMLElement;
 
 function getQueryVariable() {
@@ -63,10 +64,11 @@ class Widget {
             //argument2 = formName
             //argument3 = formDescription
 
+
             //=====> normal form
             let htmlEdit: string = `<div id="${elementId}" class="portfolioFormBox">
-            <h2 class="normal_text" id="title">${argument1}</h2>
-            <h3 class="formDescription normal_text" id="description">${argument2}</h3>
+            <h2 class="normal_text" id="title">${argument2}</h2>
+            <h3 class="formDescription normal_text" id="description">${argument3}</h3>
             <div class="accountFormBox">
                 <div class="icon"></div>
                 <h4 class="accountName normal_text">Account Name</h4>
@@ -119,7 +121,10 @@ class Widget {
             // </div>
             // </div>`;
 
-            mainView.insertAdjacentHTML('beforeend', htmlEdit);
+            //mainView.insertAdjacentHTML();
+            (async () => {
+                mainView.insertAdjacentElement('beforeend', await form(argument1,argument2,argument3));
+            })();
         }
     }
 

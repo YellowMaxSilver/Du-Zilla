@@ -1,9 +1,9 @@
 import { Router } from "express";
 import { Collection, ObjectId } from "mongodb";
-import { FormDocument, FormInput, FormUpdate } from "./interface/formInterface";
+import { FormDocument, FormInput, FormUpdate, FormDataDocument, FormDataInput } from "./interface/formInterface";
 import { messaging } from "firebase-admin";
 
-export default function formRouter(formCollection: Collection<FormDocument>,formDataCollection: Collection<FormDocument>):Router{
+export default function formRouter(formCollection: Collection<FormDocument>,formDataCollection: Collection<FormDataDocument>):Router{
     const router = Router();
 
     router.post('/',async (req,res)=>{
@@ -97,6 +97,32 @@ export default function formRouter(formCollection: Collection<FormDocument>,form
             res.status(500).json({message:`Server error: ${error}`});
         }
     });
+
+    router.post("/senddatatoform",async (req,res)=>{
+        const dataToForm:FormDataInput = req.body;
+        try{
+            if(dataToForm == null){
+                res.status(400).json({message:"data to form is null"});
+            }
+
+            const formData:FormDataDocument = {
+                _id: new ObjectId,
+                ...dataToForm,
+                date: new Date()
+            }
+            const result = await formDataCollection.insertOne(formData as FormDataDocument);
+            if(result.acknowledged){
+                const newForm:FormDataDocument = {
+                    _id: result.insertedId,
+                    ...dataToForm,
+                    date: new Date,
+                };
+                res.status(201).json(newForm);
+            }
+        }catch(error){
+            res.status(500).json({message:`Server error: ${error}`});
+        }
+    })
 
     return router;
 }

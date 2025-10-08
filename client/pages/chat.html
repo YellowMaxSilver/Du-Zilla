@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style/style.css">
+    <link rel="stylesheet" href="/style/chat.css">
+    <link rel="icon" href="./images/Du-Zilla-icon.png">
+
+    <link rel="stylesheet" href="../public/style/style.css">
+    <link rel="stylesheet" href="../public/style/chat.css">
+    <title>Dz Chat</title>
+</head>
+<body>
+    <nav class="topNav">
+      <h2 class="titleIcon">Du-Zilla</h2>
+      <div class="loadingBox" id="loadingBox"><div class="loadingIcon3"></div></div>
+      <div class="accountBox" id="logedBox" style="display: none;">        
+        <p class="normal_text" id="accountName">Account Name</p>
+        <div class="icon"></div>
+      </div>
+      <div class="signButtonsBox" id="notLogedBox" style="display: none;">  
+          <a href="login"><div class="signInButton"><h4 class="normal_text">Sign in</h4></div></a>
+          <a href="signUp"><div class="signUpButton"><h4 class="normal_text">Sign Up</h4></div></a>
+      </div>
+    </nav>
+
+    <div class="loadingPopUp"><div class="loadingIcon"></div></div>
+
+    <section class="mainSection">
+
+        <section class="contactsSection"></section>
+
+        <section class="chatSection">
+            <div class="contactBox">
+                <div class="userIcon"></div>
+                <h5>User Name</h5>
+            </div>
+            <div class="messagesBox">
+                <div class="userMessage"></div>
+                <div class="selfMessage"></div>
+            </div>
+            <div class="chatBox">
+                <input placeholder="Type here">
+                <div class="sendButton">
+
+                </div>
+            </div>
+        </section>
+    </section>
+    
+</body>
+</html>

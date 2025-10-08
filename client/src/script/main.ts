@@ -46,3 +46,17 @@ function noAccountSet(){
     loadingBox.style.display = "none";
 }
 
+export async function getAccount(): Promise<AccountDocument|null>{
+    return new Promise<AccountDocument | null>((resolve) => {
+        getCurrentSession((uid: string | null) => {
+            if (uid == null) {
+                resolve(null);
+                return;
+            }
+            getAccountAttributeByUid(uid, (fullAccount) => {
+                resolve(fullAccount);
+            });
+        });
+    });
+}
+

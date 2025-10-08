@@ -15,7 +15,7 @@ import { PortfolioDocument } from './database/interface/portfolioInterface';
 import { portfolioRouter } from './database/portfolio';
 import formRouter from './database/form'
 import { error } from 'console';
-import { FormDocument } from './database/interface/formInterface';
+import { FormDataDocument, FormDocument } from './database/interface/formInterface';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -36,7 +36,7 @@ app.use(cookieParse());
 connectDB().then(db =>{
     const portfolioCollection = db.collection<PortfolioDocument>(COLLECTION_NAME);
     const formCollection = db.collection<FormDocument>("forms");
-    const formDataCollection = db.collection<FormDocument>("forms-data");
+    const formDataCollection = db.collection<FormDataDocument>("forms-data");
 
     app.use('/api/portfolio',portfolioRouter(portfolioCollection));
     app.use('/api/form',formRouter(formCollection,formDataCollection));
