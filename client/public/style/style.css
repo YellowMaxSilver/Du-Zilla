@@ -98,16 +98,19 @@ body{
     right: 0;
     top: 0;
     width: 400px;
-    height: calc(100% - 20px);
+    height: calc(100% - 20px - 50px);
     pointer-events: none;
     z-index: 10;
+    padding-top: 50px;
 }
 
 .notification_box{
     width: 100%;
-    background-color: var(--bass_color_blur);
+    background-color: #000000e8;
+    background-image: var(--containerEffect2);
     min-height: 100px;
-    border-radius: 20px;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
     box-shadow: 0px 0px 20px black;
     backdrop-filter: blur(7px);
     margin-bottom: 20px;
@@ -233,10 +236,21 @@ body{
     background-color: var(--bass_color);
     background-image: var(--containerEffect2);
     width: 100%;
-    height: 40px;
+    height: 50px;
     position: fixed;top: 0;left: 0;
     display: flex;justify-content: center;align-items: center;
     z-index: 5;
+    transition: 1s;
+}
+
+.transparentTopNav{
+    background-color: #00000015;
+    opacity: 0.8;
+    transition: 1s;
+}
+
+.transparentTopNav:hover{
+    opacity: 1;
 }
 
 .topNav .loadingBox{
@@ -275,6 +289,29 @@ body{
     height: 100%;
 }
 
+.loadingPopUp{
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;right: 0;
+    background-color: #000000d0;
+    background-image: var(--containerEffect2);
+    z-index: 4;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    transition: 1s;
+}
+
+
+.successIcon{
+    width:100px;
+    height:100px;
+    background-image: url('../images/check_icon.png');
+    background-size: cover;
+    background-position: center;
+}
+
 
 .loadingIcon{
     width:100px;
@@ -294,6 +331,22 @@ body{
     width:100px;
     height:100px;
     background-image: url('../images/loading3.svg');
+    background-size: cover;
+    background-position: center;
+}
+
+.arrowDownIcon{
+    width:100px;
+    height:100px;
+    background-image: url('../images/arrow_down_icon.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.arrowUpIcon{
+    width:100px;
+    height:100px;
+    background-image: url('../images/arrow_up_icon.png');
     background-size: cover;
     background-position: center;
 }
@@ -335,17 +388,18 @@ body{
 
 /* Sign accounts sections */
 .accountBox{
-    min-width: calc(200px - 20px);
+    min-width: calc(120px - 20px);
     max-width: calc(300px - 20px);
-    height: calc(100% - 10px - 5px);
+    height: calc(100% - 10px - 10px);
     position: absolute;
-    top: 2.5px;
+    top: 5px;
     right: 30px;
     padding-top: 5px;
     padding-bottom: 5px;
     padding-left: 10px;
     padding-right: 10px;
     display: flex;align-items: center;
+    justify-content: space-between;
     gap: 10px;
     background-color: #000000;
     border-radius: 10px;
@@ -358,8 +412,55 @@ body{
     background-position: center;
     width: 30px;height: 30px;
     border-radius: 30px;
+}
+
+.accountBox .arrowDownIcon, .accountBox .arrowUpIcon{
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    border-radius:30px;
+    transition: 0.3s;
+}
+
+.accountBox .arrowDownIcon:hover, .accountBox .arrowUpIcon:hover{
+    background-color: var(--bass_color);
+    transition: 0.3s;
+}
+
+.accountBox .accountDropDown{
+    display:  none;
+    width: 200px;
+    background-color: var(--bass_color);
+    background-image: var(--containerEffect2);
+    padding: 0;
     position: absolute;
-    right: 10px;
+    top: 25px;
+    right: 0;
+    list-style-type: none;
+}
+
+.accountBox .accountDropDown li{
+    height: 50px;
+    cursor: pointer;
+    transition: 0.2s;
+    padding: 0px 20px 0px 20px;
+}
+
+.accountBox .accountDropDown li a{
+    height: 50px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.accountBox .accountDropDown li:hover{
+    background-color: var(--bassColorHover);
+    transition: 0.2s;
+}
+
+.accountBox .accountDropDown .dropDownIcon{
+    width: 30px;height: 30px;
+    border: 2px solid green;
 }
 
 .signInButton{
@@ -416,7 +517,7 @@ body{
 .choseTemplatePanel{
     width: calc(100% - 160px);
     height: calc(100vh - 220px);
-    position: absolute;
+    position: fixed;
     margin-top: 40px;
     margin-left: 40px;
     z-index: 3;
@@ -479,6 +580,7 @@ body{
     background-size: 30px;
     background-repeat: no-repeat;
     border-radius: 70px;
+    cursor: pointer;
 }
 
 
@@ -491,6 +593,9 @@ body{
     height: calc(100% - 10px);
 }
 
+.loginButton .loadingIcon2{
+    width: 30px;height: 30px;
+}
 
 /* #nav_bar li{ 
   margin-left: 30px;  
@@ -528,7 +633,8 @@ body{
 .darkNormalText{
     font-family: Verdana, Geneva, Tahoma, sans-serif;  
     color:var(--bass_color); 
-    word-break:break-all; 
+    font-weight: 150;
+    word-break:normal; 
 }
 
 .normal_button{

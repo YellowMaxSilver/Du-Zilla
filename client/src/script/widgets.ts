@@ -82,18 +82,36 @@ export function loadingProjectBox(id:string):HTMLElement{
   return element;
 }
 
-export async function form(id:string,name:string,description:string): Promise<HTMLElement>{
-    const Account:AccountDocument|null = await getAccount();
+export async function notLogedForm(): Promise<HTMLElement>{
+    const element = document.createElement('div');
+    element.innerHTML = `<div class="portfolioFormBox">
+                <h2 class="normal_text" id="title">Form 1</h2>
+                <h3 class="formDescription normal_text" id="description">This is my web dz form description</h3>
+                <div class="formSignBox">
+                    <div class="dzIcon"></div>
+                    <h2 class="normal_text">Sign in Du-Zilla to snd your form</h2>
+                    <div class="formSignButtons">
+                        <a href="/login"><div class="signInButton normal_text">Sign In</div></a>
+                        <a href="/register"><div class="signUpButton normal_text">Sign Up</div></a>
+                    </div>
+                </div>
+                </div>`;
+    return element;
+} 
 
+export async function form(id:string,name:string,description:string): Promise<HTMLElement>{
     const element = document.createElement('div');
     const elementId = elementRandomId();
+    element.append(loadingForm(name,description));
+    const Account:AccountDocument|null = await getAccount();
+
     element.innerHTML = `<div id="${elementId}" class="portfolioFormBox">
             <h2 class="normal_text" id="title">${name}</h2>
             <h3 class="formDescription normal_text" id="description">${description}</h3>
             <div class="accountFormBox">
                 <div class="icon"></div>
                 <h4 class="accountName normal_text">${Account?.name}</h4>
-                <h5 class="accountId normal_text">${Account?.nameId}</h5>
+                <h5 class="accountId normal_text">@${Account?.nameId}</h5>
             </div>
             <div class="attribute"> 
                 <h3 class="normal_text">Contact:</h3>
@@ -106,12 +124,14 @@ export async function form(id:string,name:string,description:string): Promise<HT
 
     (element.querySelector(`#${"submitButton"+elementId}`) as HTMLElement).addEventListener(('click'),()=>{
         const contact = (document.querySelector(`#${"contact"+elementId}`) as HTMLInputElement).value;
-        const description = (document.querySelector(`#${"description"+elementId}`) as HTMLTextAreaElement).value;
+        const userDescription = (document.querySelector(`#${"description"+elementId}`) as HTMLTextAreaElement).value;
+        element.innerHTML = "";
+        element.append(loadingForm(name,description));
         if(!contact){
           notification("alert","Contact Fiels is empty");
           return;
         }
-        if(!description){
+        if(!userDescription){
           notification("alert","Description Fiels is empty");
           return;
         }
@@ -121,13 +141,15 @@ export async function form(id:string,name:string,description:string): Promise<HT
         }
         const data:FormDataInput = {
           contact:contact,
-          description:description,
+          description:userDescription,
           formId:id,
           userUid:Account?.uid
         }
 
         sendDataToForm(data).then(newData=>{
           notification("success","success to send form");
+          element.innerHTML = "";
+          element.append(alreadySentDataToForm(name,description));
         }).catch(err=>{
           console.error(err)
           notification("error","error to send form");
@@ -135,4 +157,55 @@ export async function form(id:string,name:string,description:string): Promise<HT
     })
 
     return element;
+}
+
+export function loadingForm(name:string,description:string):HTMLElement{
+  const element = document.createElement('div');
+  element.innerHTML = `<div class="portfolioFormBox">
+            <h2 class="normal_text" id="title">${name}</h2>
+            <h3 class="formDescription normal_text" id="description">${description}</h3>
+            <div style="display:flex;justify-content: center;align-items: center;">
+              <div class="loadingIcon2"></div>
+            </div>
+            </div>`;
+  return element;
+}
+
+export function alreadySentDataToForm(name:string,description:string):HTMLElement{
+  const element = document.createElement('div');
+  element.innerHTML = `<div class="portfolioFormBox">
+            <h2 class="normal_text" id="title">${name}</h2>
+            <h3 class="formDescription normal_text" id="description">${description}</h3>
+            <div style="display:flex;justify-content: center;align-items: center;">
+              <div class="successIcon"></div>
+              <h4 class="normal_text">You already sent a form</h4>
+            </div>
+            </div>`;
+  return element;
+}
+
+export async function accountNotActvatedForm(name:string,description:string): Promise<HTMLElement>{
+  const Account:AccountDocument|null = await getAccount();
+  const element = document.createElement('div');
+  element.innerHTML = `<div class="portfolioFormBox">
+              <h2 class="normal_text" id="title">${name}</h2>
+              <h3 class="formDescription normal_text" id="description">${description}</h3>
+              <div class="notVerifiedAccount">
+                  <div class="warningIcon"></div>
+                  <h3 class="normal_text">Your account is not verified. Please verify your account to receive form submissions. <a>Verify Now</a></h3>
+              </div>
+              <div class="accountFormBox">;
+                  <div class="icon"></div>
+                  <h4 class="accountName normal_text">${Account?.name}</h4>
+                  <h5 class="accountId normal_text">@${Account?.nameId}</h5>
+              </div>
+              <div class="attribute"> 
+                  <h3 class="normal_text">Contact:</h3>
+                  <input type="text" autocomplete="off" placeholder="Email or phone number" readonly>
+              </div>
+              <div class="attributeDescription"><h3 class="normal_text">Description:</h3><textarea class="normal_text" type="text" autocomplete="off" placeholder="Description" readonly></textarea></div>
+              <div class="normal_text inactiveSubmitButton">Submit</div>
+              <div class="dzIcon"></div>
+              </div>`;
+  return element;
 }

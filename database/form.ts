@@ -124,5 +124,29 @@ export default function formRouter(formCollection: Collection<FormDocument>,form
         }
     })
 
+    router.get('/getformdatabyuseruid/:formId/:userUid',async (req,res)=>{
+        const formId = req.params.formId;
+        const userUid = req.params.userUid;
+
+        try{
+            if(!formId){
+                res.status(400).json({message:"formid is null"});
+            }
+            if(!userUid){
+                res.status(400).json({message:"userUid is null"});
+            }
+
+            const result = await formDataCollection.findOne({formId:formId,userUid:userUid});
+
+            if(!result){
+                res.status(204).json({message:"data not found"});
+            }
+
+            res.status(200).json({message:result});
+        }catch(error){
+            res.status(500).json({message:`Server error: ${error}`});
+        }
+    })
+
     return router;
 }

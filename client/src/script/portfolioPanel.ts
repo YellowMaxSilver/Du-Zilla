@@ -3,6 +3,7 @@ import { getPortfolioById, updatePortfolio } from "./querys/portfolioQuery";
 import type { PortfolioDocument, PortfolioDocumentUpdate } from "../../../database/interface/portfolioInterface";
 import { notification } from "./notification";
 import { verifyIfUserIsOwnerOfPortfolio } from "./querys/accountQuery";
+import { loading, stopLoading } from "./main";
 
 function getQueryVariable() {
     const params = new URLSearchParams(window.location.search);
@@ -192,6 +193,7 @@ function setCategoryMode(mode:string){
 }
 
 function setAttributes(){
+    loading();
     if(portfolioId == null){
         return;
     }
@@ -205,6 +207,7 @@ function setAttributes(){
                 portfolioDescriptionInput.value = portfolio.description != null ? portfolio.description : "";
                 setCategoryMode(portfolio.type)
                 setVisibilityMode(portfolio.visibility)
+                stopLoading();
             }).catch(error=>{
                 console.error(error)
             });

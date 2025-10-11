@@ -17,8 +17,17 @@
       <h2 class="titleIcon">Du-Zilla</h2>
       <div class="loadingBox" id="loadingBox"><div class="loadingIcon3"></div></div>
       <div class="accountBox" id="logedBox" style="display: none;">        
-        <p class="normal_text" id="accountName">Account Name</p>
         <div class="icon"></div>
+        <p class="normal_text" id="accountName">Account Name</p>
+        <div class="arrowDownIcon" id="accountDropDownButton"></div>
+        <ul class="accountDropDown" id="accountDropDown">
+          <li><a href="/"><div class="dropDownIcon"></div><h4 class="normal_text">My Account</h4></a></li>
+          <li><a href="/studio/my-projects"><div class="dropDownIcon"></div><h4 class="normal_text">My Projects</h4></a></li>
+          <li><a href="/"><div class="dropDownIcon"></div><h4 class="normal_text">Notification</h4></a></li>
+          <li><a href="/"><div class="dropDownIcon"></div><h4 class="normal_text">Messager</h4></a></li>
+          <li><a href="/"><div class="dropDownIcon"></div><h4 class="normal_text">Settings</h4></a></li>
+          <li><a href="/"><div class="dropDownIcon"></div><h4 class="normal_text">Help</h4></a></li>
+        </ul>
       </div>
       <div class="signButtonsBox" id="notLogedBox" style="display: none;">  
           <a href="login"><div class="signInButton"><h4 class="normal_text">Sign in</h4></div></a>
@@ -43,11 +52,11 @@
         <div>
             <div style="display: flex;justify-content: center;align-items: center;height: 50px;margin-top: 40px;margin-bottom: 40px;"><h1 class="title">Du-Zilla</h1></div>
             <div style="display: flex;">
-              <input class="inputSearch" type="text" placeholder="Pesquisar" autocomplete="off">
-              <a href="/search?q=hello"><div class="searchButton" style="margin-left: 10px;"></div></a>
+              <input id="search" class="inputSearch" type="text" placeholder="Pesquisar" autocomplete="off">
+              <div id="searchButton" class="searchButton" style="margin-left: 10px;"></div>
             </div>
             <div style="display: flex;justify-content: center;align-items: center;width: 100%;margin-top: 5%;">
-              <div class="createOwnButton" id="createOwnButton"><h4 class="normal_text">Criar Dz-Curriculo</h4></div>
+              <div class="createOwnButton" id="createOwnButton"><h3 class="normal_text">Criar Novo Portfolio</h3></div>
             </div>
         </div>
         <div class="signButtonsBox">

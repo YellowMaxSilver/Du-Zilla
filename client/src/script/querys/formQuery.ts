@@ -117,3 +117,24 @@ export async function sendDataToForm(data:FormDataInput): Promise<FormDataDocume
         throw error;
     }  
 }
+
+export async function verifyIfAlreadySentADataToForm(uid:string,formId:String):Promise<boolean>{
+    try{
+        const res = await fetch(`/api/form/getformdatabyuseruid/${formId}/${uid}`,{
+            method: "GET",
+            headers:{
+                "Content-Type":"application/json"
+            }
+        })
+        console.log(res.status);
+        if(res.status == 200){
+            return true;
+        }else if(res.status == 204){
+            return false;
+        }else{
+            throw new Error(`error: ${res.status} ${(await res.json()).message}`);
+        }
+    }catch(error){
+        throw error;
+    }
+}

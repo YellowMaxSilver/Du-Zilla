@@ -1,7 +1,7 @@
 @import url(style.css);
 
 .mainBox{
-    width: 70%;
+    width: 80%;
     height: 90vh;
     margin-left: auto;
     margin-right: auto;
@@ -18,13 +18,16 @@
     font-family: Arial, Helvetica, sans-serif;
     font-size: 55px;
     margin-left: 30px;
-    margin-top: 100px;
+    margin-top: 40px;
+    font-weight: 150;
+    word-break:normal; 
 }
 
 .signBox{
     width: calc(40% + 20px);
     height: 100%;
     background-color: var(--bass_color);
+    background-image: var(--containerEffect2);
     position: relative;
     overflow-y: auto;
 }
@@ -43,6 +46,7 @@
     color: rgb(0, 110, 255);
     text-decoration: underline;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-top: 10px;
 }
 
 .signInput{
@@ -59,33 +63,30 @@
            font-size: 20px;
 }
 
+.signInputInvalid{
+    border-color: var(--alertColor);
+}
+
 .loginButton{
     height: 50px;
     width: 200px;
     background-color: #00000000;
-    border: 2px solid var(--brightColor);
-    border-radius: 20px;
-    color: var(--white_normal_color);
+    border: 2px solid var(--whiteTextColor);
+    border-radius: 5px;
+    color: var(--whiteTextColor);
     display: flex;justify-content: center;align-items: center;
     cursor: pointer;
     margin-left: auto;margin-right: auto;
     margin-top: 50px;
+    transition: 0.2s;
 }
 
 .loginButton:hover{
-    height: 50px;
-    width: 200px;
     background-color: var(--soloColor);
+    background-image: var(--containerEffect2);
     border: 2px solid var(--soloColor);
-    border-radius: 20px;
     color: var(--white_normal_color);
-    display: flex;justify-content: center;align-items: center;
-    cursor: pointer;
-    margin-left: auto;margin-right: auto;
-    margin-top: 50px;
-    margin-top: 40px;
-    margin-left: auto;
-    margin-right: auto;
+    transition: 0.2s;
 }
 
 .visibilityButton{

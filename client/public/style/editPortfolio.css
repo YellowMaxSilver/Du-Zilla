@@ -277,6 +277,7 @@
     background-image: url('../images/format_align_right_icon.png');
 }
 
+
 .portfolioFormBox{
     width: 700px;
     height: auto;
@@ -422,6 +423,7 @@
     border-radius: 20px;
     position: relative;
     padding: 20px;
+    margin-top: 10px;
 }
 
 .portfolioFormBox .formSignBox h2{
@@ -431,11 +433,12 @@
 }
 
 .portfolioFormBox .formSignBox .formSignButtons{
-    width: calc(100% - 120px);
+    width: calc(100% - 160px);
     display: flex;
     align-items: center;
-    padding-left: 60px;
-    padding-right: 60px;
+    justify-content: space-between;
+    padding-left: 80px;
+    padding-right: 80px;
     position: relative;
     margin-top: auto;
     margin-bottom: auto;

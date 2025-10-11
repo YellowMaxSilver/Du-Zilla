@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style/signAccount.css">
-    <link rel="stylesheet" href="style/style.css">
-    <script src="script_exp.js"></script>
-    <title>Sign Up</title>
+    <link rel="stylesheet" href="/style/signAccount.css">
+    <link rel="stylesheet" href="/style/style.css">
+    <!-- <link rel="stylesheet" href="../public/style/signAccount.css">
+    <link rel="stylesheet" href="../public//style/style.css"> -->
+    <title>Login</title>
 </head>
 <body>
     <script type="module" src="../src/script/sign.ts"></script>
@@ -25,17 +26,18 @@
             </div>
 
 
-            <input class="signInput" id="emailInput" placeholder="Email" type="email" style="margin-top: 10vh;"/><!--EMAIL-->
+            <input class="signInput" id="emailInput" placeholder="Email" type="email" autocomplete="off" style="margin-top: 10vh;"/><!--EMAIL-->
             <div style="display: flex;align-items: end;position: relative;">
                 <input class="signInput" id="passwordInput" placeholder="Password" type="password" style="margin-top: 40px;"/><!--PASSWORD-->
                 <div class="visibilityButton" id="visibilityButton" style="margin-bottom: 10px;margin-right: 10%;position: absolute;right: 0;"></div><!--PASSWORD VISIBILITY BUTTON-->
             </div>
-            <h5 class="linkText" style="margin-left: 10%;">I forgot my password</h5><!--FORGOT PASSWORD-->
-            <h5 class="linkText" style="margin-left: 10%;"><a class="linkText" href="signUp">I don't have an account</a></h5><!--DONT HAVE AN ACCOUNT-->
+            <h5 class="normal_text" style="margin-left: 10%;margin-top: 10px;"><a class="linkText">I forgot my password</a></h5><!--FORGOT PASSWORD-->
+            <h5 class="normal_text" style="margin-left: 10%;margin-top: 10px;"><a class="linkText" href="signUp">I don't have an account</a></h5><!--DONT HAVE AN ACCOUNT-->
 
             
             <div class="loginButton" id="loginButton">
-                <h4 class="normal_text">Log in</h4><!--LOGIN BUTTON-->
+                <h4 id="loginText" class="normal_text">Log in</h4>
+                <div id="loginLoading" class="loadingIcon2" style="display: none;"></div>
             </div>
             
             

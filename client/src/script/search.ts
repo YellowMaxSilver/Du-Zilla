@@ -30,7 +30,7 @@ function getQuery(){
                let thisPortfolio = portfolios[i];
                getAccountAttributeByUid(thisPortfolio.creator,(fullAccount)=>{
                 (document.querySelector(`#loading${i}`) as HTMLElement).style.display = "none";
-                portfoliosThunbNailsSection.insertAdjacentElement("afterbegin",portfolioThunbNail(String(thisPortfolio._id),thisPortfolio.name,fullAccount.name)) 
+                portfoliosThunbNailsSection.insertAdjacentElement("afterbegin",portfolioThunbNail(String(thisPortfolio._id),thisPortfolio.name,fullAccount.name,true)) 
                })
         }
     }).catch(error=>{

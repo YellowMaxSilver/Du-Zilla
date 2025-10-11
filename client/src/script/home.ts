@@ -9,6 +9,8 @@ var nameId:string|null|undefined = null;
 var accountUid:string|null|undefined = null;
 
 const logedBox = document.querySelector("#logedBox") as HTMLElement;
+const searchButton = document.querySelector("#searchButton")as HTMLElement;
+const search = document.querySelector("#search") as HTMLInputElement;
 
 const portfoliosThunbNailsSection = document.querySelector("#portfoliosThunbNails") as HTMLElement;
 //templates
@@ -17,6 +19,14 @@ const templateBasic = document.querySelector("#templateBasic") as HTMLElement;
 templateBasic.addEventListener("click",()=>{
     createTemplate();
 });
+
+searchButton.addEventListener("click",()=>{
+    if(!search.value){
+        notification("alert","Por Favor, Escreva alguma coisa para iniciar a pesquisa");
+        return;
+    }
+    window.location.href = `/search?q=${search.value}`;
+})
 
 getCurrentSession((uid:string|null)=>{
     accountUid = uid
@@ -27,7 +37,7 @@ getCurrentSession((uid:string|null)=>{
         nameId = fullAccount.nameId;
         accountUid = uid;
 
-        notification("dz-icon",`How's going, ${name}?`);
+        notification("dzIcon",`How's going, ${name}?`);
         })  
         
     }

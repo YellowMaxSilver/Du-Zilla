@@ -1,4 +1,4 @@
-import { notification } from "./notification";
+import { notification, loadingNotification, closeNotification } from "./notification";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../database/firebase_settings.ts";
 import { getAccountAttributeByUid } from "./querys/accountQuery.ts";
@@ -6,23 +6,23 @@ import { getAccountAttributeByUid } from "./querys/accountQuery.ts";
 //setTimeout(()=>{notification(null,"Welcome")},500);
 
 const visibilityButton = document.getElementById("visibilityButton") as HTMLElement;
+const loginLoading = document.querySelector("#loginLoading") as HTMLElement;
+const loginText = document.querySelector("#loginText") as HTMLElement;
 
 const email = document.getElementById("emailInput") as HTMLInputElement;
 const password = document.getElementById("passwordInput") as HTMLInputElement;
 
+const loginButton = document.getElementById('loginButton') as HTMLElement;
+const signUpButton = document.getElementById("signUpButton") as HTMLElement;
+
 var passwordVisibilityStatus:boolean = false; 
 
-console.log("getting started");
 
-if((document.getElementById('loginButton') as HTMLElement)!=null){
-    (document.getElementById('loginButton') as HTMLElement ).addEventListener('click',signIn);
-}
+
+if(loginButton){loginButton.addEventListener('click',signIn);}
+if(signUpButton){signUpButton.addEventListener("click",signUp);}
 
 visibilityButton.addEventListener('click',changePasswordVisibility);
-
-setTimeout(()=>{
-    (document.getElementById("signUpButton") as HTMLElement).addEventListener("click",signUp);
-},1000)
 
 
 //getPage();
@@ -31,15 +31,23 @@ async function signIn(){
 
    //verify availble email 
    if(!validEmail(email.value)){
-    notification("error","invalid field email");
+    email.classList.add("signInputInvalid");
+    notification("error","Email inválido");
     return;
    }
 
    if(!validPassword(password.value)){
-    notification("error","invalid field email");
+    password.classList.add("signInputInvalid");
+    notification("error","Senha inválida");
     return;
    }
 
+   loginLoading.style.display = "flex";
+   loginText.style.display = "none";
+   const loadingNotificationId = loadingNotification("Entrando na conta");
+   loginButton.addEventListener('click',()=>{
+    notification("alert","Por favor espere enquanto sua conta é logada.");
+   })
    try{
     const credential = await signInWithEmailAndPassword(auth, email.value, password.value);
     const token = await credential.user.getIdToken();
@@ -56,14 +64,21 @@ async function signIn(){
     })
 
     if(res.status == 200){
-        notification("success","your in, success")
+        closeNotification(loadingNotificationId);
+        notification("success","Conta logada com sucesso");
+        setTimeout(()=>{window.location.href = "/"},1000);
     }else{
-        notification("error","error to set cookie")
-        console.log("error: ", await res.json())
+        notification("error","error")
+        console.log("error: ", "Server error. Try again later.")
+        loginLoading.style.display = "none";
+        loginText.style.display = "flex";
+        closeNotification(loadingNotificationId);
     }
-   }catch(e){
-        console.log(e)
-        notification("error","error to login")
+   }catch(error){
+        notification("error","Email ou Senha inválidos")
+        loginLoading.style.display = "none";
+        loginText.style.display = "flex";
+        closeNotification(loadingNotificationId);
    }
 }
 

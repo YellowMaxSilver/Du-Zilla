@@ -1,17 +1,4 @@
 
-.loadingPopUp{
-    width: 100vw;
-    height: 100vh;
-    position: absolute;
-    top: 0;right: 0;
-    background-color: #000000d0;
-    background-image: var(--containerEffect2);
-    z-index: 4;
-    display: none;
-    justify-content: center;
-    align-items: center;
-}
-
 .mainSection{
     display: flex;
     align-items: center;
