@@ -4,20 +4,26 @@
     width: 100%;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: row;
+    gap: 40px 0px;
+    /* flex-wrap: wrap;
     gap: 30px;
-    justify-content: left;
+    justify-content: space-around;
     padding: 20px 0;
-    padding-left: 40px;
+    padding-left: 40px; */
 }
 
 .thunbMainBox{ 
     position: relative;
     width: 360px;
     cursor: pointer;
-    flex: 1 1 300px;
-    max-width: 360px;
-    min-width: 250px;
-    box-sizing: border-box;
+    /* flex: 1 1 300px; */
+    /* max-width: 360px;
+    min-width: 250px; */
+    /* box-sizing: border-box; */
+    margin-right: 40px;
+
 }
 
 .loadingThunbNailBox{

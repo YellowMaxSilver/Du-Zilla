@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style/style.css">
     <link rel="stylesheet" href="/style/chat.css">
+    <script type="module" src="../src/script/chat.ts"></script>
+    <script type="module" src="../src/script/main.ts"></script>
     <link rel="icon" href="./images/Du-Zilla-icon.png">
 
-    <link rel="stylesheet" href="../public/style/style.css">
-    <link rel="stylesheet" href="../public/style/chat.css">
+    <!-- <link rel="stylesheet" href="../public/style/style.css">
+    <link rel="stylesheet" href="../public/style/chat.css"> -->
     <title>Dz Chat</title>
 </head>
 <body>
@@ -27,21 +29,65 @@
 
     <div class="loadingPopUp"><div class="loadingIcon"></div></div>
 
+    <div class="addNewContactPopUp">
+        <div class="closeIcon"></div>
+        <div class="searchBox">
+            <h3 class="normal_text">Add New Contact</h3>
+            <input class="normal_text" placeholder="@User" autocomplete="off">
+            <div class="searchButton"></div>
+        </div>
+        <div class="searchContactsBox">
+            <div class="noContactsFound">
+                <div class="notFoundIcon"></div>
+                <h4 class="normal_text">User not found</h4>
+            </div>
+            <!-- <div class="contact">
+                <div class="userIcon"></div>
+                <h4 class="normal_text">Accont Name</h4>
+                <h5 class="normal_text">@account_id</h5>
+                <div class="chatButton normal_text">Chat</div>
+            </div> -->
+        </div>
+    </div>
+    <div class="blackFilter" style="display: none;"></div>
+
     <section class="mainSection">
 
-        <section class="contactsSection"></section>
+        <section class="contactsSection">
+            <div class="addNewContactButton"><h3 class="normal_text">Add new contact</h3></div>
+            <h4 class="noContactsFound normal_text">Você não tem nunhum contato</h4>
+            <!-- <div class="contact"> 
+                <div class="userIcon"></div>
+                <div>
+                    <h5 class="normal_text">@userId</h5>
+                    <h4 class="normal_text">Account name</h4>
+                </div>
+                <div class="moreIcon"></div>
+            </div> -->
+        </section>
 
         <section class="chatSection">
             <div class="contactBox">
-                <div class="userIcon"></div>
-                <h5>User Name</h5>
+                <a><div class="userIcon"></div></a>
+                <a><h4 class="normal_text">User Name</h4></a>
+                <a><h5 class="normal_text">@userNameId</h5></a>
             </div>
             <div class="messagesBox">
-                <div class="userMessage"></div>
-                <div class="selfMessage"></div>
+                <div class="noMessages">
+                    <div class="icon"></div>
+                    <h3 class="normal_text">Que tal começar enviando a primeira menssagem</h3>
+                </div>
+                <!-- <div class="userMessage">
+                    <p class="normal_text">Hello whats'up</p>
+                    <p class="date normal_text">2 hours ago</p>
+                </div>
+                <div class="selfMessage">
+                    <p class="normal_text">Hello whats'up hows going are you hello</p>
+                    <p class="date normal_text">Now</p>
+                </div> -->
             </div>
             <div class="chatBox">
-                <input placeholder="Type here">
+                <textarea class="darkNormalText" placeholder="Type here"></textarea>
                 <div class="sendButton">
 
                 </div>

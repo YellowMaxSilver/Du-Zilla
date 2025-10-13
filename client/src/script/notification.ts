@@ -38,7 +38,7 @@ export function notification(icon:string,message:string){
 
 
   let box = `<box class="notification_box" id='`+number+`'>
-                <div class="close_notification_box" onclick="close_notification_box('`+number+`')"></div>
+                <div id="closeButton" class="closeIcon"></div>
                 <div class="notification_icon" style="background-image:url('`+linkIcon+`')"></div>
                 <div class="notification_text">
                   <h3 class="normal_text" style="color:${textColor}">
@@ -49,6 +49,12 @@ export function notification(icon:string,message:string){
 
   let elemento = document.createElement("div");
   elemento.innerHTML = box;
+
+  const closeButton = elemento.querySelector("#closeButton") as HTMLElement;
+
+  closeButton.addEventListener("click",()=>{
+    closeNotification(number)
+  })
 
   section.append(elemento);
   setTimeout(function(){closeNotification(number)}, 5000)
@@ -102,4 +108,45 @@ export function loadingNotification(message:string):string{
   },500);
   section.append(elemento);
   return number;
+}
+
+export function signNotification(message:string){
+      if(document.getElementById('notification_section') == undefined){
+      const mainSection = document.createElement("div") as HTMLElement;
+      mainSection.classList.add("notification_section");
+      mainSection.id = "notification_section";
+
+      document.body.appendChild(mainSection);
+    }
+
+  let section = document.getElementById('notification_section') as HTMLElement;
+
+  let number = String(Math.random());
+  let linkIcon = "/images/Du-Zilla-icon.png";
+
+
+  let box = `<box class="notification_box" id='`+number+`'>
+                <div id="closeButton" class="closeIcon"></div>
+                <div class="notification_icon" style="background-image:url('`+linkIcon+`')"></div>
+                <div class="notification_text" style="padding:10px">
+                  <h4 class="normal_text">
+                    `+message+`
+                  </h4>
+                  <div class="notificationButtons">
+                    <a href="login"><div class="signInButton"><h4 class="normal_text">Login</h4></div></a>
+                    <a href="register"><div class="signUpButton"><h4 class="normal_text">Register</h4></div></a>
+                  </div>
+                </div>
+              </box>`;
+
+  let elemento = document.createElement("div");
+  elemento.innerHTML = box;
+
+  const closeButton = elemento.querySelector("#closeButton") as HTMLElement;
+
+  closeButton.addEventListener("click",()=>{
+    closeNotification(number)
+  })
+
+  section.append(elemento);
 }

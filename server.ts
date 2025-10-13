@@ -119,6 +119,10 @@ async function createServer(){
         openHtmlFile(req,res,"search");
     })
 
+    app.get('/messager',async (req,res)=>{
+        openHtmlFile(req,res,"chat")
+    })
+
     async function openHtmlFile(req:any,res:any,file:string){
         const fullPath = path.resolve(__dirname,`./client/pages/${file}.html`);
         const url = req.originalUrl;
