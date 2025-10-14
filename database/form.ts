@@ -148,5 +148,24 @@ export default function formRouter(formCollection: Collection<FormDocument>,form
         }
     })
 
+    router.get("/getformdatabyformid/:formid",async (req,res)=>{
+        const formId = req.params.formid;
+        try{
+            if(!formId){
+                res.status(400).json({message:"formid is null"});
+            }
+
+            const result = await formDataCollection.find({formId:formId}).toArray();
+
+            if(!result){
+                res.status(204).json({message:"data not found"});
+            }
+
+            res.status(200).json(result);
+        }catch(error){
+            res.status(500).json({message:`Server error: ${error}`});
+        }
+    })
+
     return router;
 }

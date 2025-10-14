@@ -340,6 +340,11 @@ body{
     transition: 1s;
 }
 
+.showBlackFilter{
+    display: flex;
+    transition: 1s;
+}
+
 
 .successIcon{
     width:100px;

@@ -1,9 +1,9 @@
 import type { AccountDocument } from "../../../../database/interface/accountInterface";
 import type { FormDocument, FormInput, FormUpdate, FormDataDocument, FormDataInput } from "../../../../database/interface/formInterface";
 
-export async function getformsbyportfolioid(portfolioId:string): Promise<FormDocument> {
+export async function getformsbyportfolioid(portfolioId:string): Promise<FormDocument[]> {
     try{
-        const res = await fetch('/api/form/getformbyportfolioid',{
+        const res = await fetch(`/api/form/getformbyportfolioid/${portfolioId}`,{
             method: "GET",
             headers:{
                 "Content-Type":"application/json"
@@ -137,4 +137,23 @@ export async function verifyIfAlreadySentADataToForm(uid:string,formId:String):P
     }catch(error){
         throw error;
     }
+}
+
+export async function getFormDataByFormId(formId:string): Promise<FormDataDocument[]>{
+    try{
+        const res = await fetch(`/api/form/getformdatabyformid/${formId}`,{
+            method: "GET",
+            headers:{
+                "Content-Type":"application/json"
+            }
+        });
+
+        if(res.status == 200){
+            return await res.json();
+        }else{
+            throw new Error(`error: ${res.status} ${(await res.json()).message}`);
+        }
+    }catch(error){
+        throw error;
+    }     
 }

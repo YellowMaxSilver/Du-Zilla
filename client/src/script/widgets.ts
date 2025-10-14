@@ -209,3 +209,39 @@ export async function accountNotActvatedForm(name:string,description:string): Pr
               </div>`;
   return element;
 }
+
+export function formsPanelFormBox(name:string,usersResponse:number,readButtonAction:any):HTMLElement{
+  const element = document.createElement('div');
+  element.innerHTML = `<div class="formBox">
+                <div class="formIcon"></div>
+                <h3 class="normal_text">${name}</h3>
+                <div class="assignment">
+                    <div class="assignmentIcon"></div>
+                    <p class="normal_text">${usersResponse}</p>
+                </div>
+                <div id="readButton" class="readButton normal_text">Read</div>
+            </div>`;
+
+  const readButton = element.querySelector("#readButton") as HTMLElement;
+  readButton.addEventListener("click",readButtonAction);
+  return element;
+}
+
+
+export function userProposalBox(userId:string, userName:string, contact:string, description:string):HTMLElement{
+  const element = document.createElement('div');
+  element.innerHTML = `<div class="userProposalBox">
+                <div class="userBox">
+                    <div class="userIcon"></div>
+                    <h4 class="userName normal_text">${userName}</h4>
+                    <h5 class="userNameId normal_text">@${userId}</h5>
+                    <div class="profileButton normal_text">Conversar</div>
+                    <div class="profileButton normal_text">Ver Perfil</div>
+                </div>
+                <div class="proposalBox">
+                    <input class="contact normal_text" value="${contact}" readonly>
+                    <textarea class="proposalDescription normal_text" readonly>${description}</textarea>
+                </div>
+            </div>`;
+  return element;
+}

@@ -13,13 +13,21 @@
 <body>
     <section class="bodyPanelStyle"></section>
 
-    <nav class="topNav" id="topNav">
+    <nav class="topNav">
       <h2 class="titleIcon">Du-Zilla</h2>
-      <div class="loadingBox" id="loadingBox" style="display: none;">
-      </div>
+      <div class="loadingBox" id="loadingBox"><div class="loadingIcon3"></div></div>
       <div class="accountBox" id="logedBox" style="display: none;">        
-        <p class="normal_text" id="accountName">Account Name</p>
         <div class="icon"></div>
+        <p class="normal_text" id="accountName">Account Name</p>
+        <div class="arrowDownIcon" id="accountDropDownButton"></div>
+        <ul class="accountDropDown" id="accountDropDown">
+          <li><a href="/account"><div class="dropDownIcon accountIcon"></div><h4 class="normal_text">My Account</h4></a></li>
+          <li><a href="/studio/my-projects"><div class="dropDownIcon projectsIcon"></div><h4 class="normal_text">My Projects</h4></a></li>
+          <li><a href="/notification"><div class="dropDownIcon notificationIcon"></div><h4 class="normal_text">Notification</h4></a></li>
+          <li><a href="/messager"><div class="dropDownIcon messagerIcon"></div><h4 class="normal_text">Messager</h4></a></li>
+          <li><a href="/account/settings"><div class="dropDownIcon settingsIcon"></div><h4 class="normal_text">Settings</h4></a></li>
+          <li><a href="/help"><div class="dropDownIcon helpIcon"></div><h4 class="normal_text">Help</h4></a></li>
+        </ul>
       </div>
       <div class="signButtonsBox" id="notLogedBox" style="display: none;">  
           <a href="login"><div class="signInButton"><h4 class="normal_text">Sign in</h4></div></a>
@@ -32,8 +40,11 @@
     <section class="formPopUpPanel" id="formPopUpPanel">
         <div class="closeButton" id="formPopUpCloseButton"></div>
         <h2 class="formName normal_text">Form name1</h2>
-        <div class="usersProposalPanel">
-            <div class="userProposalBox">
+        <div class="loadingBox" id="userProposalBoxLoadingIcon">
+            <div class="loadingIcon2"></div>
+        </div>
+        <div class="usersProposalPanel" id="usersProposalPanel">
+            <!-- <div class="userProposalBox">
                 <div class="userBox">
                 <div class="userIcon"></div>
                     <h4 class="userName normal_text">User Name</h4>
@@ -44,7 +55,7 @@
                     <input class="contact normal_text" value="user email or phone number" readonly>
                     <textarea class="proposalDescription normal_text" readonly>Sou capaz</textarea>
                 </div>
-            </div>
+            </div> -->
         </div>
     </section>
     <section class="blackFilter" id="blackFilter" style="display: none;"></section>
@@ -140,11 +151,11 @@
             <div class="background"></div>
         </div>
 
-        <div class="formsPanel">
+        <div class="formsPanel" id="formsPanel">
             <div class="textTitleBox"><p class="normal_text">Forms</p></div>
             <div class="noFormsMessage" ><h3 class="normal_text">There are not forms in your portfolio.</h3></div>
 
-            <div class="formBox">
+            <!-- <div class="formBox">
                 <div class="formIcon"></div>
                 <h3 class="normal_text">Form Name</h3>
                 <div class="assignment">
@@ -152,17 +163,9 @@
                     <p class="normal_text">0</p>
                 </div>
                 <div class="readButton normal_text">Read</div>
-            </div>
+            </div> -->
 
-            <div class="formBox">
-                <div class="formIcon"></div>
-                <h3 class="normal_text">Form Name</h3>
-                <div class="assignment">
-                    <div class="assignmentIcon"></div>
-                    <p class="normal_text">0</p>
-                </div>
-                <div class="readButton normal_text">Read</div>
-            </div>
+        
         </div>
         
         <div class="ratesPanel">

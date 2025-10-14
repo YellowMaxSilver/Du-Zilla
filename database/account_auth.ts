@@ -26,7 +26,7 @@ import { AccountDocument } from "./interface/accountInterface";
                         ["email"]:email,
                         ["uid"]:uid,
                         ["cpf-cnpj"]:cpf_cnpj,
-                        ["verified"]:false,
+                        ["verified"]:true,
                         ["created-date"]:null,
                         ["description"]:null,
                         ["contry"]:null,

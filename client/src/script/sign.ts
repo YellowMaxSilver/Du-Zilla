@@ -1,7 +1,6 @@
 import { notification, loadingNotification, closeNotification } from "./notification";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../database/firebase_settings.ts";
-import { getAccountAttributeByUid } from "./querys/accountQuery.ts";
 
 //setTimeout(()=>{notification(null,"Welcome")},500);
 
@@ -45,9 +44,6 @@ async function signIn(){
    loginLoading.style.display = "flex";
    loginText.style.display = "none";
    const loadingNotificationId = loadingNotification("Entrando na conta");
-   loginButton.addEventListener('click',()=>{
-    notification("alert","Por favor espere enquanto sua conta é logada.");
-   })
    try{
     const credential = await signInWithEmailAndPassword(auth, email.value, password.value);
     const token = await credential.user.getIdToken();
@@ -85,7 +81,6 @@ async function signIn(){
 async function signUp(){
     const name = document.getElementById("nameInput") as HTMLInputElement;
     const nameId = document.getElementById("nameIdInput") as HTMLInputElement;
-    getAccountAttributeByUid("6TZptgdc7hYHNKncKuHGxxJ5Uuf2", ()=>{});
     console.log("activate")
 
     if(!validName(name.value)){
@@ -110,7 +105,7 @@ async function signUp(){
     }
 
 
-
+    const loading = loadingNotification("Criando Conta");
 
 
     try{
@@ -132,12 +127,16 @@ async function signUp(){
             })
         })
         if(res.status == 201){
+            closeNotification(loading);
             notification("success","Account created with success");
+            setTimeout(()=>{window.location.href = "/"},1000);
         }else{
-            notification("error","Error to create accont")
+            closeNotification(loading);
+            notification("error","Erro para criar conta. tente novamente mais tarde")
         }
     }catch(e){
-        notification("error","Error in network")
+        closeNotification(loading);
+        notification("error","Error nas credenciais")
     }
 }
 

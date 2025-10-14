@@ -2,8 +2,13 @@ import { portfolioRandomId } from "./idGenerete";
 import { getPortfolioById, updatePortfolio } from "./querys/portfolioQuery";
 import type { PortfolioDocument, PortfolioDocumentUpdate } from "../../../database/interface/portfolioInterface";
 import { notification } from "./notification";
-import { verifyIfUserIsOwnerOfPortfolio } from "./querys/accountQuery";
-import { loading, stopLoading } from "./main";
+import { getAccountAttributeByUid, getAccountByUid, verifyIfUserIsOwnerOfPortfolio } from "./querys/accountQuery";
+import { getAccount, loading, stopLoading } from "./main";
+import type { AccountDocument } from "../../../database/interface/accountInterface";
+import { getFormDataByFormId, getformsbyportfolioid } from "./querys/formQuery";
+import type { FormDataDocument, FormDocument } from "../../../database/interface/formInterface";
+import { formsPanelFormBox, userProposalBox } from "./widgets";
+import type { ObjectId } from "mongodb";
 
 function getQueryVariable() {
     const params = new URLSearchParams(window.location.search);
@@ -17,6 +22,8 @@ var portfolioOwner:boolean = false;
 if(portfolioId == null){
     window.location.href = "/studio";
 }
+
+const Account:AccountDocument|null = await getAccount();
 
 const projectName = document.querySelector("#projectName") as HTMLElement;
 
@@ -99,6 +106,8 @@ formPopUpCloseButton.addEventListener('click',()=>{
     blackFilter.style.display = "none";
 });
 
+const formPanelUserProposalPanel = document.querySelector("#usersProposalPanel") as HTMLElement;
+
 const portfolioNameBox = document.querySelector("#portfolioNameBox") as HTMLElement;
 const portfolioDescriptionBox = document.querySelector("#portfolioDescriptionBox") as HTMLElement;
 const tagsBox = document.querySelector("#tagsBox") as HTMLElement;
@@ -110,6 +119,8 @@ const tagsInput = document.querySelector("#tagsInput") as HTMLInputElement;
 //const saveButton = document.querySelector("#saveButton") as HTMLElement;
 const publishButton = document.querySelector("#publishButton") as HTMLElement;
 
+
+const formsPanel = document.querySelector("#formsPanel") as HTMLElement;
 setInterval(verifyInputs,500);
 
 setAttributes();
@@ -207,6 +218,7 @@ function setAttributes(){
                 portfolioDescriptionInput.value = portfolio.description != null ? portfolio.description : "";
                 setCategoryMode(portfolio.type)
                 setVisibilityMode(portfolio.visibility)
+                loadForms();
                 stopLoading();
             }).catch(error=>{
                 console.error(error)
@@ -216,6 +228,53 @@ function setAttributes(){
         }
     })
         
+}
+
+function loadForms(){
+    if(!portfolioOwner){
+        return;
+    }
+
+    if(!portfolioId){
+        return;
+    }
+
+    if(!Account){
+        return;
+    }
+
+    getformsbyportfolioid(portfolioId).then((forms:FormDocument[])=>{
+        for(let i = 0;i< forms.length;i++){
+            let form:FormDocument = forms[i];
+            formsPanel.append(formsPanelFormBox(form.name,0,()=>{openFormPopupPanel(form._id)}));
+        }
+    }).catch(err=>{
+        console.error(err);
+        notification("error","Error to load forms");
+    })
+}
+
+async function openFormPopupPanel(formId:ObjectId){
+    const userProposalBoxLoadingIcon = document.querySelector("#userProposalBoxLoadingIcon") as HTMLElement;
+    userProposalBoxLoadingIcon.style.display = "flex";
+
+    formPopUpPanel.style.display = "block";
+    blackFilter.style.display = "flex";
+    formPanelUserProposalPanel.innerHTML = "";
+    
+    getFormDataByFormId(String(formId)).then(async (formData:FormDataDocument[])=>{
+        console.log("got: ",formData);
+        for(let i = 0;i< formData.length;i++){
+            let data = formData[i];
+            console.log(data)
+            let thisAccount:AccountDocument = await getAccountByUid(data.userUid);
+            formPanelUserProposalPanel.append(userProposalBox(thisAccount.nameId,thisAccount.name,data.contact,data.description ? data.description : "No Description"))
+        }
+        userProposalBoxLoadingIcon.style.display = "none";
+    }).catch(err=>{
+        console.error(err)
+        notification("error","Error to get form data.");
+    })
 }
 
 

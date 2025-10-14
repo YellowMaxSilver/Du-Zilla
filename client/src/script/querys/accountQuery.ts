@@ -6,7 +6,6 @@ type Process = (success:boolean, status:number) => void;
 type Account = (account:AccountDocument) => void;
 
 export async function getAccountAttributeByUid(accountUid:string,user:Account){
-    console.log("started")
     try{
         const res = await fetch(`/api/account/getaccountattributes/${accountUid}`,{
             method: "GET",
@@ -24,6 +23,25 @@ export async function getAccountAttributeByUid(accountUid:string,user:Account){
         }
     }catch(e){
         console.error("erro to find user ",e)
+    }
+}
+
+export async function getAccountByUid(uid:string):Promise<AccountDocument>{
+    try{
+        const res = await fetch(`/api/account/getaccountattributes/${uid}`,{
+            method: "GET",
+            credentials: 'include',
+            headers:{
+                "Content-Type":"application/json"
+            }
+        })
+        if(res.status == 200){
+            return await res.json()
+        }else{
+            throw new Error(`Error: ${res.status} ${(await res.json()).message}`);            
+        }
+    }catch(e){
+        throw e;
     }
 }
 
