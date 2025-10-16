@@ -16,7 +16,11 @@ function getQueryVariable() {
 }
 
 const portfolioId:string|null = getQueryVariable();
-const Account:AccountDocument|null = await getAccount();
+let Account: AccountDocument | null = null;
+(async () => {
+    Account = await getAccount();
+})();
+
 
 const portfolioNameTitle = document.querySelector("#portfolioName") as HTMLElement;
 const pageTitle = document.querySelector("#pageTitle") as HTMLElement;

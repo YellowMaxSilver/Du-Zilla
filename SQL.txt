@@ -41,3 +41,8 @@ insert into user_account(nick,user_name,email,user_password,user_description)
 values('mr-hello','Mr.Hello','mr.hello@gmail.com','mrhello12345.','hi, i am mr.hello');
 
 select * from user_account
+
+
+//obs to fix project
+PS D:\projects\Du-zilla> Remove-Item -Recurse -Force node_modules
+PS D:\projects\Du-zilla> Remove-Item package-lock.json

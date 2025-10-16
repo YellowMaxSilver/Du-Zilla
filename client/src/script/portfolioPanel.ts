@@ -23,7 +23,11 @@ if(portfolioId == null){
     window.location.href = "/studio";
 }
 
-const Account:AccountDocument|null = await getAccount();
+let Account: AccountDocument | null = null;
+(async () => {
+    Account = await getAccount();
+    setAttributes();
+})();
 
 const projectName = document.querySelector("#projectName") as HTMLElement;
 

@@ -262,9 +262,15 @@
     position: fixed;
     z-index: 5;
     top: 60px;
-    left: calc((100vw - 50%)/2);
+    left: 50%;
     padding:  10px 20px 10px 20px;
-    display: none;
+    display: block;
+    transition: 1s;
+}
+
+.hiddenPopUpSection{
+    left: calc(100vw);
+    transition: 1s;
 }
 
 .addNewContactPopUp .closeIcon{
@@ -315,6 +321,22 @@
     overflow-y:auto;
     padding:5px;
     border-radius:10px;
+    position: relative;
+}
+
+.searchContactsBox .loadingBox{
+    width: 100%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.2s;
+}
+
+.hiddenLoadingBox{
+    opacity: 0;
+    display: none;
+    transition: 0.2s;
 }
 
 .searchContactsBox .contact{

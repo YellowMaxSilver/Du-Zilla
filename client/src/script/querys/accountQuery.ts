@@ -104,3 +104,22 @@ export function verifyIfUserIsOwnerOfPortfolio(portfolioId:string, callback:(isO
         });
     })
 }
+
+export async function searchUserByNameOrNameId(query:string):Promise<AccountDocument[]|null>{
+    try{
+        const res = await fetch(`/api/account/searchuserbynameornameid/${query}`,{
+            method:"GET",
+            headers:{
+                "Content-Type":"application/json"
+            }
+        });
+
+        if(res.status == 200){
+            return await res.json();
+        }else{
+            throw new Error(`error: ${res.status} ${(await res.json()).message}`);
+        }
+    }catch(error){
+        throw error;
+    }
+}

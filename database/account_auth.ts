@@ -135,16 +135,76 @@ import { AccountDocument } from "./interface/accountInterface";
         }
     })
 
-    router.get("/finduserbyname",()=>{
+    router.get("/searchuserbynameornameid/:query",async (req,res)=>{
+        const name = req.params.query;
 
-    })
+        try{
+            if(!name){
+                res.status(400).json({message:"not found query"})
+            }
+            const userRef = db.collection("Accounts");
 
-    router.get("/getcurrentsession",(req,res)=>{
+            const startQuery = name;
+            const endQuery = name+"\uf8ff";
 
-    })
+            const querySnapshot = await userRef
+            .where("name",">=",startQuery)
+            .where("name","<",endQuery)
+            .get();
 
-    async function setCookiesSession(req:any,res:any){
+            if(querySnapshot.empty){
+                res.status(200).json({message:"user not found"})
+            }
+            
+            let accounts: AccountDocument[] = [];
+            querySnapshot.forEach(doc => {
+                const data = doc.data();
+                const account: AccountDocument = {
+                    name: data.name,
+                    nameId: data["name-id"],
+                    email: data.email,
+                    uid: data.uid,
+                    cpf_cnpj: data["cpf-cnpj"],
+                    activated: data.verified,
+                    createDate: data["create-date"],
+                    description: data.description,
+                    contry: data.contry,
+                    state: data.state,
+                    city: data.city,
+                    address: data.address
+                };
+                accounts.push(account);
+            });
+
+            // var allAccounts:AccountDocument[]|null = null;
+            // for(let i = 0;i< accounts.lenght;i++){
+            //     let results = accounts[i];
+            //     const account:AccountDocument = {
+            //         name:results[0].name,
+            //         nameId:results[0]["name-id"],
+            //         email :results[0].email,
+            //         uid:results[0].uid,
+            //         cpf_cnpj:results[0]["cpf-cnpj"],
+            //         activated:results[0].verified,
+            //         createDate:results[0]["create-date"],
+            //         description:results[0].description,
+            //         contry:results[0].contry,
+            //         state:results[0].state,
+            //         city:results[0].city,
+            //         address:results[0].address
+            //     }
+            //     if (!allAccounts) {
+            //         allAccounts = [account];
+            //     } else {
+            //         allAccounts.push(account);
+            //     }
+            // }
+            res.status(200).json(accounts) 
         
-    }
+        }catch(error){
+            res.status(500).json({message:`Server error: ${error}`});
+        }
+    })
+
 
     export default router;

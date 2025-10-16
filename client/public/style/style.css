@@ -340,8 +340,9 @@ body{
     transition: 1s;
 }
 
-.showBlackFilter{
-    display: flex;
+.hiddenBlackFilter{
+    opacity: 0;
+    pointer-events: none;
     transition: 1s;
 }
 

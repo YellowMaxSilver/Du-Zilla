@@ -245,3 +245,14 @@ export function userProposalBox(userId:string, userName:string, contact:string, 
             </div>`;
   return element;
 }
+
+export function contactAccountFromAddNewContactPanel(name:string,id:string,):HTMLElement{
+  const element = document.createElement('div');
+  element.innerHTML = `<div class="contact">
+                <div class="userIcon"></div>
+                <h4 class="normal_text">${name}</h4>
+                <h5 class="normal_text">${id}</h5>
+                <div class="chatButton normal_text">Chat</div>
+            </div>`;
+  return element;
+}

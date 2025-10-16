@@ -18,8 +18,18 @@
       <h2 class="titleIcon">Du-Zilla</h2>
       <div class="loadingBox" id="loadingBox"><div class="loadingIcon3"></div></div>
       <div class="accountBox" id="logedBox" style="display: none;">        
-        <p class="normal_text" id="accountName">Account Name</p>
         <div class="icon"></div>
+        <p class="normal_text" id="accountName">Account Name</p>
+        <div class="arrowDownIcon" id="accountDropDownButton"></div>
+        <ul class="accountDropDown" id="accountDropDown">
+          <li><a href="/account"><div class="dropDownIcon accountIcon"></div><h4 class="normal_text">My Account</h4></a></li>
+          <li><a href="/studio/my-projects"><div class="dropDownIcon projectsIcon"></div><h4 class="normal_text">My Projects</h4></a></li>
+          <li><a href="/notification"><div class="dropDownIcon notificationIcon"></div><h4 class="normal_text">Notification</h4></a></li>
+          <li><a href="/messager"><div class="dropDownIcon messagerIcon"></div><h4 class="normal_text">Messager</h4></a></li>
+          <li><a href="/account/settings"><div class="dropDownIcon settingsIcon"></div><h4 class="normal_text">Settings</h4></a></li>
+          <li><a href="/help"><div class="dropDownIcon helpIcon"></div><h4 class="normal_text">Help</h4></a></li>
+          <li><a href="/logout"><div class="dropDownIcon helpIcon"></div><h4 class="normal_text">Log out</h4></a></li>
+        </ul>
       </div>
       <div class="signButtonsBox" id="notLogedBox" style="display: none;">  
           <a href="login"><div class="signInButton"><h4 class="normal_text">Sign in</h4></div></a>
@@ -29,15 +39,18 @@
 
     <div class="loadingPopUp"><div class="loadingIcon"></div></div>
 
-    <div class="addNewContactPopUp">
-        <div class="closeIcon"></div>
+    <div class="addNewContactPopUp hiddenPopUpSection" id="addNewContactPopUp">
+        <div class="closeIcon" id="addNewContactCloseButton"></div>
         <div class="searchBox">
             <h3 class="normal_text">Add New Contact</h3>
-            <input class="normal_text" placeholder="@User" autocomplete="off">
+            <input id="searchUserInput" class="normal_text" placeholder="@User" autocomplete="off">
             <div class="searchButton"></div>
         </div>
-        <div class="searchContactsBox">
-            <div class="noContactsFound">
+        <div class="searchContactsBox" id="searchContactsBox">
+            <div class="loadingBox hiddenLoadingBox" id="loadingBox">
+                <div class="loadingIcon2"></div>
+            </div>
+            <div class="noContactsFound" id="noContactsFoundBox">
                 <div class="notFoundIcon"></div>
                 <h4 class="normal_text">User not found</h4>
             </div>
@@ -49,12 +62,12 @@
             </div> -->
         </div>
     </div>
-    <div class="blackFilter" style="display: none;"></div>
+    <div class="blackFilter hiddenBlackFilter" id="blackFilter"></div>
 
     <section class="mainSection">
 
         <section class="contactsSection">
-            <div class="addNewContactButton"><h3 class="normal_text">Add new contact</h3></div>
+            <div class="addNewContactButton" id="addNewContactButton"><h3 class="normal_text">Add new contact</h3></div>
             <h4 class="noContactsFound normal_text">Você não tem nunhum contato</h4>
             <!-- <div class="contact"> 
                 <div class="userIcon"></div>

@@ -8,21 +8,19 @@ import { createForm, verifyFormExistence, updateForm } from "./querys/formQuery"
 import type { FormDocument, FormInput, FormUpdate } from "../../../database/interface/formInterface";
 import { getCurrentSession, getAccountAttributeByUid } from "./querys/accountQuery";
 import type { AccountDocument } from "../../../database/interface/accountInterface";
-
+import { getAccount } from "./main";
 function getQueryVariable() {
     const params = new URLSearchParams(window.location.search);
     const id = params.get('id');
     return id;
 }
 
-var Account:AccountDocument|null = null;
-getCurrentSession((uid:string|null)=>{
-    if(uid != null){
-        getAccountAttributeByUid(uid,(fullAccount)=>{       
-            Account = fullAccount;
-        })  
-    }
-})
+let Account: AccountDocument | null = null;
+(async () => {
+    Account = await getAccount();
+})();
+
+
 
 const portfolioId:string|null = getQueryVariable();
 var portfolioSavedCode:string|null = null;
