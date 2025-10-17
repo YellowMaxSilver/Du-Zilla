@@ -17,8 +17,18 @@
       <h2 class="titleIcon">Du-Zilla</h2>
       <div class="loadingBox" id="loadingBox"><div class="loadingIcon3"></div></div>
       <div class="accountBox" id="logedBox" style="display: none;">        
-        <p class="normal_text" id="accountName">Account Name</p>
         <div class="icon"></div>
+        <p class="normal_text" id="accountName">Account Name</p>
+        <div class="arrowDownIcon" id="accountDropDownButton"></div>
+        <ul class="accountDropDown" id="accountDropDown">
+          <li><a href="/account"><div class="dropDownIcon accountIcon"></div><h4 class="normal_text">My Account</h4></a></li>
+          <li><a href="/studio/my-projects"><div class="dropDownIcon projectsIcon"></div><h4 class="normal_text">My Projects</h4></a></li>
+          <li><a href="/notification"><div class="dropDownIcon notificationIcon"></div><h4 class="normal_text">Notification</h4></a></li>
+          <li><a href="/messager"><div class="dropDownIcon messagerIcon"></div><h4 class="normal_text">Messager</h4></a></li>
+          <li><a href="/account/settings"><div class="dropDownIcon settingsIcon"></div><h4 class="normal_text">Settings</h4></a></li>
+          <li><a href="/help"><div class="dropDownIcon helpIcon"></div><h4 class="normal_text">Help</h4></a></li>
+          <li><a href="/logout"><div class="dropDownIcon helpIcon"></div><h4 class="normal_text">Log out</h4></a></li>
+        </ul>
       </div>
       <div class="signButtonsBox" id="notLogedBox" style="display: none;">  
           <a href="login"><div class="signInButton"><h4 class="normal_text">Sign in</h4></div></a>

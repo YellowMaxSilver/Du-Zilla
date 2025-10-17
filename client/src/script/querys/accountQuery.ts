@@ -45,6 +45,25 @@ export async function getAccountByUid(uid:string):Promise<AccountDocument>{
     }
 }
 
+export async function getAccountByNameId(nameId:string):Promise<AccountDocument>{
+    try{
+        const res = await fetch(`/api/account/getaccountattributesbynameid/${nameId}`,{
+            method: "GET",
+            credentials: 'include',
+            headers:{
+                "Content-Type":"application/json"
+            }
+        })
+        if(res.status == 200){
+            return await res.json()
+        }else{
+            throw new Error(`Error: ${res.status} ${(await res.json()).message}`);            
+        }
+    }catch(e){
+        throw e;
+    }
+}
+
 type User = (userUid:string|null) => void;
 
 export async function getCurrentSession(call:User){

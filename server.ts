@@ -16,6 +16,9 @@ import { portfolioRouter } from './database/portfolio';
 import formRouter from './database/form'
 import { error } from 'console';
 import { FormDataDocument, FormDocument } from './database/interface/formInterface';
+import { ContactDocument } from './database/interface/contactInterface';
+import messageRouter from './database/message';
+import { MessageDocument } from './database/interface/messageInterface';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -37,9 +40,12 @@ connectDB().then(db =>{
     const portfolioCollection = db.collection<PortfolioDocument>(COLLECTION_NAME);
     const formCollection = db.collection<FormDocument>("forms");
     const formDataCollection = db.collection<FormDataDocument>("forms-data");
+    const contactsCollection = db.collection<ContactDocument>("contacts");
+    const messagesCollection = db.collection<MessageDocument>("messages");
 
     app.use('/api/portfolio',portfolioRouter(portfolioCollection));
     app.use('/api/form',formRouter(formCollection,formDataCollection));
+    app.use('/api/message',messageRouter(messagesCollection));
     
 }).catch(error => {
     console.error("DB fatal error: "+error)

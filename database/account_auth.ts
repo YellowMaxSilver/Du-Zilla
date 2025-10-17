@@ -124,6 +124,40 @@ import { AccountDocument } from "./interface/accountInterface";
         }
     })
 
+    router.get("/getaccountattributesbynameid/:nameId",async (req,res)=>{
+        const nameId = req.params.nameId;
+        try{
+            const userRef = db.collection("Accounts");
+            const querySnapshot = await userRef.where("name-id","==",nameId).get();
+            if(!querySnapshot.empty){
+                let results:any = [];
+                querySnapshot.forEach(doc=>{
+                    results.push({id:doc.id, ...doc.data()});
+                })
+
+                const account:AccountDocument = {
+                    name:results[0].name,
+                    nameId:results[0]["name-id"],
+                    email :results[0].email,
+                    uid:results[0].uid,
+                    cpf_cnpj:results[0]["cpf-cnpj"],
+                    activated:results[0].verified,
+                    createDate:results[0]["create-date"],
+                    description:results[0].description,
+                    contry:results[0].contry,
+                    state:results[0].state,
+                    city:results[0].city,
+                    address:results[0].address
+                }
+                res.status(200).json(account)
+            }else{
+               res.status(204).json({message:`not found user`}) 
+            }
+        }catch(e){
+            res.status(500).json({message:`erro in network: ${e}`})
+        }
+    })
+
     router.patch("/setsoftattributes",async (req,res)=>{
         const {name,uid,description,cpf_cnpj,contry,state,city,address} = req.body;
         try{

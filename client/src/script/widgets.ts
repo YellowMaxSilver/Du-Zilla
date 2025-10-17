@@ -235,7 +235,7 @@ export function userProposalBox(userId:string, userName:string, contact:string, 
                     <div class="userIcon"></div>
                     <h4 class="userName normal_text">${userName}</h4>
                     <h5 class="userNameId normal_text">@${userId}</h5>
-                    <div class="profileButton normal_text">Conversar</div>
+                    <a href="/messager?id=${userId}"><div class="profileButton normal_text">Conversar</div></a>
                     <div class="profileButton normal_text">Ver Perfil</div>
                 </div>
                 <div class="proposalBox">
@@ -246,13 +246,50 @@ export function userProposalBox(userId:string, userName:string, contact:string, 
   return element;
 }
 
-export function contactAccountFromAddNewContactPanel(name:string,id:string,):HTMLElement{
+export function contactAccountFromAddNewContactPanel(name:string,id:string,event:any):HTMLElement{
   const element = document.createElement('div');
   element.innerHTML = `<div class="contact">
                 <div class="userIcon"></div>
                 <h4 class="normal_text">${name}</h4>
-                <h5 class="normal_text">${id}</h5>
-                <div class="chatButton normal_text">Chat</div>
+                <h5 class="normal_text">@${id}</h5>
+                <div id="chatButton" class="chatButton normal_text">Chat</div>
             </div>`;
+
+  const chatButton = element.querySelector("#chatButton") as HTMLElement;
+  chatButton.addEventListener("click",event);              
+  return element;
+}
+
+export function panelLoadingBox():HTMLElement{
+  const element = document.createElement('div');
+  element.innerHTML = `<div class="loadingBox" id="loadingBox">
+                <div class="loadingIcon2"></div>
+            </div>`;
+
+  return element;
+}
+
+export function panelNotFoundBox(message:string):HTMLElement{
+  const element = document.createElement('div');
+  element.innerHTML = `<div class="noContactsFound" id="noContactsFoundBox">
+                <div class="notFoundIcon"></div>
+                <h4 class="normal_text">${message}</h4>
+            </div>`;
+  return element;
+}
+
+export function selfMessageBox(message:string,date:Date):HTMLElement{
+  const element = document.createElement('div');
+  element.classList.add("selfMessage");
+  element.innerHTML = `<p class="normal_text">${message}</p>
+                    <p class="date normal_text">now</p>`;
+  return element;
+}
+
+export function userMessageBox(message:string,date:Date):HTMLElement{
+  const element = document.createElement('div');
+  element.classList.add("userMessage");
+  element.innerHTML = `<p class="normal_text">${message}</p>
+                    <p class="date normal_text">now</p>`;
   return element;
 }
