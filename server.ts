@@ -19,6 +19,7 @@ import { FormDataDocument, FormDocument } from './database/interface/formInterfa
 import { ContactDocument } from './database/interface/contactInterface';
 import messageRouter from './database/message';
 import { MessageDocument } from './database/interface/messageInterface';
+import contactRouter from './database/contact';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -46,7 +47,7 @@ connectDB().then(db =>{
     app.use('/api/portfolio',portfolioRouter(portfolioCollection));
     app.use('/api/form',formRouter(formCollection,formDataCollection));
     app.use('/api/message',messageRouter(messagesCollection));
-    
+    app.use('/api/contact',contactRouter(contactsCollection));
 }).catch(error => {
     console.error("DB fatal error: "+error)
 })

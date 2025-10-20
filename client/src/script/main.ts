@@ -1,5 +1,5 @@
 import {getAccountAttributeByUid, getCurrentSession } from "./querys/accountQuery";
-import { notification } from "./notification";
+import { notification, signNotification } from "./notification";
 import type { AccountDocument } from "../../../database/interface/accountInterface";
 
 var name:string|null|undefined = null;

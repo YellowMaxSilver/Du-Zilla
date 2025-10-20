@@ -1,5 +1,5 @@
 import {getAccountAttributeByUid, getCurrentSession } from "./querys/accountQuery";
-import { notification } from "./notification";
+import { notification, signNotification } from "./notification";
 import { createNewPortfolio, getAllPortfolios } from "./querys/portfolioQuery";
 import type { PortfolioInput, PortfolioDocument } from "../../../database/interface/portfolioInterface";
 import { portfolioThunbNail, loadingPortfolioThunbNailBox } from "./widgets";
@@ -31,7 +31,7 @@ searchButton.addEventListener("click",()=>{
 getCurrentSession((uid:string|null)=>{
     accountUid = uid
     console.log(accountUid)
-    if(accountUid != null){
+    if(accountUid){
         getAccountAttributeByUid(accountUid,(fullAccount)=>{
         name = fullAccount.name;
         nameId = fullAccount.nameId;
@@ -40,6 +40,8 @@ getCurrentSession((uid:string|null)=>{
         notification("dzIcon",`How's going, ${name}?`);
         })  
         
+    }else{
+        signNotification("Parece que você não tem uma conta ainda. Entre ou crie uma aqui :)");
     }
 })
 

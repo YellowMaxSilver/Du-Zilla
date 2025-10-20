@@ -106,8 +106,8 @@ const formPopUpPanel = document.querySelector("#formPopUpPanel") as HTMLElement;
 const blackFilter = document.querySelector("#blackFilter") as HTMLElement;
 const formPopUpCloseButton = document.querySelector("#formPopUpCloseButton") as HTMLElement;
 formPopUpCloseButton.addEventListener('click',()=>{
-    formPopUpPanel.style.display = "none";
-    blackFilter.style.display = "none";
+    formPopUpPanel.classList.add("hiddenPopUpPanel");
+    blackFilter.classList.add("hiddenBlackFilter");
 });
 
 const formPanelUserProposalPanel = document.querySelector("#usersProposalPanel") as HTMLElement;
@@ -262,8 +262,8 @@ async function openFormPopupPanel(formId:ObjectId){
     const userProposalBoxLoadingIcon = document.querySelector("#userProposalBoxLoadingIcon") as HTMLElement;
     userProposalBoxLoadingIcon.style.display = "flex";
 
-    formPopUpPanel.style.display = "block";
-    blackFilter.style.display = "flex";
+    formPopUpPanel.classList.remove("hiddenPopUpPanel");
+    blackFilter.classList.remove("hiddenBlackFilter");
     formPanelUserProposalPanel.innerHTML = "";
     
     getFormDataByFormId(String(formId)).then(async (formData:FormDataDocument[])=>{

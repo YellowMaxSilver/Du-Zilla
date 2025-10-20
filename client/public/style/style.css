@@ -434,6 +434,26 @@ body{
     transition: 0.2s;
 }
 
+.popUpPanel{
+    width: calc(50% - 40px);
+    height: calc(100% - 70px - 20px);
+    background-color: var(--bass_color);
+    background-image: var(--containerEffect2);
+    border-radius: 10px;
+    position: fixed;
+    z-index: 5;
+    top: 60px;
+    left: 50%;
+    padding:  10px 20px 10px 20px;
+    display: block;
+    transition: 1s;
+}
+
+.hiddenPopUpPanel{
+    left: calc(100vw);
+    transition: 1s;
+}
+
 /* Newwwwwwwwwwwwwwwwww */
 
 .globalBox{
