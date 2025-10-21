@@ -20,7 +20,7 @@ import { MessageDocument } from './database/interface/messageInterface';
 import contactRouter from './database/contact';
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 const COLLECTION_NAME = "portfolios"
 
 // Serve arquivos estáticos do build Vite

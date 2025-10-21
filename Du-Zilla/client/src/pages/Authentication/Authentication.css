@@ -1,0 +1,106 @@
+.mainBox{
+    width: 100%;
+    height: 100vh;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    top: 0;
+    /* background-image: radial-gradient(500px,var(--soloBassColor),var(--bass_color)); */
+    display: flex;
+    align-items: center;
+}
+
+.darkTitle{
+    color: var(--bass_color);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 55px;
+    margin-left: 30px;
+    margin-top: 40px;
+    font-weight: 150;
+    word-break:normal; 
+}
+
+.signBox{
+    width: calc(40% + 20px);
+    height: 100%;
+    background-color: var(--bass_color);
+    background-image: var(--containerEffect2);
+    position: relative;
+    overflow-y: auto;
+}
+
+.infoBox{
+    width: 60%;
+    height: 100%;
+    background-image: url('../images/Du-Zilla-White-Vertical-Background.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-right: -5px;
+}
+
+.linkText{
+    color: rgb(0, 110, 255);
+    text-decoration: underline;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-top: 10px;
+}
+
+.signInput{
+           background-color: #00000000; 
+           border-bottom: 1px solid var(--white_normal_color);
+           border-right: 0px;
+           border-left: 0px;
+           border-top: 0px;
+           color: var(--white_normal_color);
+           outline: none;
+           height: 40px;
+           width: 80%;
+           margin-left: 10%;
+           font-size: 20px;
+}
+
+.signInputInvalid{
+    border-color: var(--alertColor);
+}
+
+.loginButton{
+    height: 50px;
+    width: 200px;
+    background-color: #00000000;
+    border: 2px solid var(--whiteTextColor);
+    border-radius: 5px;
+    color: var(--whiteTextColor);
+    display: flex;justify-content: center;align-items: center;
+    cursor: pointer;
+    margin-left: auto;margin-right: auto;
+    margin-top: 50px;
+    transition: 0.2s;
+}
+
+.loginButton:hover{
+    background-color: var(--soloColor);
+    background-image: var(--containerEffect2);
+    border: 2px solid var(--soloColor);
+    color: var(--white_normal_color);
+    transition: 0.2s;
+}
+
+.visibilityButton{
+    width: 30px;
+    height: 30px;
+    background-image: url("../images/visibility_off.png");
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+}
+
+
+.visibilityButtonVisible{
+    width: 30px;
+    height: 30px;
+    background-image: url("../images/visibility.png");
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+}

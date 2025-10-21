@@ -1,0 +1,12 @@
+npm install react@18 react-dom@18
+
+# 2. Instalação do React Router DOM (v6, versão mais recente)
+npm install react-router-dom@6
+
+# 3. Instalação das Tipagens (AQUI ESTÁ A CORREÇÃO PRINCIPAL)
+# Não use @6 no @types. O pacote @latest já corresponde à v6 do RRD.
+npm install -D @types/react@18 @types/react-dom@18 @types/react-router-dom
+
+
+#secret 
+set the dependencies to old version, then use npm install
