@@ -6,8 +6,8 @@
     "react-router-dom": "6"
   },
   "srcipts": {
-    "dev:backend": "cd clound & ts-node-dev server.ts",
-    "dev:frontend": "cd du-zilla & cd client & npm start",
+    "dev:backend": "cd clound & npm run dev",
+    "dev:frontend": "cd du-zilla/client & npm start",
     "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\""
   },
   "devDependencies": {

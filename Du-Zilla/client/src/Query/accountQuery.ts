@@ -1,5 +1,5 @@
 import { getPortfolioById } from "./portfolioQuery";
-import type { AccountDocument } from "../../../../Clound/database/interface/accountInterface";
+import type { AccountDocument } from "./interface/accountInterface";
 
 type Process = (success:boolean, status:number) => void;
 
@@ -67,7 +67,7 @@ export async function getAccountByNameId(nameId:string):Promise<AccountDocument>
 
 type User = (userUid:string|null) => void;
 
-export async function getCurrentSession(call:User){
+export async function getCurrentSession(): Promise<string|null>{
     try{
         const res = await fetch(`${DuZillaClound}/api/account/getcurrentsession`,{
             method: "GET",
@@ -77,53 +77,55 @@ export async function getCurrentSession(call:User){
             }
         })
         if(res.status == 200){
-            res.json().then(data=>{
-                console.log("aaa:",data.message);
-                call(data.message);
-            })
+            const results = await res.json();
+            if(results.logged){
+                return results.uid;
+            }else{
+                return null;
+            }
         }else{
-            console.log("no account cookie", await res.json());
-            call(null)
+            throw new Error(`Error: ${res.status} ${(await res.json()).message}`);
         }
     }catch(e){
         console.log("error to get account: ",e)
-        call(null)
+        // throw e;
+        return null;
     }
 }
 
-export function verifyIfUserIsOwnerOfPortfolio(portfolioId:string, callback:(isOwner:boolean)=>void){
-    let currentSession:string|null = null;
-    let portfolioCreatorId:string|null = null;
+// export function verifyIfUserIsOwnerOfPortfolio(portfolioId:string, callback:(isOwner:boolean)=>void){
+//     let currentSession:string|null = null;
+//     let portfolioCreatorId:string|null = null;
 
-    getCurrentSession((session)=>{
-        console.log("session "+session);
-        currentSession = session;
+//     getCurrentSession((session)=>{
+//         console.log("session "+session);
+//         currentSession = session;
 
-        getPortfolioById(portfolioId).then(portfolio=>{
-            portfolioCreatorId = portfolio.creator;
-            console.log("creator: "+portfolioCreatorId+" "+portfolio.creator);
+//         getPortfolioById(portfolioId).then(portfolio=>{
+//             portfolioCreatorId = portfolio.creator;
+//             console.log("creator: "+portfolioCreatorId+" "+portfolio.creator);
         
-            if(currentSession == null){
-                console.error("null current session");
-                callback(false);
-            }
-            if(portfolioCreatorId == null){
-                console.error("null portfolio id")
-                callback(false);
-            }
+//             if(currentSession == null){
+//                 console.error("null current session");
+//                 callback(false);
+//             }
+//             if(portfolioCreatorId == null){
+//                 console.error("null portfolio id")
+//                 callback(false);
+//             }
 
-            if(currentSession == portfolioCreatorId){
-                callback(true);
-            }else{
-                console.error("user is not the owner of the portfolio");
-                callback(false);
-            }   
-        }).catch(error=>{
-            console.error(error);
-            callback(false);
-        });
-    })
-}
+//             if(currentSession == portfolioCreatorId){
+//                 callback(true);
+//             }else{
+//                 console.error("user is not the owner of the portfolio");
+//                 callback(false);
+//             }   
+//         }).catch(error=>{
+//             console.error(error);
+//             callback(false);
+//         });
+//     })
+// }
 
 export async function searchUserByNameOrNameId(query:string):Promise<AccountDocument[]|null>{
     try{

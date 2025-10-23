@@ -64,9 +64,13 @@ import { AccountDocument } from "./interface/accountInterface";
             const currentSession = req.cookies["session"];
             const descodedClains = await admin.auth().verifySessionCookie(currentSession, true);
 
-            res.status(200).json({message:descodedClains.uid})
+            if(descodedClains.uid){
+                res.status(200).json({logged:false,uid:descodedClains.uid})
+            }else{
+                res.status(200).json({logged:false,uid:descodedClains.uid})
+            }
         }catch(e){
-            res.status(401).json({message:`error: ${e}`})
+            res.status(401).json({message:`Server error: ${e}`})
         }
     })
 

@@ -1,61 +1,66 @@
 import React, { useRef, useEffect, useLayoutEffect, useState} from 'react'
 import "../style.css"
-import { PopUpPanel } from '../Widgets';
+import "../thunbnail.css"
+import { CreateThunbNail, PopUpPanel, ThunbNail, TopNavBar } from '../Widgets';
 import { title } from 'process';
 import { getAllPortfolios } from '../../Query/portfolioQuery';
 import { PortfolioDocument } from '../../Query/interface/portfolioInterface';
+import { JsxElement } from 'typescript';
 
 console.log("hello");
 
 const TemplatePanel:React.FC = ()=>{
   return(
-    <div>
-
+    <div className='thunbsLayoutInPanel'>
+      <CreateThunbNail width='280px' height='150px'></CreateThunbNail>
+      <ThunbNail width='280px' height='150px' title='portfolio teste' description='' rateLevel={0} userTab={false}></ThunbNail>
+      <ThunbNail width='280px' height='150px' title='portfolio teste' description='' rateLevel={0} userTab={false}></ThunbNail>
     </div>
   )
 }
 
-const getPortfolios = async () =>{
+const getPortfolios = async ():Promise<PortfolioDocument[]> =>{
   try{
     const Portfolios:PortfolioDocument[] = await getAllPortfolios();
-    console.log(Portfolios)
+    
+    if(!Portfolios){
+      throw new Error("thers no portfolios");
+    }
+
+    return Portfolios;
   }catch(err){
-    console.error("deu ruin:",err);
+    throw new Error("Error: "+err);
   }
 }
+
 
 function Home() {
   // const popUpPanel = useRef<React.FC|null>(null);
   const firstNotification = useRef<boolean>(false);
 
-
-  getPortfolios();
   const {PopUpPanelElement, activePopUpPanel} = PopUpPanel();
+ 
+  const [portfolios, setPortfolios] = useState<PortfolioDocument[]>([])
+  useEffect(()=>{
+    const loadData = async ()=>{
+      try{
+        const tryingPortfolios = await getPortfolios();
+        setPortfolios(tryingPortfolios);
+      }catch(err){
+        console.log("haha: "+err);
+      }finally{
+
+      }
+    }
+
+    loadData()
+  },[]);
+
+  
   return (
     <div>
     <title>Du-Zilla</title>
-    <nav className="topNav">
-      <h2 className="titleIcon">Du-Zilla</h2>
-      <div className="loadingBox" id="loadingBox"><div className="loadingIcon3"></div></div>
-      <div className="accountBox" id="logedBox" style={{display: "none"}}>        
-        <div className="icon"></div>
-        <p className="normal_text" id="accountName">Account Name</p>
-        <div className="arrowDownIcon" id="accountDropDownButton"></div>
-        <ul className="accountDropDown" id="accountDropDown">
-          <li><a href="/account"><div className="dropDownIcon accountIcon"></div><h4 className="normal_text">My Account</h4></a></li>
-          <li><a href="/studio/my-projects"><div className="dropDownIcon projectsIcon"></div><h4 className="normal_text">My Projects</h4></a></li>
-          <li><a href="/notification"><div className="dropDownIcon notificationIcon"></div><h4 className="normal_text">Notification</h4></a></li>
-          <li><a href="/messager"><div className="dropDownIcon messagerIcon"></div><h4 className="normal_text">Messager</h4></a></li>
-          <li><a href="/account/settings"><div className="dropDownIcon settingsIcon"></div><h4 className="normal_text">Settings</h4></a></li>
-          <li><a href="/help"><div className="dropDownIcon helpIcon"></div><h4 className="normal_text">Help</h4></a></li>
-          <li><a href="/logout"><div className="dropDownIcon helpIcon"></div><h4 className="normal_text">Log out</h4></a></li>
-        </ul>
-      </div>
-      <div className="signButtonsBox" id="notLogedBox" style={{display:"none"}}>  
-          <a href="login"><div className="signInButton"><h4 className="normal_text">Sign in</h4></div></a>
-          <a href="register"><div className="signUpButton"><h4 className="normal_text">Sign Up</h4></div></a>
-      </div>
-    </nav>
+    <TopNavBar />
 
     <PopUpPanelElement title="Create Portfolio" Content={TemplatePanel}></PopUpPanelElement>
 
@@ -79,7 +84,17 @@ function Home() {
     </section>
 
     <section className="thunbsSection" id="portfoliosThunbNails" style={{marginTop: "40px"}}>
-
+    {
+      portfolios.map( (portfolio:PortfolioDocument) =>(
+        <div key={String(portfolio._id)}>
+        { }
+        <ThunbNail
+         width='380px' height='280px'
+         title={portfolio.name} userUid={portfolio.creator} rateLevel={0} userTab={true}
+        ></ThunbNail>
+        </div>
+      ))
+    }
     </section>
     </div>
   )

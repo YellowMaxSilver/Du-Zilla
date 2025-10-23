@@ -5,11 +5,15 @@ import App from './App';
 import AppRoutes from './AppRoutes';
 import reportWebVitals from './reportWebVitals';
 
+import Notification from './pages/Notification/Notification';
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
+    <Notification />
     <AppRoutes />
   </React.StrictMode>
 );

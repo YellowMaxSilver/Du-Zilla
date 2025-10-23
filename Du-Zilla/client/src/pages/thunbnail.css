@@ -1,0 +1,226 @@
+@import url(style.css);
+
+.thunbsSection{  
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: row;
+    gap: 40px 0px;
+    /* flex-wrap: wrap;
+    gap: 30px;
+    justify-content: space-around;
+    padding: 20px 0;
+    padding-left: 40px; */
+}
+
+.thunbsLayoutInPanel{
+    width: calc(100% - 20px);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    padding: 0px;
+    gap: 40px 40px;
+    padding-left: 20px;
+    padding-top: 20px;
+}
+
+.thunbMainBox{ 
+    position: relative;
+    width: 360px;
+    height: 230px;
+    cursor: pointer;
+    overflow:hidden;
+    border-radius: 20px;
+    margin-right: 20px;
+}
+
+.thunbMainBox .userIcon{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.createThunbBox{
+    position: relative;
+    width: 360px;
+    height: calc(230px - 4px);
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 20px;
+    border: 2px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@keyframes loadingEffect {
+    0%{background-color: #1d1d1d;opacity: 0.3;}
+    100%{background-color: #000000;opacity: 0.5;}
+}
+
+.loadingThunbNailBox{
+    position: relative;
+    width: 360px;
+    height: 280px;
+    animation-name: loadingEffect;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    background-image: var(--containerEffect2);
+    margin-right: 40px;
+    box-sizing: border-box;
+}
+
+.thunbBanner{
+    width: 100%; 
+    height: 190px;
+    background-color: #000000;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;  
+    margin-bottom: -20px;
+}
+
+.thunbInfoBox{
+    width: 100%;
+    height: auto;
+}
+
+.thunbTitleBox{
+    width: 100%;
+    background-color: var(--bass_color);
+    min-height: 60px;
+    height: auto;
+    display: flex;
+    align-items: center;
+}
+
+.thunbUserBox{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    background-color: #0c0c0c; 
+    position: relative; 
+}
+
+.thunbUserBox .thunbUserImage{
+    /* background-image: url('../images/user-icon.jpg'); */
+    border-radius: 100px;
+    width: 40px;
+    height: 40px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size:100%;
+    margin-left: 10px; 
+}
+
+.rateBox{
+    display: flex;
+    position: absolute;
+    right: 0;
+    margin-right: 10px;
+}
+
+.emptyStarRate{
+    width: 23px;
+    height: 23px;
+    background-image: url("./images/star_rate_icon.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.starRate{
+    width: 23px;
+    height: 23px;
+    background-image: url("./images/star_rate_all_icon.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.halfStarRate{
+    width: 23px;
+    height: 23px;
+    background-image: url("./images/star_rate_half_icon.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.redAlertIcon{
+    width: 23px;
+    height: 25px;
+    background-image: url("./images/red_alert_icon.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.yellowAlertIcon{
+    width: 23px;
+    height: 25px;
+    background-image: url("./images/yellow_alert_icon.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.noRateIcon{
+    width: auto;
+    height: auto;
+    padding: 5px;
+    border: 2px solid var(--soloColor);
+    color: var(--soloColor);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;   
+    word-break:normal;  
+    font-size: 13px;
+}
+
+.verifiedIcon{
+    width: 23px;
+    height: 25px;
+    background-image: url("./images/verified_icon.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+/* templateThunbNail */
+
+.templateThunbNail{
+    width: 250px;
+    height: 300px;
+    background-color: var(--soloColor);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    position: relative;
+    background-image: url('./images/image-icon.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.templateThunbNailNameBox{
+    background-color: black;
+    width: calc(100% - 10px);
+    height: 20%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;  
+    color:var(--white_normal_color); 
+    word-break:normal; 
+    font-size: 17px; 
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+}
