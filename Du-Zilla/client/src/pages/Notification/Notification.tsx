@@ -2,71 +2,178 @@ import React, { useEffect, useRef, useState } from "react";
 import "../style.css"
 import "./Notification.css"
 import { JsxElement } from "typescript";
+import ReactDOM  from "react-dom/client";
 interface NotificationProps{
     icon?:string,
     text:string
 }
 
  
-export const useDefaultNotification = (section:React.RefObject<HTMLDivElement>)=>{
-      
-      const [notification, addNewNotification] = useState<JSX.Element[]>([]);
-      const newNotification = () =>{
-        const randomId = "notification"+Math.floor(Math.random() * (999 - 1 + 1)) + 1;
-        const element = (
-            <div className="notification_box hiddenNotificationBox" id={randomId} key={randomId}>
-                    <div className="closeIcon"></div>
-                    <div className="notification_icon"></div>
-                    <div className="notification_text">
-                      <h3 className="normal_text">
-                        {/* {text} */}
-                      </h3>
-                    </div>
-            </div>);
 
-        addNewNotification((prevItens)=> [element, ...prevItens])
-          
-        setTimeout(()=>{
-          const container = section.current;
-          if(container){
-              let element = container.querySelector("#"+randomId) as HTMLDivElement;
-              if(element){
-                element.classList.remove("hiddenNotificationBox");
-                console.log("showsss")
-              }
-          }
-          setTimeout(()=>{
-            closeNotification(randomId);
-          },3000);
-        },100)
-      }
-      function closeNotification(elementId:string){
-        const container = section.current;
-        if(container){
-          let element = container.querySelector("#"+elementId) as HTMLDivElement;
-          if(element){
-            element.classList.add("hiddenNotificationBox");
-            console.log("hidden",element.classList)
-          }
-        }
-      }
-
-      return{
-        notification,
-        newNotification
-      }
-}
 
 function Notification(){
-    const section = useRef<HTMLDivElement>(null);
-    const { notification, newNotification } = useDefaultNotification(section);
+  const newNotification = (message:string)=>{
+    const notificationSection = document.querySelector("#notificationSection") as HTMLDivElement;
+    const id = "ntf"+String(Math.floor(Math.random() * (999999999 - 10 + 1)) + 10);
+    if(notificationSection){
+      notificationSection.insertAdjacentHTML("beforeend",`
+                    <box class="notification_box hiddenNotificationBox" id="${id}">
+                      <div id="closeButton" class="closeIcon"></div>
+                      <div class="notificationIcon dzIcon"></div>
+                      <div class="notification_text">
+                        <h3 class="normal_text" >
+                          ${message}
+                        </h3>
+                      </div>
+                    </box>`);
+    }
+    setTimeout(()=>{
+      const notificationElement = document.querySelector(`#${id}`) as HTMLDivElement;
+      if(notificationElement){
+        notificationElement.classList.remove("hiddenNotificationBox");
+        const closeButton = notificationElement.querySelector(`#closeButton`);
+        if(closeButton){
+          closeButton.addEventListener("click",()=>{closeNotification(id)})
+        }
+      }
+    },100)
+    setTimeout(()=>{closeNotification(id)},5000)
+  }
 
-    return(
-        (<div className="notificationSection" ref={section}>
-          <button onClick={newNotification}>Hello?</button>
-          {notification}
-        </div>)
-    )
+  const newSuccessNotification = (message:string)=>{
+    const notificationSection = document.querySelector("#notificationSection") as HTMLDivElement;
+    const id = "ntf"+String(Math.floor(Math.random() * (999999999 - 10 + 1)) + 10);
+    if(notificationSection){
+      notificationSection.insertAdjacentHTML("beforeend",`
+                    <box class="notification_box hiddenNotificationBox" id="${id}">
+                      <div id="closeButton" class="closeIcon"></div>
+                      <div class="notificationIcon successIcon"></div>
+                      <div class="notification_text">
+                        <h3 class="normal_text" >
+                          ${message}
+                        </h3>
+                      </div>
+                    </box>`);
+    }
+    setTimeout(()=>{
+      const notificationElement = document.querySelector(`#${id}`) as HTMLDivElement;
+      if(notificationElement){
+        notificationElement.classList.remove("hiddenNotificationBox");
+        const closeButton = notificationElement.querySelector(`#closeButton`);
+        if(closeButton){
+          closeButton.addEventListener("click",()=>{closeNotification(id)})
+        }
+      }
+    },100)
+    setTimeout(()=>{closeNotification(id)},5000)
+  }
+
+  const newErrorNotification = (message:string)=>{
+    const notificationSection = document.querySelector("#notificationSection") as HTMLDivElement;
+    const id = "ntf"+String(Math.floor(Math.random() * (999999999 - 10 + 1)) + 10);
+    if(notificationSection){
+      notificationSection.insertAdjacentHTML("beforeend",`
+                    <box class="notification_box hiddenNotificationBox" id="${id}">
+                      <div id="closeButton" class="closeIcon"></div>
+                      <div class="notificationIcon errorIcon"></div>
+                      <div class="notification_text">
+                        <h3 class="errorText normal_text" >
+                          ${message}
+                        </h3>
+                      </div>
+                    </box>`);
+    }
+    setTimeout(()=>{
+      const notificationElement = document.querySelector(`#${id}`) as HTMLDivElement;
+      
+      if(notificationElement){
+        notificationElement.classList.remove("hiddenNotificationBox");
+        const closeButton = notificationElement.querySelector(`#closeButton`);
+        if(closeButton){
+          closeButton.addEventListener("click",()=>{closeNotification(id)})
+        }
+      }
+    },100)
+    setTimeout(()=>{closeNotification(id)},5000);
+  }
+
+  const newLoadingNotification = (message:string)=>{
+    const notificationSection = document.querySelector("#notificationSection") as HTMLDivElement;
+    const id = "ntf"+String(Math.floor(Math.random() * (999999999 - 10 + 1)) + 10);
+    if(notificationSection){
+      notificationSection.insertAdjacentHTML("beforeend",`
+                    <box class="notification_box hiddenNotificationBox" id="${id}">
+                      <div id="closeButton" class="closeIcon"></div>
+                      <div class="notificationIcon loadingIcon3"></div>
+                      <div class="notification_text">
+                        <h3 class="normal_text" >
+                          ${message}
+                        </h3>
+                      </div>
+                    </box>`);
+    }
+    setTimeout(()=>{
+      const notificationElement = document.querySelector(`#${id}`) as HTMLDivElement;
+      
+      if(notificationElement){
+        notificationElement.classList.remove("hiddenNotificationBox");
+        const closeButton = notificationElement.querySelector(`#closeButton`);
+        if(closeButton){
+          closeButton.addEventListener("click",()=>{closeNotification(id)})
+        }
+      }
+    },100)
+    return id;
+  }
+
+  const newSignNotification = (message?:string)=>{
+    const notificationSection = document.querySelector("#notificationSection") as HTMLDivElement;
+    const id = "ntf"+String(Math.floor(Math.random() * (999999999 - 10 + 1)) + 10);
+    if(notificationSection){
+      notificationSection.insertAdjacentHTML("beforeend",`
+                    <box class="notification_box hiddenNotificationBox" id='${id}'>
+                <div id="closeButton" class="closeIcon"></div>
+                <div class="notificationIcon dzIcon"></div>
+                <div class="notification_text" style="padding:10px">
+                  <h4 class="normal_text">
+                    ${message}
+                  </h4>
+                  <div class="notificationButtons">
+                    <a href="login"><div class="signInButton"><h4 class="normal_text">Login</h4></div></a>
+                    <a href="register"><div class="signUpButton"><h4 class="normal_text">Register</h4></div></a>
+                  </div>
+                </div>
+              </box>`);
+    }
+    setTimeout(()=>{
+      const notificationElement = document.querySelector(`#${id}`) as HTMLDivElement;
+      
+      if(notificationElement){
+        notificationElement.classList.remove("hiddenNotificationBox");
+        const closeButton = notificationElement.querySelector(`#closeButton`);
+        if(closeButton){
+          closeButton.addEventListener("click",()=>{closeNotification(id)})
+        }
+      }
+    },100)
+    return id;
+  }
+
+  const closeNotification = (id:string)=>{
+    const notificationElement = document.querySelector(`#${id}`) as HTMLDivElement;
+    if(notificationElement){
+      notificationElement.classList.add("hiddenNotificationBox");
+      setTimeout(()=>{notificationElement.style.display = "none"},500);
+    }
+  }
+  return{
+    newNotification,
+    newSuccessNotification,
+    newErrorNotification,
+    newSignNotification,
+    newLoadingNotification,
+    closeNotification
+  }
 }
 
 export default Notification;

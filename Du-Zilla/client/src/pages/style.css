@@ -38,9 +38,10 @@
     --brightColorHover:#afafaf;
     --white_normal_color: rgb(218,218,218);
     --soloColor: #0051ff;
+    --textSoloColor: #3776ff;
     --soloColorHover: #003ed1;
     --blurSize:5px;
-    --shadowColor:#020202b9;
+    --shadowColor:#02020254;
     --shadowSize:10px;
     --grayTextNormalColor:#535353;
     --alertColor:#cf2f21;
@@ -277,6 +278,14 @@ body{
     transition: 1s;
 }
 
+.dzIcon{
+    width:100px;
+    height:100px;
+    background-image: url('./images/Du-Zilla-icon.png');
+    background-size: cover;
+    background-position: center;
+}
+
 .userIcon{
     width:100px;
     height:100px;
@@ -356,11 +365,19 @@ body{
     background-position: center;
 }
 
-
 .notFoundIcon{
     width:100px;
     height:100px;
     background-image: url('./images/more_icon.png');
+    background-size: cover;
+    background-position: center;
+}
+
+
+.errorIcon{
+    width:100px;
+    height:100px;
+    background-image: url('./images/red_alert_icon.png');
     background-size: cover;
     background-position: center;
 }
@@ -382,10 +399,12 @@ body{
 
 .popUpPanel{
     width: calc(50% - 40px);
+    max-width: 600px;
     height: calc(100% - 70px - 20px);
     background-color: var(--bass_color);
     background-image: var(--containerEffect2);
-    border-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
     position: fixed;
     z-index: 5;
     top: 60px;
@@ -418,12 +437,146 @@ body{
 }
 
 .popUpPanel .panel{
-    width: 100%;
-    height: calc(100% - 160px);
+    width: calc(100% - 40px);
+    height: calc(100% - 160px - 40px);
     background-color: var(--bassColorHover);
     background-image: var(--containerEffect2);
     border-radius: 20px;
     margin-top: 20px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    position: relative;
+    padding: 20px;
+}
+
+.popUpPanel .panel .panelTitle{
+    width: 100%;
+    height: 40px;
+    border-bottom: 1px solid var(--grayTextNormalColor);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.popUpPanel .panel .attribute{
+    width: 100%;
+    min-height: 50px;
+    border-bottom: 1px solid var(--grayTextNormalColor);
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+
+.popUpPanel .panel .attribute .text{
+    width: 140px;
+    height: 100%;
+    word-break: normal;
+}
+
+.popUpPanel .panel .attribute input{
+    width: 100%;
+    height: 25px;
+    outline: none;
+    border-radius: 5px;
+    border: 0px;
+    font-size: 20px;
+    padding: 5px;
+}
+
+.popUpPanel .panel .attribute textarea{
+    width: 100%;
+    height: 100px;
+    outline: none;
+    border-radius: 5px;
+    border: 0px;
+    font-size: 20px;
+    padding: 5px;
+    color: var(--darkTextColor);
+    resize: vertical;
+    font-weight: 100;
+}
+
+.popUpPanel .panel .attribute .portfolioPreview{
+    width: 400px;
+    height: 260px;
+    background-color: #000000;
+    margin-left: auto;margin-right: auto;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.createPortfolioButton{
+    width: 100%;
+    height: 40px;
+    background-color: var(--soloColor);
+    background-image: var(--containerEffect2);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.normalButton{
+    width: 100%;
+    height: 40px;
+    border: 2px solid var(--soloColor);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.normalButton h4{
+    color: var(--textSoloColor);
+}
+
+.deletePortfolioButton{
+    width: 100%;
+    height: 40px;
+    background-color: var(--alertColor);
+    background-image: var(--containerEffect2);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.spinnerButton{
+    width: calc(50% - 10px);
+    height: 40px;
+    border: 2px solid var(--whiteTextColor);
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 10px;
+    cursor: pointer;
+}
+
+.spinnerButton .arrowDownIcon{
+    width: 35px;
+    height: 35px;
+    border-radius: 40px;
+    transition: 0.5s;
+}
+
+.spinnerButton .arrowDownIcon:hover{
+    width: 35px;
+    height: 35px;
+    transition: 0.5s;
+    background-color: var(--bassColorHover);
+}
+
+.inactiveCreatePortfolioButton{
+    background-color: var(--grayTextNormalColor);
+    transition: 0.5s;
 }
 
 .hiddenPopUpPanel{
@@ -492,6 +645,7 @@ body{
     width: 30px;height: 30px;
     border-radius: 30px;
 }
+
 
 .accountBox .arrowDownIcon, .accountBox .arrowUpIcon{
     width: 30px;
@@ -701,6 +855,10 @@ body{
     color:var(--bass_color); 
     font-weight: 150;
     word-break:normal; 
+}
+
+.errorText{
+    color: var(--alertColor);
 }
 
 .normal_button{

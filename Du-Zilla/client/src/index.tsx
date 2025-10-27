@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import AppRoutes from './AppRoutes';
 import reportWebVitals from './reportWebVitals';
+import "./pages/Notification/Notification.css"
 
 import Notification from './pages/Notification/Notification';
 
@@ -13,10 +14,10 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <Notification />
     <AppRoutes />
   </React.StrictMode>
 );
+
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
