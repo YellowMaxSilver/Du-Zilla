@@ -5,9 +5,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from './pages/Home/Home'; 
 import Login from './pages/Authentication/Login';
 import Register from './pages/Authentication/Register';
-
+import PortfolioView from './pages/PortfolioView/PortfolioView';
 import PortfolioPanel from './pages/PortfolioPanel/PortfolioPanel';
-// import Sobre from './Sobre';
+import PortfolioEditor from './pages/PortfolioEditor/PortfolioEditor';
+
 import NotFound from './pages/NotFound/NotFound'; 
 
 const AppRoutes: React.FC = () => {
@@ -17,9 +18,9 @@ const AppRoutes: React.FC = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        {/* <Route path="/sobre" element={<Sobre />} /> */}
-
+        <Route path="/portfolio" element={<PortfolioView />} />
         <Route path="/studio/portfolio/panel" element={<PortfolioPanel />} />
+        <Route path="/studio/portfolio/editor" element={<PortfolioEditor />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

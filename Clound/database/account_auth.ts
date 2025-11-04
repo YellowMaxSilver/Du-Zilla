@@ -65,7 +65,7 @@ import { AccountDocument } from "./interface/accountInterface";
             const descodedClains = await admin.auth().verifySessionCookie(currentSession, true);
 
             if(descodedClains.uid){
-                res.status(200).json({logged:false,uid:descodedClains.uid})
+                res.status(200).json({logged:true,uid:descodedClains.uid})
             }else{
                 res.status(200).json({logged:false,uid:descodedClains.uid})
             }
@@ -85,7 +85,8 @@ import { AccountDocument } from "./interface/accountInterface";
                 httpOnly:true,
                 secure:false,
                 sameSite:"lax",
-                path:"/"
+                path:"/",
+                domain: "localhost"
             });
             
             res.status(200).json({message:`current session set`})

@@ -3,15 +3,18 @@ import "../style.css"
 import "./Authentication.css"
 import {signInWithEmailAndPassword} from "firebase/auth"
 import { auth } from './firebase_settings'
+import Notification from '../Notification/Notification'
 // import { notification } from "./notification";
 
 
 
 function Login(){
+    const {newErrorNotification, newSuccessNotification, newLoadingNotification, closeNotification} = Notification();
     const email = useRef<HTMLInputElement|null>(null);
     const password = useRef<HTMLInputElement|null>(null);
 
     const login = async ()=>{
+        const loadNotificationId = newLoadingNotification("Entrando na conta");
         if(!email.current?.value || !password.current?.value){
             return;
         }
@@ -32,17 +35,21 @@ function Login(){
         
             if(res.status == 200){
                 console.log("success");
+                newSuccessNotification("Conta logada com sucesso :)");
             }else{
                 console.log("error: ", "Server error. Try again later.")
             }
         }catch(error){
-        console.log("error to login",error);
+            console.log("error to login",error);
+            newErrorNotification("Email ou Senha inválidos.");
+        }finally{
+            closeNotification(loadNotificationId);
         }
     }
 
     return(
         <div className="mainBox">
-
+            <div className='notificationSection' id='notificationSection'></div>
             <div className="infoBox">
                 <h1 className="title" style={{marginTop: "10px",marginLeft: "30px"}}>Du-Zilla</h1>
                 <h1 className="darkTitle">Hello! Welcome back to Du-Zila</h1>

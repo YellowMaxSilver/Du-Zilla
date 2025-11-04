@@ -411,8 +411,9 @@ body{
     left: 0;
     padding:  10px 20px 10px 20px;
     display: block;
-    transition: 1s;
+    transition: 0.5s;
 }
+
 
 .popUpPanel .topTitle{
     width: 100%;
@@ -439,7 +440,7 @@ body{
 .popUpPanel .panel{
     width: calc(100% - 40px);
     height: calc(100% - 160px - 40px);
-    background-color: var(--bassColorHover);
+    background-color: #181818;
     background-image: var(--containerEffect2);
     border-radius: 20px;
     margin-top: 20px;
@@ -464,6 +465,7 @@ body{
     display: flex;
     gap: 20px;
     align-items: center;
+    justify-content: space-between;
     margin-bottom: 20px;
     padding-bottom: 20px;
 }
@@ -474,7 +476,7 @@ body{
     word-break: normal;
 }
 
-.popUpPanel .panel .attribute input{
+.popUpPanel .panel .attribute .attributeInputText{
     width: 100%;
     height: 25px;
     outline: none;
@@ -529,6 +531,7 @@ body{
     justify-content: center;
     cursor: pointer;
     transition: 0.5s;
+    color: var(--text);
 }
 
 .normalButton h4{
@@ -549,7 +552,7 @@ body{
 }
 
 .spinnerButton{
-    width: calc(50% - 10px);
+    width: 100%;
     height: 40px;
     border: 2px solid var(--whiteTextColor);
     border-radius: 20px;
@@ -581,7 +584,36 @@ body{
 
 .hiddenPopUpPanel{
     left: -50vw;
-    transition: 1s;
+    transition: 0.5s;
+}
+
+.spinnerDropDown{
+    width: 100%;
+    background-color: var(--bass_color);
+    border: 1px solid var(--grayTextNormalColor);
+    border-radius: 3px;
+    position: absolute;
+    z-index: 6;
+    display: none;
+    flex-direction: column;
+    list-style-type: none;
+    padding: 0;
+    overflow-y: auto;
+}
+
+.spinnerDropDown li{
+    width: calc(100% - 5px);
+    height: 50px;
+    display: flex;align-items: center;gap: 10px;
+    justify-content: center;
+    padding-left: 5px;
+    cursor: pointer;
+    color: var(--whiteTextColor);
+    border-bottom: 1px solid var(--grayTextNormalColor);
+}
+
+.spinnerDropDown li:hover{
+    background-color: var(--bassColorHover);
 }
 
 /* Newwwwwwwwwwwwwwwwww */
@@ -667,7 +699,7 @@ body{
     background-image: var(--containerEffect2);
     padding: 0;
     position: absolute;
-    top: 25px;
+    top: 33px;
     right: 0;
     list-style-type: none;
 }
@@ -693,8 +725,9 @@ body{
 
 .accountBox .accountDropDown .dropDownIcon{
     width: 30px;height: 30px;
-    border: 2px solid green;
 }
+
+
 
 .signInButton{
     width: 100px;
@@ -747,51 +780,11 @@ body{
 }
 
 
-.choseTemplatePanel{
-    width: calc(100% - 160px);
-    height: calc(100vh - 220px);
-    position: fixed;
-    margin-top: 40px;
-    margin-left: 40px;
-    z-index: 3;
-    padding: 40px;
-    overflow-y: auto;
-}
-
-.searchTemplateBox{
-    width: 100%;
-    height: 70px;
-    display: flex;
-    align-items: center;
-}
-
-.templatesThunbnailLayout{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 100px;
-    margin-top: 20px;
-}
-
 
 
 /*Newwwwwwwwwwwwwwwwww */
 
 
-.navBar{
-    background-color: rgb(70, 70, 70);
-    width: 100%;
-    height: 50px;
-    top: 0;
-    left: 0;
-    margin-top: 49px;
-    position: absolute;
-    z-index: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
 /* Search */
 

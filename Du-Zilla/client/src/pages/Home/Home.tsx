@@ -2,13 +2,14 @@ import React, { useRef, useEffect, useLayoutEffect, useState} from 'react'
 import "../style.css"
 import "../thunbnail.css"
 import "../Notification/Notification.css"
-import { CreateThunbNail, ThunbNail, ThunbNailProject, TopNavBar } from '../Widgets';
+import { CreateThunbNail, Spinner, ThunbNail, ThunbNailProject, TopNavBar } from '../Widgets';
 import { title } from 'process';
-import { getAllPortfolios } from '../../Query/portfolioQuery';
-import { PortfolioDocument } from '../../Query/interface/portfolioInterface';
+import { createNewPortfolio, getAllPortfolios, getAllPortfoliosProjectsByUid } from '../../Query/portfolioQuery';
+import { PortfolioDocument, PortfolioInput } from '../../Query/interface/portfolioInterface';
 import { JsxElement } from 'typescript';
 import Notification from '../Notification/Notification';
-console.log("hello");
+import { getCurrentSession, getAccountByUid } from '../../Query/accountQuery';
+import { AccountDocument } from '../../Query/interface/accountInterface';
 
 const TemplatePanel:React.FC = ()=>{
   return(
@@ -39,11 +40,10 @@ interface NotificationProps{
 }
 
 function Home() {
-  const { newNotification, newErrorNotification, newLoadingNotification, newSignNotification } = Notification();
-
-  // const popUpPanel = useRef<React.FC|null>(null);
-
+  const { newNotification, newSuccessNotification, newErrorNotification, newLoadingNotification, newSignNotification, closeNotification } = Notification();
+  const [Account,setAccount] = useState<AccountDocument|null>(null);
   const [portfolios, setPortfolios] = useState<PortfolioDocument[]>([])
+  const [ ownPortfolios, setOwnPortfolios] = useState<PortfolioDocument[]>([]);
   useEffect(()=>{
     const loadData = async ()=>{
       try{
@@ -58,13 +58,51 @@ function Home() {
 
     loadData()
   },[]);
+  useEffect(()=>{
+          const loadData = async () =>{
+              try{
+                  const uid:string|null = await getCurrentSession();
+                  if(!uid){
+                      setAccount(null);
+                      return;
+                  }
+                  const account:AccountDocument = await getAccountByUid(uid);
+                  setAccount(account);
+              }catch(error){
+                  setAccount(null);
+              }finally{
+  
+              }
+          }
+          loadData();
+  },[])
+  useEffect(()=>{
+    const loadData =  async () => {
+      try{
+        if(!Account){
+          return;
+        }
+        const portfolios:PortfolioDocument[] = await getAllPortfoliosProjectsByUid(Account.uid);
+
+        setOwnPortfolios(portfolios);
+      }catch(error){
+
+      }finally{
+
+      }
+    }
+
+    if(Account){
+      loadData();
+    }
+  },[Account])
 
   const templatePanel = useRef<HTMLDivElement | null>(null);
   const blackFilter = useRef<HTMLDivElement | null>(null);
+  const categoryDropDown = useRef<HTMLDivElement | null>(null);
 
   const {activeNewPortfolioPanel, hiddenNewPortfolioPanel , PopUpPanelNewPortfolios} = NewPortfolioPanel();
   const {activePortfolioPanel, hiddenPortfolioPanel, PopUpPortfolioPanel} = PortfolioPanel();
-
 
     const hiddenTemplatePanel = ()=>{
         templatePanel.current?.classList.add("hiddenPopUpPanel");
@@ -118,6 +156,20 @@ function Home() {
                               </div>
                           </div>
 
+                          {
+                            ownPortfolios.map((portfolio:PortfolioDocument)=>(
+                                <div className="thunbNailProject" onClick={()=>{
+                                  activePortfolioPanel()
+                                  hiddenTemplatePanel()
+                                  }}>
+                                    <div className="banner"></div>
+                                    <div className="titleBox">
+                                        <h4 className="normal_text">{portfolio.name}</h4>
+                                    </div>
+                                </div>
+                            ))
+                          }
+
                         </div>
                     </div>    
                 </section>
@@ -126,9 +178,15 @@ function Home() {
         );
     }
 
+
     function NewPortfolioPanel(){
+      var category:string = "Personal";
       const newPortfolioPanel = useRef<HTMLDivElement | null>(null);
       const blackFilter = useRef<HTMLDivElement | null>(null);
+      const categoryText = useRef<any | null>(null);
+      const newPortfolioTitleInput = useRef<HTMLInputElement | null>(null);
+      const newPortfolioCreatePortfolioButton = useRef<HTMLDivElement | null>(null); 
+      const termsOfUseCheckBox = useRef<HTMLInputElement | null>(null); 
       
       const hiddenNewPortfolioPanel = ()=>{
             newPortfolioPanel.current?.classList.add("hiddenPopUpPanel");
@@ -142,9 +200,56 @@ function Home() {
                 panelElement.classList.remove("hiddenPopUpPanel");
                 blackFilterElement.classList.remove("hiddenBlackFilter");
             }   
+      }
+
+      const CreatePortfolio = ()=>{
+        if(!Account){
+          newSignNotification("Você precisa de uma conta para criar um portfólios. Crie ou entre na sua conta aqui.")
+          return;
+        }
+        if(!newPortfolioTitleInput.current?.value){
+          newErrorNotification("Titulo inválido")
+          return;
+        }
+        if(!termsOfUseCheckBox.current?.checked){
+          newErrorNotification("Para criar o portfólio você precisa cocordar com os nossos termos de uso.")
+          return;
+        }
+        const loading = newLoadingNotification("Creating Portfolio");
+
+        const portfolio:PortfolioInput = {
+          name:newPortfolioTitleInput.current.value,
+          creator:Account.uid,
+          type:category,
+          visibility:"just-me",
+          code: "{!}{/!}",
+          views: 0
         }
 
-      const createPortfolio = ()=>{
+       
+        const loadData = async () => {
+          try{
+            const newPortfolio:PortfolioDocument = await createNewPortfolio(portfolio);
+            newSuccessNotification("Portfolio criado. Redirecionado");
+          }catch(error){
+            newErrorNotification("Erro para criar o portfólio. Tente novamente mais tarde.")
+          }finally{
+            closeNotification(loading)
+          }
+        }
+        //loadData()
+        console.log(portfolio);
+        
+      }
+
+
+
+      const verifyAttributes = () => {
+        if(!newPortfolioTitleInput.current?.value || !termsOfUseCheckBox.current?.checked){
+          newPortfolioCreatePortfolioButton.current?.classList.add("inactiveCreatePortfolioButton")
+        }else{
+          newPortfolioCreatePortfolioButton.current?.classList.remove("inactiveCreatePortfolioButton");
+        }
       }
 
       const PopUpPanelNewPortfolios: React.FC = () =>{
@@ -164,19 +269,24 @@ function Home() {
                       <div className="panel">
                           <div className='attribute'>
                             <h3 className='normal_text text'>Title</h3> 
-                            <input placeholder='Portfolio Title'/>
+                            <input className='attributeInputText' placeholder='Portfolio Title' ref={newPortfolioTitleInput} onChange={verifyAttributes}/>
                           </div>
 
                           <div className='attribute'>
                             <h3 className='normal_text text'>Category</h3> 
-                            <div className='spinnerButton'>
-                              <div className='icon publicIcon'></div>
-                              <h4 className='normal_text'>Category</h4>
-                              <div className='arrowDownIcon'></div>
+                            {Spinner(["Personal","Professional","Store","Other"],(selected)=>{
+                                category = selected;
+                            })}
+                          </div>
+
+                          <div className='attribute'>
+                            <div style={{display:"flex",alignItems:"center"}}>
+                              <input type='checkbox' ref={termsOfUseCheckBox} onChange={verifyAttributes}/>
+                              <h5 className='normal_text'>Eu li e concordo com os termos de uso da plataforma para criar meu portfólio.</h5>
                             </div>
                           </div>
 
-                          <div className='createPortfolioButton' onClick={createPortfolio}>
+                          <div className='createPortfolioButton inactiveCreatePortfolioButton' onClick={CreatePortfolio} ref={newPortfolioCreatePortfolioButton}>
                             <h4 className='normal_text'>
                               Create and Edit Portfolio
                             </h4>
@@ -195,112 +305,112 @@ function Home() {
       }
     }  
 
-  function PortfolioPanel(){
-      const portfolioPopUpPanel = useRef<HTMLDivElement | null>(null);
-      const blackFilter = useRef<HTMLDivElement | null>(null);
-      
-      const hiddenPortfolioPanel = ()=>{
-            portfolioPopUpPanel.current?.classList.add("hiddenPopUpPanel");
-            blackFilter.current?.classList.add("hiddenBlackFilter");
-      }
-      
-      const activePortfolioPanel = ()=>{
-            const panelElement = portfolioPopUpPanel.current;
-            const blackFilterElement = blackFilter.current;
-            if(panelElement && blackFilterElement){
-                panelElement.classList.remove("hiddenPopUpPanel");
-                blackFilterElement.classList.remove("hiddenBlackFilter");
-            }   
+    function PortfolioPanel(){
+        const portfolioPopUpPanel = useRef<HTMLDivElement | null>(null);
+        const blackFilter = useRef<HTMLDivElement | null>(null);
+        
+        const hiddenPortfolioPanel = ()=>{
+              portfolioPopUpPanel.current?.classList.add("hiddenPopUpPanel");
+              blackFilter.current?.classList.add("hiddenBlackFilter");
         }
-
-      const PopUpPortfolioPanel: React.FC = () =>{
-          const closeIconStyle:React.CSSProperties = {
-              width: 30,
-              height: 30,
-              position: "absolute",
-              top: 20,
-              right:20,
+        
+        const activePortfolioPanel = ()=>{
+              const panelElement = portfolioPopUpPanel.current;
+              const blackFilterElement = blackFilter.current;
+              if(panelElement && blackFilterElement){
+                  panelElement.classList.remove("hiddenPopUpPanel");
+                  blackFilterElement.classList.remove("hiddenBlackFilter");
+              }   
           }
-          return(
-              <div>
-                  <section className="popUpPanel hiddenPopUpPanel" ref={portfolioPopUpPanel}>
-                      <div className="closeIcon" onClick={hiddenPortfolioPanel} style={closeIconStyle}></div>
-                      <div className="topTitle"><h2 className="normal_text">Portfolio Name</h2></div>
 
-                      <div className='attribute'>
-                            <div className='createPortfolioButton inactiveCreatePortfolioButton'>
+        const PopUpPortfolioPanel: React.FC = () =>{
+            const closeIconStyle:React.CSSProperties = {
+                width: 30,
+                height: 30,
+                position: "absolute",
+                top: 20,
+                right:20,
+            }
+            return(
+                <div>
+                    <section className="popUpPanel hiddenPopUpPanel" ref={portfolioPopUpPanel}>
+                        <div className="closeIcon" onClick={hiddenPortfolioPanel} style={closeIconStyle}></div>
+                        <div className="topTitle"><h2 className="normal_text">Portfolio Name</h2></div>
+
+                        <div className='attribute'>
+                              <div className='createPortfolioButton inactiveCreatePortfolioButton'>
+                                <h4 className='normal_text'>
+                                  Save Changes
+                                </h4>
+                              </div>
+                        </div>
+                        <div className="panel">
+                      
+                            <div className='attribute'>
+                              <div className='portfolioPreview'></div>
+                            </div>
+
+                            <div className='attribute'>
+                              <div className='normalButton'>
+                                <h4 className='normal_text'>
+                                  See Form and Rate
+                                </h4>
+                              </div>
+                            </div>
+
+                            <div className='attribute'>
+                              <div className='createPortfolioButton'>
+                                <h4 className='normal_text'>
+                                  Edit Portfolio
+                                </h4>
+                              </div>
+                            </div>
+
+                            <div className='attribute'>
+                              <h3 className='normal_text text'>Visibility</h3> 
+                              <div className='spinnerButton'>
+                                <div className='icon publicIcon'></div>
+                                <h4 className='normal_text'>Public</h4>
+                                <div className='arrowDownIcon'></div>
+                              </div>
+                            </div>
+
+                            <div className='attribute'>
+                              <h3 className='normal_text text'>Title</h3> 
+                              <input className='attributeInputText' placeholder='Portfolio Title'/>
+                            </div>
+
+                            <div className='attribute'>
+                              <h3 className='normal_text text'>Description</h3> 
+                              <textarea className='normal_text'  placeholder='Portfolio Description'/>
+                            </div>
+
+                            <div className='attribute'>
+                              <h3 className='normal_text text'>Category</h3> 
+                              <div className='spinnerButton'>
+                                <div className='icon publicIcon'></div>
+                                <h4 className='normal_text'>Category</h4>
+                                <div className='arrowDownIcon'></div>
+                              </div>
+                            </div>
+
+                            <div className='deletePortfolioButton'>
                               <h4 className='normal_text'>
-                                Save Changes
+                                Delete Portfolio
                               </h4>
                             </div>
-                      </div>
-                      <div className="panel">
-                    
-                          <div className='attribute'>
-                            <div className='portfolioPreview'></div>
-                          </div>
-
-                          <div className='attribute'>
-                            <div className='normalButton'>
-                              <h4 className='normal_text'>
-                                See Form and Rate
-                              </h4>
-                            </div>
-                          </div>
-
-                          <div className='attribute'>
-                            <div className='createPortfolioButton'>
-                              <h4 className='normal_text'>
-                                Edit Portfolio
-                              </h4>
-                            </div>
-                          </div>
-
-                          <div className='attribute'>
-                            <h3 className='normal_text text'>Visibility</h3> 
-                            <div className='spinnerButton'>
-                              <div className='icon publicIcon'></div>
-                              <h4 className='normal_text'>Public</h4>
-                              <div className='arrowDownIcon'></div>
-                            </div>
-                          </div>
-
-                          <div className='attribute'>
-                            <h3 className='normal_text text'>Title</h3> 
-                            <input placeholder='Portfolio Title'/>
-                          </div>
-
-                          <div className='attribute'>
-                            <h3 className='normal_text text'>Description</h3> 
-                            <textarea className='normal_text'  placeholder='Portfolio Description'/>
-                          </div>
-
-                          <div className='attribute'>
-                            <h3 className='normal_text text'>Category</h3> 
-                            <div className='spinnerButton'>
-                              <div className='icon publicIcon'></div>
-                              <h4 className='normal_text'>Category</h4>
-                              <div className='arrowDownIcon'></div>
-                            </div>
-                          </div>
-
-                          <div className='deletePortfolioButton'>
-                            <h4 className='normal_text'>
-                              Delete Portfolio
-                            </h4>
-                          </div>
-                      </div>    
-                  </section>
-                  <div className="blackFilter hiddenBlackFilter" ref={blackFilter}></div>
-              </div>
-          );
-      }
-      return{
-        activePortfolioPanel,
-        hiddenPortfolioPanel,
-        PopUpPortfolioPanel
-      }
-  }
+                        </div>    
+                    </section>
+                    <div className="blackFilter hiddenBlackFilter" ref={blackFilter}></div>
+                </div>
+            );
+        }
+        return{
+          activePortfolioPanel,
+          hiddenPortfolioPanel,
+          PopUpPortfolioPanel
+        }
+    }
     
   
   return (
@@ -336,10 +446,12 @@ function Home() {
       portfolios.map( (portfolio:PortfolioDocument) =>(
         <div key={String(portfolio._id)}>
         { }
+        <a href={"/portfolio?id="+portfolio._id}>
         <ThunbNail
          width='380px' height='280px'
          title={portfolio.name} userUid={portfolio.creator} rateLevel={0} userTab={true}
-        ></ThunbNail>
+        />
+        </a>
         </div>
       ))
     }
