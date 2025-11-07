@@ -159,6 +159,46 @@ function Notification(){
     return id;
   }
 
+  const newSaveChangesNotification = (onSaveButtonClicked: ()=> void,onCancelButtonClicked: ()=> void)=>{
+      const notificationSection = document.querySelector("#notificationSection") as HTMLDivElement;
+      const id = "ntf"+String(Math.floor(Math.random() * (999999999 - 10 + 1)) + 10);
+      if(notificationSection){
+        notificationSection.insertAdjacentHTML("beforeend",`
+                      <box class="notification_box hiddenNotificationBox" id='${id}'>
+                  
+                  <div class="notificationIcon dzIcon"></div>
+                  <div class="notification_text" style="padding:10px">
+                    <h3 class="normal_text">
+                      Salvar mudanças?
+                    </h3>
+                    <div class="notificationButtons">
+                      <div id="saveButton${id}" class="signUpButton"><h4 class="normal_text">Salvar</h4></div>
+                      <div id="cancelButton${id}" class="signInButton"><h4 class="normal_text">Cancelar</h4></div>
+                    </div>
+                  </div>
+                </box>`);
+      }
+      setTimeout(()=>{
+        const notificationElement = document.querySelector(`#${id}`) as HTMLDivElement;
+        
+        if(notificationElement){
+          notificationElement.classList.remove("hiddenNotificationBox");
+          
+          const saveButton = document.querySelector(`#saveButton${id}`) as HTMLDivElement;
+          const cancelButton = document.querySelector(`#cancelButton${id}`) as HTMLDivElement;
+
+          if(saveButton){
+            saveButton.addEventListener("click",()=>{onSaveButtonClicked();closeNotification(id)})
+          }
+
+          if(cancelButton){
+            cancelButton.addEventListener("click",()=>{onCancelButtonClicked();closeNotification(id)})
+          }
+        }
+      },100)
+      return id;
+  }
+
   const closeNotification = (id:string)=>{
     const notificationElement = document.querySelector(`#${id}`) as HTMLDivElement;
     if(notificationElement){
@@ -171,6 +211,7 @@ function Notification(){
     newSuccessNotification,
     newErrorNotification,
     newSignNotification,
+    newSaveChangesNotification,
     newLoadingNotification,
     closeNotification
   }

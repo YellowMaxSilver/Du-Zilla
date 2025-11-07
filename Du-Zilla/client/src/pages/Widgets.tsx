@@ -152,7 +152,7 @@ export const TopNavBar:React.FC = ()=>{
                   <li><a href="/studio/my-projects"><div className="dropDownIcon projectsIcon"></div><h4 className="normal_text">My Projects</h4></a></li>
                   <li><a href="/notification"><div className="dropDownIcon"></div><h4 className="normal_text">Notification</h4></a></li>
                   <li><a href="/messager"><div className="dropDownIcon messagerIcon"></div><h4 className="normal_text">Messager</h4></a></li>
-                  <li><a href="/account/settings"><div className="dropDownIcon settingsIcon"></div><h4 className="normal_text">Settings</h4></a></li>
+                  <li><a href="/settings"><div className="dropDownIcon settingsIcon"></div><h4 className="normal_text">Settings</h4></a></li>
                   <li><a href="/help"><div className="dropDownIcon helpIcon"></div><h4 className="normal_text">Help</h4></a></li>
                   <li><a href="/logout"><div className="dropDownIcon helpIcon"></div><h4 className="normal_text">Log out</h4></a></li>
                 </ul>
@@ -330,5 +330,18 @@ export function Spinner(attributes:string[], callback: (selected:string) => void
                 {/* <li onClick={()=>{setBackgroundType("Personal")}}><h4 className='normal_text'>Personal</h4></li> */}
             </ul>
         </div>
+    )
+}
+
+export function FormTabBox(formName:string,numberOfResponses:number,callback:()=> void){
+    return(
+        <div className='formTabBox' onClick={callback}>
+            <div className='icon'></div>
+            <h4 className='normal_text'>{formName}</h4>
+            <div className='numberOfUsers'>
+            <div className='numberOfUsersIcon'></div>
+                <h4 className="normal_text">{numberOfResponses}</h4>
+            </div>
+        </div>  
     )
 }

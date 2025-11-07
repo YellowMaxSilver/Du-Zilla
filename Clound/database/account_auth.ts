@@ -1,7 +1,7 @@
 import Express from "express";
 import admin from "./firebase_admin";
 import { db } from "./firebase_admin";
-import { AccountDocument } from "./interface/accountInterface";
+import { AccountDocument, AccountUpdate } from "./interface/accountInterface";
 
     const router = Express.Router();
 
@@ -171,6 +171,34 @@ import { AccountDocument } from "./interface/accountInterface";
         }catch(e){
             console.log(e)
             res.status(500)
+        }
+    })
+
+    router.patch("/updateaccount/:uid",async (req,res)=>{
+        const uid = req.params.uid;
+        const account: Partial<AccountUpdate> = req.body;
+        try{
+            const userRef = db.collection("Accounts");
+            const querySnapshot = await userRef.where("uid","==",uid).get();
+
+            if(querySnapshot.empty){
+                res.status(404).json({message:`erro to find account`})
+            }
+
+            const document = querySnapshot.docs[0].id;
+            
+            const result = await userRef.doc(document).update(account);
+
+            const accountUpdated = await userRef.doc(document).get();
+            if(accountUpdated.exists){
+                const updatedDocumentData = accountUpdated.data();
+                res.status(200).json(updatedDocumentData);
+            }else{
+                res.status(404).json({message:`erro to find account`})
+            }
+            
+        }catch(error){
+            res.status(500).json({message:`Server error: ${error}`});
         }
     })
 

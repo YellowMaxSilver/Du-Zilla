@@ -44,12 +44,15 @@
     --shadowColor:#02020254;
     --shadowSize:10px;
     --grayTextNormalColor:#535353;
+    --grayBorderColor:#8f8f8f;
     --alertColor:#cf2f21;
     --warningColor:#f0972b;
     --whiteTextColor:#eeeeee;
     --darkTextColor:#141414;
+    --okColor: #19960e;
     --containerEffect:radial-gradient(500px,var(--soloBassColor),var(--bass_color));
     --containerEffect2:radial-gradient(500px,#ffffff1a,transparent);
+    /* --containerEffect2:radial-gradient(500px,#002b883d,transparent); */
 }
 
 
@@ -458,7 +461,7 @@ body{
     margin-bottom: 20px;
 }
 
-.popUpPanel .panel .attribute{
+.popUpPanel .attribute{
     width: 100%;
     min-height: 50px;
     border-bottom: 1px solid var(--grayTextNormalColor);
@@ -470,13 +473,13 @@ body{
     padding-bottom: 20px;
 }
 
-.popUpPanel .panel .attribute .text{
+.popUpPanel .attribute .text{
     width: 140px;
     height: 100%;
     word-break: normal;
 }
 
-.popUpPanel .panel .attribute .attributeInputText{
+.popUpPanel .attribute .attributeInputText{
     width: 100%;
     height: 25px;
     outline: none;
@@ -486,7 +489,7 @@ body{
     padding: 5px;
 }
 
-.popUpPanel .panel .attribute textarea{
+.popUpPanel .attribute textarea{
     width: 100%;
     height: 100px;
     outline: none;
@@ -499,13 +502,127 @@ body{
     font-weight: 100;
 }
 
-.popUpPanel .panel .attribute .portfolioPreview{
+.popUpPanel .attribute .portfolioPreview{
     width: 400px;
     height: 260px;
     background-color: #000000;
     margin-left: auto;margin-right: auto;
     border-radius: 20px;
     cursor: pointer;
+}
+
+.formTabBox{
+    width: calc(100% - 40px);
+    height: 50px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    background-color: black;
+    background-image: var(--containerEffect2);
+    border-radius: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    cursor: pointer;
+    position: relative;
+    border: 2px solid #00000000;
+    transition: 0.2s;
+}
+
+.formTabBox:hover{
+    transition: 0.2s;
+    border: 2px solid var(--soloColor);
+}
+
+.formTabBox .icon{
+    width: 30px;
+    height: 30px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url("./images/form_icon.png");
+}
+
+.formTabBox .numberOfUsers{
+    width: 50px;
+    position: absolute;
+    right: 20px;
+    display: flex;
+    align-items: center;justify-content: center;
+    gap: 10px;
+    border: 1px solid var(--whiteTextColor);
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.formTabBox .numberOfUsersIcon{
+    width: 27px;
+    height: 27px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url("./images/form_icon.png");
+}
+
+.formResponseBox{
+    width: calc(100% - 20px);
+    background-color: black;
+    background-image: var(--containerEffect2);
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.formResponseBox .userTab{
+    width: calc(100% - 10px);
+    height: 50px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 10px;
+    background-color: black;
+    padding-left: 10px;
+    position: relative;
+}
+
+.formResponseBox .userTab h5{
+    color: var(--grayTextNormalColor);
+}
+
+.formResponseBox .userTab .seeProfileButton{
+    width: 80px;
+    height: 30px;
+    border-radius: 5px;
+    background-color: var(--soloColor);
+    display: flex;align-items: center;justify-content: center;
+    color: var(--whiteTextColor);
+    cursor: pointer;
+    font-size: 13px;
+    position: absolute;
+    right: 10px;
+}
+
+.formResponseBox .userTab .userIcon{
+    width: 30px;height: 30px;
+    border-radius: 50px;
+}
+.formResponseBox .subAttribute{
+    width: 100%;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.formResponseBox .subAttribute input,.formResponseBox .subAttribute textarea{
+    outline: none;
+    width: 50%;
+    min-height: 30px;
+    border: 0;
+    border-radius: 10px;
+    color: var(--darkTextColor);
+    padding-left: 10px;
+    resize: vertical;
+
 }
 
 .createPortfolioButton{

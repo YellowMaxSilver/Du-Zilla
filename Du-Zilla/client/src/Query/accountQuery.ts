@@ -1,5 +1,5 @@
 import { getPortfolioById } from "./portfolioQuery";
-import type { AccountDocument } from "./interface/accountInterface";
+import type { AccountDocument, AccountUpdate } from "./interface/accountInterface";
 
 type Process = (success:boolean, status:number) => void;
 
@@ -90,6 +90,26 @@ export async function getCurrentSession(): Promise<string|null>{
         console.log("error to get account: ",e)
         // throw e;
         return null;
+    }
+}
+
+export async function updateAccount(uid:string,account:AccountUpdate): Promise<AccountDocument>{
+    try{
+        const res = await fetch(`${DuZillaClound}/api/account/updateaccount/${uid}`,{
+            method: "PATCH",
+            credentials: 'include',
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify(account)
+        })
+        if(res.status == 200){
+           return await res.json();
+        }else{
+            throw new Error(`Error: ${res.status} ${(await res.json()).message}`);
+        }
+    }catch(e){
+        throw e
     }
 }
 

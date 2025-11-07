@@ -9,6 +9,8 @@ import PortfolioView from './pages/PortfolioView/PortfolioView';
 import PortfolioPanel from './pages/PortfolioPanel/PortfolioPanel';
 import PortfolioEditor from './pages/PortfolioEditor/PortfolioEditor';
 
+import AccountSettings from './pages/AccountSettings/AccountSettings';
+
 import NotFound from './pages/NotFound/NotFound'; 
 
 const AppRoutes: React.FC = () => {
@@ -21,6 +23,7 @@ const AppRoutes: React.FC = () => {
         <Route path="/portfolio" element={<PortfolioView />} />
         <Route path="/studio/portfolio/panel" element={<PortfolioPanel />} />
         <Route path="/studio/portfolio/editor" element={<PortfolioEditor />} />
+        <Route path="/settings" element={<AccountSettings />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

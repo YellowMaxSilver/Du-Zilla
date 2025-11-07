@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useLayoutEffect, useState} from 'react'
 import "../style.css"
 import "../thunbnail.css"
 import "../Notification/Notification.css"
-import { CreateThunbNail, Spinner, ThunbNail, ThunbNailProject, TopNavBar } from '../Widgets';
+import { CreateThunbNail, FormTabBox, Spinner, ThunbNail, ThunbNailProject, TopNavBar } from '../Widgets';
 import { title } from 'process';
 import { createNewPortfolio, getAllPortfolios, getAllPortfoliosProjectsByUid } from '../../Query/portfolioQuery';
 import { PortfolioDocument, PortfolioInput } from '../../Query/interface/portfolioInterface';
@@ -103,18 +103,18 @@ function Home() {
 
   const {activeNewPortfolioPanel, hiddenNewPortfolioPanel , PopUpPanelNewPortfolios} = NewPortfolioPanel();
   const {activePortfolioPanel, hiddenPortfolioPanel, PopUpPortfolioPanel} = PortfolioPanel();
+  const {activeFormPanel, hiddenFormPanel, FormPanelElment} = FormPanel();
 
     const hiddenTemplatePanel = ()=>{
         templatePanel.current?.classList.add("hiddenPopUpPanel");
-        blackFilter.current?.classList.add("hiddenBlackFilter");
+        hiddenBlackFilter();
     }
   
     const activePopUpPanel = ()=>{
         const templatePanelElement = templatePanel.current;
-        const blackFilterElement = blackFilter.current;
-        if(templatePanelElement && blackFilterElement){
+        if(templatePanelElement){
             templatePanelElement.classList.remove("hiddenPopUpPanel");
-            blackFilterElement.classList.remove("hiddenBlackFilter");
+            activeBlackFilter();
         }   
     }
       
@@ -130,17 +130,16 @@ function Home() {
             <div>
                 <section className="popUpPanel hiddenPopUpPanel" ref={templatePanel}>
                     <div className="closeIcon" onClick={hiddenTemplatePanel} style={closeIconStyle}></div>
-                    <div className="topTitle"><h2 className="normal_text">{"Create Portfolio"}</h2></div>
+                    <div className="topTitle"><h2 className="normal_text">{"Portfolios"}</h2></div>
                     {/* <div className="topMenu">
                         <input className="inputSearch" type="text" placeholder={"search template"} style={{marginLeft:"20px"}}/>
                         <div className="searchButton" style={{marginLeft:"10px"}}></div>
                     </div> */}
         
                     <div className="panel">
-                        <h3 className='normal_text panelTitle'>My Portfolios</h3>
+                        <h3 className='normal_text panelTitle'>Meus Portfolios</h3>
                         <div style={{display:"flex",flexWrap:"wrap",justifyContent:"center",gap:"20px 0px"}}>
                           <div className="createThunbBox" style={{width:240,height:165}} onClick={()=>{
-                            hiddenTemplatePanel()
                             activeNewPortfolioPanel()
                           }}>
                               <div className="addIcon"></div>
@@ -148,7 +147,6 @@ function Home() {
 
                           <div className="thunbNailProject" onClick={()=>{
                             activePortfolioPanel()
-                            hiddenTemplatePanel()
                             }}>
                               <div className="banner"></div>
                               <div className="titleBox">
@@ -160,7 +158,6 @@ function Home() {
                             ownPortfolios.map((portfolio:PortfolioDocument)=>(
                                 <div className="thunbNailProject" onClick={()=>{
                                   activePortfolioPanel()
-                                  hiddenTemplatePanel()
                                   }}>
                                     <div className="banner"></div>
                                     <div className="titleBox">
@@ -264,7 +261,7 @@ function Home() {
               <div>
                   <section className="popUpPanel hiddenPopUpPanel" ref={newPortfolioPanel}>
                       <div className="closeIcon" onClick={hiddenNewPortfolioPanel} style={closeIconStyle}></div>
-                      <div className="topTitle"><h2 className="normal_text">New Portfolio</h2></div>
+                      <div className="topTitle"><h2 className="normal_text">Novo Portfolio</h2></div>
 
                       <div className="panel">
                           <div className='attribute'>
@@ -307,19 +304,17 @@ function Home() {
 
     function PortfolioPanel(){
         const portfolioPopUpPanel = useRef<HTMLDivElement | null>(null);
-        const blackFilter = useRef<HTMLDivElement | null>(null);
         
         const hiddenPortfolioPanel = ()=>{
               portfolioPopUpPanel.current?.classList.add("hiddenPopUpPanel");
-              blackFilter.current?.classList.add("hiddenBlackFilter");
+              hiddenBlackFilter();
         }
         
         const activePortfolioPanel = ()=>{
               const panelElement = portfolioPopUpPanel.current;
-              const blackFilterElement = blackFilter.current;
-              if(panelElement && blackFilterElement){
+              activeBlackFilter();
+              if(panelElement){
                   panelElement.classList.remove("hiddenPopUpPanel");
-                  blackFilterElement.classList.remove("hiddenBlackFilter");
               }   
           }
 
@@ -349,22 +344,19 @@ function Home() {
                             <div className='attribute'>
                               <div className='portfolioPreview'></div>
                             </div>
-
+                            
                             <div className='attribute'>
-                              <div className='normalButton'>
-                                <h4 className='normal_text'>
-                                  See Form and Rate
-                                </h4>
-                              </div>
-                            </div>
-
-                            <div className='attribute'>
-                              <div className='createPortfolioButton'>
+                              <div className='createPortfolioButton' onClick={()=>{window.location.href = "./studio/portfolio/editor?id=faca12345"}}>
                                 <h4 className='normal_text'>
                                   Edit Portfolio
                                 </h4>
                               </div>
                             </div>
+
+                            <div className='attribute'>
+                              {FormTabBox("form name",0,()=>{activeFormPanel()})}
+                            </div>
+
 
                             <div className='attribute'>
                               <h3 className='normal_text text'>Visibility</h3> 
@@ -412,7 +404,100 @@ function Home() {
         }
     }
     
+    function FormPanel(){
+        const portfolioPopUpPanel = useRef<HTMLDivElement | null>(null);
+        
+        const hiddenFormPanel = ()=>{
+          hiddenBlackFilter();
+          portfolioPopUpPanel.current?.classList.add("hiddenPopUpPanel");
+        }
+        
+        const activeFormPanel = ()=>{
+              const panelElement = portfolioPopUpPanel.current;
+              if(panelElement){
+                  activeBlackFilter();
+                  panelElement.classList.remove("hiddenPopUpPanel");
+              }   
+          }
+
+        const FormPanelElment: React.FC = () =>{
+            const closeIconStyle:React.CSSProperties = {
+                width: 30,
+                height: 30,
+                position: "absolute",
+                top: 20,
+                right:20,
+            }
+            return(
+                <div>
+                    <section className="popUpPanel hiddenPopUpPanel" ref={portfolioPopUpPanel}>
+                        <div className="closeIcon" onClick={hiddenFormPanel} style={closeIconStyle}></div>
+                        <div className="topTitle"><h2 className="normal_text">Form Name</h2></div>
+
+                        <div className='attribute'>
+                              {FormTabBox("form name",2,()=>{})}
+                        </div>
+
+                        <div className='attribute'>
+                          <h4 className='normal_text text'>Título: </h4> 
+                          <input className='attributeInputText' placeholder='Título'/>
+                        </div>
+                        <div className='attribute'>
+                          <h4 className='normal_text text'>Descrição: </h4> 
+                          <textarea className='attributeInputText' placeholder='Descrição'/>
+                        </div>    
+                        <div className="panel" style={{height:"calc(50%)"}}>
+                          {/* <div className='attribute'>
+                            <div className='notFoundIcon'></div>
+                            <h4 className='normal_text'>Ainda não há nenhuma resposta</h4>
+                          </div> */}
+
+                          <div className='formResponseBox'>
+                              <div className='userTab'>
+                                <div className='userIcon'></div>
+                                <h4 className='normal_text'>User Name</h4>
+                                <h5 className='normal_text'>@userNameId</h5>
+                                <div className='seeProfileButton'>See Profile</div>
+                              </div>
+                              <div className='subAttribute'>
+                                <h4 className='normal_text'>Contato: </h4>
+                                <input className='normal_text' value={"hello@gmail.com"} readOnly></input>
+                              </div>
+                              <div className='subAttribute'>
+                                <h4 className='normal_text'>Descrição: </h4>
+                                <textarea className='normal_text' value={"what about this one?"} readOnly/>
+                              </div>
+                              <div className='subAttribute'>
+                                <div className='createPortfolioButton'><h4 className='normal_text'>Conversar</h4></div>
+                              </div>
+                          </div>
+
+                        </div>    
+                    </section>
+                </div>
+            );
+        }
+        return{
+          activeFormPanel,
+          hiddenFormPanel,
+          FormPanelElment
+        }
+    }
   
+    const activeBlackFilter = ()=>{
+      const blackFilterElement = blackFilter.current;
+      if(blackFilterElement){
+        blackFilterElement.classList.remove("hiddenBlackFilter");
+        console.log("Ok")
+      }else{
+        console.log("something wrong")
+      }
+    }
+
+    const hiddenBlackFilter = ()=>{
+      blackFilter.current?.classList.add("hiddenBlackFilter");
+    }
+
   return (
     <div>
     <title>Du-Zilla</title>
@@ -421,6 +506,9 @@ function Home() {
     <PopUpPanelElement />
     <PopUpPanelNewPortfolios />
     <PopUpPortfolioPanel />
+    <FormPanelElment/>
+    <div className="blackFilter hiddenBlackFilter" ref={blackFilter}></div>
+
     <section className="globalBox searchSection">
         <div>
             <div style={{display: "flex",justifyContent: "center",alignItems: "center",height: "50px",marginTop: "40px",marginBottom: "40px"}}><h1 className="title">Du-Zilla</h1></div>

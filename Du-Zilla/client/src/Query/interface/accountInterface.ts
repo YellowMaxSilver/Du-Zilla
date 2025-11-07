@@ -12,3 +12,16 @@ export interface AccountDocument{
     city?:string,
     address?:string
 }
+
+export interface AccountUpdate{
+    name?:string,
+    nameId?:string,
+    email?:string,
+    cpf_cnpj?:number,
+    activated?:boolean,
+    description?:string,
+    contry?:string,
+    state?:string,
+    city?:string,
+    address?:string
+}
