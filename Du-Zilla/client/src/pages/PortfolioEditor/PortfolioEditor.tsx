@@ -464,7 +464,7 @@ function PortfolioEditor(){
                             <div className="panel">
                                 <div className="attribute">
                                     <h4 className="normal_text text">Style: </h4>
-                                    {Spinner(["Solid Color","Gradient","Image"],(selected)=>{
+                                    {Spinner(["Solid Color","Gradient","Image"],0,(selected)=>{
                                         mode = selected;
                                         if(selected == "Solid Color"){
                                             if (solidColorAttributes.current) solidColorAttributes.current.style.display = "flex";

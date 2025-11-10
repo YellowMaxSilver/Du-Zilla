@@ -5,6 +5,7 @@ import { AccountDocument } from "../Query/interface/accountInterface";
 import { getAccountByUid, getCurrentSession } from "../Query/accountQuery";
 
 import Notification from "./Notification/Notification";
+import { JsxElement } from "typescript";
 interface PopUpPanelProps {
     title:string;
     Content:React.FC;
@@ -199,14 +200,14 @@ export function form(){
                     <h5 className="accountId normal_text">{userNameId}</h5>
                 </div>
                 <div className="attribute"> 
-                    <h3 className="normal_text">Contact:</h3>
-                    <input type="text" placeholder="Email or phone number"/>
+                    <h3 className="normal_text">Contato:</h3>
+                    <input type="text" placeholder="Email ou Número de celular"/>
                 </div>
                 <div className="attributeDescription">
-                    <h3 className="normal_text">Description:</h3>
-                    <textarea className="normal_text" placeholder="Description"></textarea>
+                    <h3 className="normal_text">Descrição:</h3>
+                    <textarea className="normal_text" placeholder="Descrição"></textarea>
                 </div>
-                <button className="submitButton normal_text">Submit</button>
+                <button className="submitButton normal_text">Enviar</button>
                 <div className="dzIcon"></div>
             </div>
         )
@@ -278,7 +279,7 @@ export function form(){
 }
 
 
-export function Spinner(attributes:string[], callback: (selected:string) => void){
+export function Spinner(attributes:string[],preSelected:number, callback: (selected:string) => void){
     const spinnerId: string = "spn"+String(Math.floor(Math.random() * (999999999 - 10 + 1)) + 10);
     const dropDownId: string = "drd"+String(Math.floor(Math.random() * (999999999 - 10 + 1)) + 10);
     
@@ -320,7 +321,7 @@ export function Spinner(attributes:string[], callback: (selected:string) => void
         <div style={{width:"50%",position:"relative"}}>
             <div className='spinnerButton'>
                 <div className='icon publicIcon'></div>
-                <h4 className='normal_text' id={"curretSelectedBox"+spinnerId}>{attributes[0]}</h4>
+                <h4 className='normal_text' id={"curretSelectedBox"+spinnerId}>{attributes[preSelected]}</h4>
                 <div className='arrowDownIcon'  id={spinnerId} onClick={showDropDown}></div>
             </div>
             <ul className='spinnerDropDown' id={dropDownId}>

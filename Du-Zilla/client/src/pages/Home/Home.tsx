@@ -4,12 +4,16 @@ import "../thunbnail.css"
 import "../Notification/Notification.css"
 import { CreateThunbNail, FormTabBox, Spinner, ThunbNail, ThunbNailProject, TopNavBar } from '../Widgets';
 import { title } from 'process';
-import { createNewPortfolio, getAllPortfolios, getAllPortfoliosProjectsByUid } from '../../Query/portfolioQuery';
-import { PortfolioDocument, PortfolioInput } from '../../Query/interface/portfolioInterface';
+import { createNewPortfolio, getAllPortfolios, getAllPortfoliosProjectsByUid, updatePortfolio } from '../../Query/portfolioQuery';
+import { PortfolioDocument, PortfolioDocumentUpdate, PortfolioInput } from '../../Query/interface/portfolioInterface';
 import { JsxElement } from 'typescript';
 import Notification from '../Notification/Notification';
 import { getCurrentSession, getAccountByUid } from '../../Query/accountQuery';
 import { AccountDocument } from '../../Query/interface/accountInterface';
+import { ObjectId } from 'mongodb';
+import PortfolioEditor from '../PortfolioEditor/PortfolioEditor';
+import { FormDocument } from '../../Query/interface/formInterface';
+import { getformsbyportfolioid } from '../../Query/formQuery';
 
 const TemplatePanel:React.FC = ()=>{
   return(
@@ -40,10 +44,15 @@ interface NotificationProps{
 }
 
 function Home() {
-  const { newNotification, newSuccessNotification, newErrorNotification, newLoadingNotification, newSignNotification, closeNotification } = Notification();
+  const { newSaveChangesNotification,newNotification, newSuccessNotification, newErrorNotification, newLoadingNotification, newSignNotification, closeNotification } = Notification();
   const [Account,setAccount] = useState<AccountDocument|null>(null);
   const [portfolios, setPortfolios] = useState<PortfolioDocument[]>([])
   const [ ownPortfolios, setOwnPortfolios] = useState<PortfolioDocument[]>([]);
+
+  const portfolioPopUpPanel = useRef<HTMLDivElement | null>(null);
+  const [PortfolioPanelVisibility, setPortfolioPanelVisibility] = useState<boolean>(false);
+  const [portfolioOfPortfolioPanel, setPortfolioOfPortfolioPanel] = useState<PortfolioDocument>();
+
   useEffect(()=>{
     const loadData = async ()=>{
       try{
@@ -97,12 +106,21 @@ function Home() {
     }
   },[Account])
 
+  useEffect(()=>{
+    if(PortfolioPanelVisibility){
+      if(portfolioPopUpPanel.current) portfolioPopUpPanel.current.style.left = "0";
+      activeBlackFilter();
+    }else{
+      if(portfolioPopUpPanel.current) portfolioPopUpPanel.current.style.left = "-50vw";
+      hiddenBlackFilter();
+    }
+  },[PortfolioPanelVisibility])
+
   const templatePanel = useRef<HTMLDivElement | null>(null);
   const blackFilter = useRef<HTMLDivElement | null>(null);
   const categoryDropDown = useRef<HTMLDivElement | null>(null);
 
   const {activeNewPortfolioPanel, hiddenNewPortfolioPanel , PopUpPanelNewPortfolios} = NewPortfolioPanel();
-  const {activePortfolioPanel, hiddenPortfolioPanel, PopUpPortfolioPanel} = PortfolioPanel();
   const {activeFormPanel, hiddenFormPanel, FormPanelElment} = FormPanel();
 
     const hiddenTemplatePanel = ()=>{
@@ -131,10 +149,6 @@ function Home() {
                 <section className="popUpPanel hiddenPopUpPanel" ref={templatePanel}>
                     <div className="closeIcon" onClick={hiddenTemplatePanel} style={closeIconStyle}></div>
                     <div className="topTitle"><h2 className="normal_text">{"Portfolios"}</h2></div>
-                    {/* <div className="topMenu">
-                        <input className="inputSearch" type="text" placeholder={"search template"} style={{marginLeft:"20px"}}/>
-                        <div className="searchButton" style={{marginLeft:"10px"}}></div>
-                    </div> */}
         
                     <div className="panel">
                         <h3 className='normal_text panelTitle'>Meus Portfolios</h3>
@@ -146,7 +160,7 @@ function Home() {
                           </div>
 
                           <div className="thunbNailProject" onClick={()=>{
-                            activePortfolioPanel()
+                            setPortfolioPanelVisibility(true)
                             }}>
                               <div className="banner"></div>
                               <div className="titleBox">
@@ -157,7 +171,8 @@ function Home() {
                           {
                             ownPortfolios.map((portfolio:PortfolioDocument)=>(
                                 <div className="thunbNailProject" onClick={()=>{
-                                  activePortfolioPanel()
+                                  setPortfolioOfPortfolioPanel(portfolio)
+                                  setPortfolioPanelVisibility(true)
                                   }}>
                                     <div className="banner"></div>
                                     <div className="titleBox">
@@ -170,7 +185,6 @@ function Home() {
                         </div>
                     </div>    
                 </section>
-                <div className="blackFilter hiddenBlackFilter" ref={blackFilter}></div>
             </div>
         );
     }
@@ -271,7 +285,7 @@ function Home() {
 
                           <div className='attribute'>
                             <h3 className='normal_text text'>Category</h3> 
-                            {Spinner(["Personal","Professional","Store","Other"],(selected)=>{
+                            {Spinner(["Personal","Professional","Store","Other"],0,(selected)=>{
                                 category = selected;
                             })}
                           </div>
@@ -302,107 +316,198 @@ function Home() {
       }
     }  
 
-    function PortfolioPanel(){
-        const portfolioPopUpPanel = useRef<HTMLDivElement | null>(null);
         
-        const hiddenPortfolioPanel = ()=>{
-              portfolioPopUpPanel.current?.classList.add("hiddenPopUpPanel");
-              hiddenBlackFilter();
+    const PortfolioPanel: React.FC = () =>{
+        const title = useRef<HTMLInputElement|null>(null);
+        const description =  useRef<HTMLTextAreaElement|null>(null);
+        const saveChangesButton = useRef<HTMLDivElement|null>(null);
+
+        const [numberOfVisibility, setNumberOfVisibility] = useState<number>(0)
+        const [formElement, setFormElement] = useState<any>(<div className='attribute'>
+                <div className='notFoundIcon'></div>
+                <h4 className='normal_text'>Você ainda não criou nenhum Formulário neste Portfolio</h4>
+              </div>);
+
+        useEffect(()=>{
+        
+          if(portfolioOfPortfolioPanel){
+          
+            const loadForms = async () => {
+                try{
+                  const portfolioForms:FormDocument[]|null = await getformsbyportfolioid(String(portfolioOfPortfolioPanel._id));
+                  console.log("forms: ",portfolioForms);
+                  if(portfolioForms){
+                    convertFormsToElement(portfolioForms)
+                  }else{
+                    
+                  }
+                }catch(error){
+                  
+                }
+            }
+            loadForms();
+
+            if(portfolioOfPortfolioPanel.visibility === "Public"){
+              setNumberOfVisibility(0)
+            }else if(portfolioOfPortfolioPanel.visibility === "Private"){
+              setNumberOfVisibility(1)
+            }else{
+              setNumberOfVisibility(2)
+            }
+          }
+          
+        },[portfolioOfPortfolioPanel,PortfolioPanelVisibility])
+
+        const convertFormsToElement = (forms:FormDocument[])=>{
+          if(forms && forms.length > 0){
+            setFormElement(forms.map((form)=>(
+              <div className='attribute' key={"form"+form._id}>
+                {FormTabBox(form.name,0,()=>{activeFormPanel()})}
+              </div>
+            )))
+          }else{
+            setFormElement(
+              <div className='attribute'>
+                <div className='notFoundIcon'></div>
+                <h4 className='normal_text'>Você ainda não criou nenhum Formulário neste Portfolio</h4>
+              </div>
+            )
+          }
+          console.log("last form: ",forms)
+        }
+
+        const closeIconStyle:React.CSSProperties = {
+            width: 30,
+            height: 30,
+            position: "absolute",
+            top: 20,
+            right:20,
         }
         
-        const activePortfolioPanel = ()=>{
-              const panelElement = portfolioPopUpPanel.current;
-              activeBlackFilter();
-              if(panelElement){
-                  panelElement.classList.remove("hiddenPopUpPanel");
-              }   
-          }
 
-        const PopUpPortfolioPanel: React.FC = () =>{
-            const closeIconStyle:React.CSSProperties = {
-                width: 30,
-                height: 30,
-                position: "absolute",
-                top: 20,
-                right:20,
+        const showStyle = {
+            left: 0
+        }
+
+        const hiddenStyle = {
+          left: "-50vw",
+          transition: "0.5s"
+        }
+
+        const verifyAttributesChanges = () =>{
+            if(title.current?.value != portfolioOfPortfolioPanel?.name
+              || description.current?.value != portfolioOfPortfolioPanel?.description
+            ){
+              saveChangesButton.current?.classList.remove("inactiveCreatePortfolioButton");
+            }else{
+              saveChangesButton.current?.classList.add("inactiveCreatePortfolioButton");
             }
-            return(
-                <div>
-                    <section className="popUpPanel hiddenPopUpPanel" ref={portfolioPopUpPanel}>
-                        <div className="closeIcon" onClick={hiddenPortfolioPanel} style={closeIconStyle}></div>
-                        <div className="topTitle"><h2 className="normal_text">Portfolio Name</h2></div>
+        }
+
+        const saveChanges = () =>{
+            if(title.current?.value === portfolioOfPortfolioPanel?.name
+              && description.current?.value === portfolioOfPortfolioPanel?.description
+            ){
+              newErrorNotification("Você ainda não alterou nada");
+              return;
+            }
+
+            const newPortfolio:PortfolioDocumentUpdate = {
+              name: title.current?.value,
+              description: description.current?.value,
+            }
+
+            newSaveChangesNotification(async ()=>{
+              const loading = newLoadingNotification("Salvando mundanças");
+              try{
+                const portfolioUpdated = await updatePortfolio(String(portfolioOfPortfolioPanel?._id),newPortfolio);
+                console.log("update: ",portfolioUpdated)
+                newSuccessNotification("Alterações salvas com sucesso");
+              }catch(error){
+                newErrorNotification("Erro para salvar mudanças: "+error);
+              }finally{
+                closeNotification(loading);
+              }
+            },()=>{})
+            
+
+        }
+
+        const visibility = PortfolioPanelVisibility ? showStyle : hiddenStyle;
+
+        return(
+            <div>
+                <section className="popUpPanel" style={visibility} ref={portfolioPopUpPanel}>
+                    <div className="closeIcon" onClick={()=>{setPortfolioPanelVisibility(false)}} style={closeIconStyle}></div>
+                    <div className="topTitle"><h2 className="normal_text">{portfolioOfPortfolioPanel?.name}</h2></div>
+
+                    <div className='attribute'>
+                          <div className='createPortfolioButton inactiveCreatePortfolioButton' ref={saveChangesButton} onClick={saveChanges}>
+                            <h4 className='normal_text'>
+                              Save Changes
+                            </h4>
+                          </div>
+                    </div>
+                    <div className="panel">
+                  
+                        <div className='attribute'>
+                          <div className='portfolioPreview'></div>
+                        </div>
+                        
+                        <div className='attribute'>
+                          <div className='createPortfolioButton' onClick={()=>{window.location.href=`./studio/portfolio/editor?id=${portfolioOfPortfolioPanel?._id}`}}>
+                            <h4 className='normal_text'>
+                              Edit Portfolio
+                            </h4>
+                          </div>
+                        </div>
+
+                        {formElement}
+                        {/* <div className='attribute'>
+                          <div className='notFoundIcon'></div>
+                          <h4 className='normal_text'>Você ainda não criou nenhum Formulário neste Portfolio</h4>
+                        </div>*/}
+
+                        {/* <div className='attribute'>
+                          {FormTabBox("form name",0,()=>{activeFormPanel()})}
+                        </div> */}
+
 
                         <div className='attribute'>
-                              <div className='createPortfolioButton inactiveCreatePortfolioButton'>
-                                <h4 className='normal_text'>
-                                  Save Changes
-                                </h4>
-                              </div>
+                          <h4 className='normal_text text'>Visibility</h4> 
+                          {Spinner(["Publico","Privado","Somente eu"],numberOfVisibility,(selected)=>{
+
+                          })}
                         </div>
-                        <div className="panel">
-                      
-                            <div className='attribute'>
-                              <div className='portfolioPreview'></div>
-                            </div>
-                            
-                            <div className='attribute'>
-                              <div className='createPortfolioButton' onClick={()=>{window.location.href = "./studio/portfolio/editor?id=faca12345"}}>
-                                <h4 className='normal_text'>
-                                  Edit Portfolio
-                                </h4>
-                              </div>
-                            </div>
 
-                            <div className='attribute'>
-                              {FormTabBox("form name",0,()=>{activeFormPanel()})}
-                            </div>
+                        <div className='attribute'>
+                          <h4 className='normal_text text'>Title</h4> 
+                          <input className='attributeInputText' ref={title} defaultValue={portfolioOfPortfolioPanel?.name} placeholder='Portfolio Title' onChange={verifyAttributesChanges}/>
+                        </div>
 
+                        <div className='attribute'>
+                          <h4 className='normal_text text' >Description</h4> 
+                          <textarea className='normal_text' ref={description}  defaultValue={portfolioOfPortfolioPanel?.description}  placeholder='Portfolio Description' onChange={verifyAttributesChanges}/>
+                        </div>
 
-                            <div className='attribute'>
-                              <h3 className='normal_text text'>Visibility</h3> 
-                              <div className='spinnerButton'>
-                                <div className='icon publicIcon'></div>
-                                <h4 className='normal_text'>Public</h4>
-                                <div className='arrowDownIcon'></div>
-                              </div>
-                            </div>
+                        <div className='attribute'>
+                          <h4 className='normal_text text'>Category</h4> 
+                          {Spinner(["Pessoal","Profissional","Loja","Outro"],0,(selected)=>{
 
-                            <div className='attribute'>
-                              <h3 className='normal_text text'>Title</h3> 
-                              <input className='attributeInputText' placeholder='Portfolio Title'/>
-                            </div>
+                          })}
+                        </div>
 
-                            <div className='attribute'>
-                              <h3 className='normal_text text'>Description</h3> 
-                              <textarea className='normal_text'  placeholder='Portfolio Description'/>
-                            </div>
-
-                            <div className='attribute'>
-                              <h3 className='normal_text text'>Category</h3> 
-                              <div className='spinnerButton'>
-                                <div className='icon publicIcon'></div>
-                                <h4 className='normal_text'>Category</h4>
-                                <div className='arrowDownIcon'></div>
-                              </div>
-                            </div>
-
-                            <div className='deletePortfolioButton'>
-                              <h4 className='normal_text'>
-                                Delete Portfolio
-                              </h4>
-                            </div>
-                        </div>    
-                    </section>
-                    <div className="blackFilter hiddenBlackFilter" ref={blackFilter}></div>
-                </div>
-            );
-        }
-        return{
-          activePortfolioPanel,
-          hiddenPortfolioPanel,
-          PopUpPortfolioPanel
-        }
+                        <div className='deletePortfolioButton'>
+                          <h4 className='normal_text'>
+                            Delete Portfolio
+                          </h4>
+                        </div>
+                    </div>    
+                </section>
+            </div>
+        );
     }
+
     
     function FormPanel(){
         const portfolioPopUpPanel = useRef<HTMLDivElement | null>(null);
@@ -457,7 +562,7 @@ function Home() {
                                 <div className='userIcon'></div>
                                 <h4 className='normal_text'>User Name</h4>
                                 <h5 className='normal_text'>@userNameId</h5>
-                                <div className='seeProfileButton'>See Profile</div>
+                                <div className='seeProfileButton'>Perfil</div>
                               </div>
                               <div className='subAttribute'>
                                 <h4 className='normal_text'>Contato: </h4>
@@ -505,7 +610,7 @@ function Home() {
     <div className='notificationSection' id='notificationSection'></div>
     <PopUpPanelElement />
     <PopUpPanelNewPortfolios />
-    <PopUpPortfolioPanel />
+    <PortfolioPanel />
     <FormPanelElment/>
     <div className="blackFilter hiddenBlackFilter" ref={blackFilter}></div>
 
@@ -526,7 +631,7 @@ function Home() {
             <a href="signUp"><div className="signUpButton"><h4 className="normal_text">Sign Up</h4></div></a>
           </div>
         </div>
-        <h6 className='normal_text' style={{position:"absolute",bottom:20,right:20,color:"gray"}}>Du-Zilla V Alpha</h6>
+        <h6 className='normal_text' style={{position:"absolute",bottom:20,right:20,color:"gray"}}>Du-Zilla Alpha v1.0</h6>
     </section>
 
     <section className="thunbsSection" id="portfoliosThunbNails" style={{marginTop: "40px"}}>
