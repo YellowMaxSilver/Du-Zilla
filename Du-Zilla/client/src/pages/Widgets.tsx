@@ -189,9 +189,9 @@ export const TopNavBar:React.FC = ()=>{
 
 export function form(){
 
-    const formWidget = (elementId:string, formName:string,formDescription:string,userName:string|null,userNameId:string|null) => {
+    const formWidget = (elementId:string,formId:string, formName:string,formDescription:string,userName:string|null,userNameId:string|null) => {
         return(
-            <div id={elementId} className="portfolioFormBox">
+            <div id={elementId} data-id={formId} data-name={formName} data-description={formDescription} className="portfolioFormBox">
                 <h2 className="normal_text" id="title">{formName}</h2>
                 <h3 className="formDescription normal_text" id="description">{formDescription}</h3>
                 <div className="accountFormBox">

@@ -12,8 +12,8 @@ import { getCurrentSession, getAccountByUid } from '../../Query/accountQuery';
 import { AccountDocument } from '../../Query/interface/accountInterface';
 import { ObjectId } from 'mongodb';
 import PortfolioEditor from '../PortfolioEditor/PortfolioEditor';
-import { FormDocument } from '../../Query/interface/formInterface';
-import { getformsbyportfolioid } from '../../Query/formQuery';
+import { FormDataDocument, FormDocument, FormUpdate } from '../../Query/interface/formInterface';
+import { getFormDataByFormId, getformsbyportfolioid, updateForm } from '../../Query/formQuery';
 
 const TemplatePanel:React.FC = ()=>{
   return(
@@ -49,9 +49,18 @@ function Home() {
   const [portfolios, setPortfolios] = useState<PortfolioDocument[]>([])
   const [ ownPortfolios, setOwnPortfolios] = useState<PortfolioDocument[]>([]);
 
+  const loadingPopUp = useRef<HTMLDivElement|null>(null);
+  const renderedErrorPopUp = useRef<HTMLDivElement|null>(null);
   const portfolioPopUpPanel = useRef<HTMLDivElement | null>(null);
+  const formPanel = useRef<HTMLDivElement | null>(null);
+  const projectsPanel = useRef<HTMLDivElement | null>(null);
+
   const [PortfolioPanelVisibility, setPortfolioPanelVisibility] = useState<boolean>(false);
+  const [formPanelVisibility, setFormPanelVisibility] = useState<boolean>(false);
+  const [ProjectsPanelVisibility, setProjectsPanelVisibility] = useState<boolean>(false);
+
   const [portfolioOfPortfolioPanel, setPortfolioOfPortfolioPanel] = useState<PortfolioDocument>();
+  const [currentFormOfFormPanel, setCurrentFormOfFormPanel] = useState<FormDocument>();
 
   useEffect(()=>{
     const loadData = async ()=>{
@@ -59,9 +68,10 @@ function Home() {
         const tryingPortfolios = await getPortfolios();
         setPortfolios(tryingPortfolios);
       }catch(err){
-        console.log("haha: "+err);
+        newErrorNotification("Erro no servidor. Tente novamente mais tarde.")
+        if (renderedErrorPopUp.current) renderedErrorPopUp.current.style.display = "flex";
       }finally{
-
+        if (loadingPopUp.current) loadingPopUp.current.style.display = "none";
       }
     }
 
@@ -116,38 +126,39 @@ function Home() {
     }
   },[PortfolioPanelVisibility])
 
+  useEffect(()=>{
+    if(formPanelVisibility){
+      if(formPanel.current) formPanel.current.style.left = "0";
+      activeBlackFilter();
+    }else{
+      if(formPanel.current) formPanel.current.style.left = "-50vw";
+      hiddenBlackFilter();
+    }
+  },[formPanelVisibility])
+
+  useEffect(()=>{
+    if(ProjectsPanelVisibility){
+      if(projectsPanel.current) projectsPanel.current.style.left = "0";
+      activeBlackFilter();
+    }else{
+      if(projectsPanel.current) projectsPanel.current.style.left = "-50vw";
+      hiddenBlackFilter();
+    }
+  },[ProjectsPanelVisibility])
+
   const templatePanel = useRef<HTMLDivElement | null>(null);
   const blackFilter = useRef<HTMLDivElement | null>(null);
   const categoryDropDown = useRef<HTMLDivElement | null>(null);
 
-  const {activeNewPortfolioPanel, hiddenNewPortfolioPanel , PopUpPanelNewPortfolios} = NewPortfolioPanel();
-  const {activeFormPanel, hiddenFormPanel, FormPanelElment} = FormPanel();
+    const {activeNewPortfolioPanel, hiddenNewPortfolioPanel , PopUpPanelNewPortfolios} = NewPortfolioPanel();
 
-    const hiddenTemplatePanel = ()=>{
-        templatePanel.current?.classList.add("hiddenPopUpPanel");
-        hiddenBlackFilter();
-    }
-  
-    const activePopUpPanel = ()=>{
-        const templatePanelElement = templatePanel.current;
-        if(templatePanelElement){
-            templatePanelElement.classList.remove("hiddenPopUpPanel");
-            activeBlackFilter();
-        }   
-    }
-      
-    const PopUpPanelElement: React.FC = () =>{
-        const closeIconStyle:React.CSSProperties = {
-            width: 30,
-            height: 30,
-            position: "absolute",
-            top: 20,
-            right:20,
-        }
+
+    const ProjectsPanel: React.FC = () =>{
+        const visibility = ProjectsPanelVisibility ? showStyle : hiddenStyle;
         return(
             <div>
-                <section className="popUpPanel hiddenPopUpPanel" ref={templatePanel}>
-                    <div className="closeIcon" onClick={hiddenTemplatePanel} style={closeIconStyle}></div>
+                <section className="popUpPanel hiddenPopUpPanel" style={visibility} ref={projectsPanel}>
+                    <div className="closeIcon panelCloseButton" onClick={()=>{setProjectsPanelVisibility(false)}}></div>
                     <div className="topTitle"><h2 className="normal_text">{"Portfolios"}</h2></div>
         
                     <div className="panel">
@@ -316,7 +327,15 @@ function Home() {
       }
     }  
 
-        
+    const showStyle = {
+      left: 0
+    }
+
+    const hiddenStyle = {
+      left: "-50vw",
+      transition: "0.5s"
+    }    
+
     const PortfolioPanel: React.FC = () =>{
         const title = useRef<HTMLInputElement|null>(null);
         const description =  useRef<HTMLTextAreaElement|null>(null);
@@ -362,7 +381,10 @@ function Home() {
           if(forms && forms.length > 0){
             setFormElement(forms.map((form)=>(
               <div className='attribute' key={"form"+form._id}>
-                {FormTabBox(form.name,0,()=>{activeFormPanel()})}
+                {FormTabBox(form.name,0,()=>{
+                  setFormPanelVisibility(true)
+                  setCurrentFormOfFormPanel(form);
+                  })}
               </div>
             )))
           }else{
@@ -384,15 +406,6 @@ function Home() {
             right:20,
         }
         
-
-        const showStyle = {
-            left: 0
-        }
-
-        const hiddenStyle = {
-          left: "-50vw",
-          transition: "0.5s"
-        }
 
         const verifyAttributesChanges = () =>{
             if(title.current?.value != portfolioOfPortfolioPanel?.name
@@ -508,87 +521,162 @@ function Home() {
         );
     }
 
-    
-    function FormPanel(){
-        const portfolioPopUpPanel = useRef<HTMLDivElement | null>(null);
-        
-        const hiddenFormPanel = ()=>{
-          hiddenBlackFilter();
-          portfolioPopUpPanel.current?.classList.add("hiddenPopUpPanel");
-        }
-        
-        const activeFormPanel = ()=>{
-              const panelElement = portfolioPopUpPanel.current;
-              if(panelElement){
-                  activeBlackFilter();
-                  panelElement.classList.remove("hiddenPopUpPanel");
-              }   
-          }
+    const FormPanel: React.FC = ()=>{
+        const title = useRef<HTMLInputElement|null>(null);
+        const description = useRef<HTMLTextAreaElement|null>(null);
+        const [formResponses, setFormResponses] = useState<FormDataDocument[]|null>(null);
+        const [formResponsesElement, setFormResponsesElement] = useState<any>();
 
-        const FormPanelElment: React.FC = () =>{
-            const closeIconStyle:React.CSSProperties = {
-                width: 30,
-                height: 30,
-                position: "absolute",
-                top: 20,
-                right:20,
+        useEffect(()=>{
+          const loadFormData = async ()=>{
+            if(!currentFormOfFormPanel){return;}
+            const responses:FormDataDocument[] = await getFormDataByFormId(String(currentFormOfFormPanel._id));
+            if(responses){
+              setFormResponses(responses)
+            }else{
+              setFormResponses(null);
             }
-            return(
-                <div>
-                    <section className="popUpPanel hiddenPopUpPanel" ref={portfolioPopUpPanel}>
-                        <div className="closeIcon" onClick={hiddenFormPanel} style={closeIconStyle}></div>
-                        <div className="topTitle"><h2 className="normal_text">Form Name</h2></div>
+          }
+          try{
+            loadFormData()
+          }catch(error){
+            newErrorNotification("Erro para carregar respostas do formulário");
+          }
+        },[currentFormOfFormPanel]);
 
-                        <div className='attribute'>
-                              {FormTabBox("form name",2,()=>{})}
-                        </div>
-
-                        <div className='attribute'>
-                          <h4 className='normal_text text'>Título: </h4> 
-                          <input className='attributeInputText' placeholder='Título'/>
-                        </div>
-                        <div className='attribute'>
-                          <h4 className='normal_text text'>Descrição: </h4> 
-                          <textarea className='attributeInputText' placeholder='Descrição'/>
-                        </div>    
-                        <div className="panel" style={{height:"calc(50%)"}}>
-                          {/* <div className='attribute'>
-                            <div className='notFoundIcon'></div>
-                            <h4 className='normal_text'>Ainda não há nenhuma resposta</h4>
-                          </div> */}
-
-                          <div className='formResponseBox'>
-                              <div className='userTab'>
-                                <div className='userIcon'></div>
-                                <h4 className='normal_text'>User Name</h4>
-                                <h5 className='normal_text'>@userNameId</h5>
-                                <div className='seeProfileButton'>Perfil</div>
-                              </div>
-                              <div className='subAttribute'>
-                                <h4 className='normal_text'>Contato: </h4>
-                                <input className='normal_text' value={"hello@gmail.com"} readOnly></input>
-                              </div>
-                              <div className='subAttribute'>
-                                <h4 className='normal_text'>Descrição: </h4>
-                                <textarea className='normal_text' value={"what about this one?"} readOnly/>
-                              </div>
-                              <div className='subAttribute'>
-                                <div className='createPortfolioButton'><h4 className='normal_text'>Conversar</h4></div>
-                              </div>
-                          </div>
-
-                        </div>    
-                    </section>
+        useEffect(()=>{
+          console.log(formResponses);
+          if(formResponses && formResponses.length >0){
+            setFormResponsesElement(formResponses.map((response:FormDataDocument)=>(
+                <div className='formResponseBox'>
+                    <div className='userTab'>
+                      <div className='userIcon'></div>
+                      <h4 className='normal_text'>User Name</h4>
+                      <h5 className='normal_text'>@userNameId</h5>
+                      <div className='seeProfileButton'>Perfil</div>
+                    </div>
+                    <div className='subAttribute'>
+                      <h4 className='normal_text'>Contato: </h4>
+                      <input className='normal_text' value={response.contact} readOnly></input>
+                    </div>
+                    <div className='subAttribute'>
+                      <h4 className='normal_text'>Descrição: </h4>
+                      <textarea className='normal_text' value={response.description} readOnly/>
+                    </div>
+                    <div className='subAttribute'>
+                      <div className='createPortfolioButton'><h4 className='normal_text'>Conversar</h4></div>
+                    </div>
                 </div>
-            );
+            )))
+          }else{
+            setFormResponsesElement(
+                    <div className='attribute'>
+                      <div className='notFoundIcon'></div>
+                      <h4 className='normal_text'>Ainda não há nenhuma resposta</h4>
+                    </div>)
+          }
+        },[formResponses])
+
+        const [changes, setChanges] = useState<boolean>(false);
+
+        const verifyChanges = ()=>{
+          if(!title.current || !description.current || !currentFormOfFormPanel){return;}
+          if(title.current.value !== currentFormOfFormPanel.name || 
+            description.current.value !== currentFormOfFormPanel.description
+          ){
+            if(!changes){
+              newSaveChangesNotification(()=>{
+                saveChanges();
+              },()=>{setChanges(false)});
+              setChanges(true);
+            }
+          }
         }
-        return{
-          activeFormPanel,
-          hiddenFormPanel,
-          FormPanelElment
+
+        const saveChanges = async ()=>{
+            if(!currentFormOfFormPanel){
+              return;
+            }
+            if(changes){
+              newErrorNotification("Não há nenhuma alteração no formulários");
+              return;
+            }
+            if(!title.current || !description.current){
+              newErrorNotification("Field error");
+              return;
+            }
+
+            const loading = newLoadingNotification("Salvando alterações");
+
+            const formUpdate:FormUpdate = {
+              name:title.current?.value,
+              description:description.current?.value  
+            }
+
+            try{
+              const formUpdated:FormDocument = await updateForm(String(currentFormOfFormPanel._id),formUpdate) 
+              newSuccessNotification("Alterações salvas com sucesso");
+            }catch(error){
+              newErrorNotification("Error para salvar alterações do formulário.");
+            }finally{
+              setTimeout(()=>{closeNotification(loading)},500);
+            }
+
         }
+
+        const visibility = formPanelVisibility ? showStyle : hiddenStyle;
+        return(
+          <div>
+              <section className="popUpPanel hiddenPopUpPanel" style={visibility} ref={formPanel}>
+                  <div className="closeIcon panelCloseButton" onClick={()=>{setFormPanelVisibility(false)}}></div>
+                  <div className="topTitle"><h2 className="normal_text">{currentFormOfFormPanel?.name}</h2></div>
+
+                  <div className='attribute'>
+                        {FormTabBox(currentFormOfFormPanel?.name?currentFormOfFormPanel?.name:"not found",2,()=>{})}
+                  </div>
+
+                  <div className='attribute'>
+                    <h4 className='normal_text text'>Título: </h4> 
+                    <input className='attributeInputText' ref={title} defaultValue={currentFormOfFormPanel?.name} placeholder='Título' onChange={verifyChanges}/>
+                  </div>
+                  <div className='attribute'>
+                    <h4 className='normal_text text'>Descrição: </h4> 
+                    <textarea className='attributeInputText' ref={description} defaultValue={currentFormOfFormPanel?.description} placeholder='Descrição' onChange={verifyChanges}/>
+                  </div>    
+                  <div className="panel" style={{height:"calc(50%)"}}>
+                    {formResponsesElement}
+                    {/* <div className='attribute'>
+                      <div className='notFoundIcon'></div>
+                      <h4 className='normal_text'>Ainda não há nenhuma resposta</h4>
+                    </div> */}
+
+                    {/* <div className='formResponseBox'>
+                        <div className='userTab'>
+                          <div className='userIcon'></div>
+                          <h4 className='normal_text'>User Name</h4>
+                          <h5 className='normal_text'>@userNameId</h5>
+                          <div className='seeProfileButton'>Perfil</div>
+                        </div>
+                        <div className='subAttribute'>
+                          <h4 className='normal_text'>Contato: </h4>
+                          <input className='normal_text' value={"hello@gmail.com"} readOnly></input>
+                        </div>
+                        <div className='subAttribute'>
+                          <h4 className='normal_text'>Descrição: </h4>
+                          <textarea className='normal_text' value={"what about this one?"} readOnly/>
+                        </div>
+                        <div className='subAttribute'>
+                          <div className='createPortfolioButton'><h4 className='normal_text'>Conversar</h4></div>
+                        </div>
+                    </div> */}
+
+                  </div>    
+              </section>
+          </div>
+        )
     }
-  
+    
+    
     const activeBlackFilter = ()=>{
       const blackFilterElement = blackFilter.current;
       if(blackFilterElement){
@@ -608,10 +696,12 @@ function Home() {
     <title>Du-Zilla</title>
     <TopNavBar />
     <div className='notificationSection' id='notificationSection'></div>
-    <PopUpPanelElement />
+    <ProjectsPanel />
     <PopUpPanelNewPortfolios />
     <PortfolioPanel />
-    <FormPanelElment/>
+    <FormPanel/>
+    <div className='loadingPopUp' style={{display:"flex"}} ref={loadingPopUp}><div className='loadingIcon3'></div></div>
+    <div className='loadingPopUp' style={{display:"none"}} ref={renderedErrorPopUp}><div className='notFoundIcon'></div></div>
     <div className="blackFilter hiddenBlackFilter" ref={blackFilter}></div>
 
     <section className="globalBox searchSection">
@@ -623,7 +713,7 @@ function Home() {
             </div>
 
             <div style={{display: "flex",justifyContent: "center",alignItems: "center",width: "100%",marginTop: "5%"}}>
-              <div className="createOwnButton" id="createOwnButton" onClick={activePopUpPanel}><h3 className="normal_text">Criar Novo Portfolio</h3></div>
+              <div className="createOwnButton" id="createOwnButton" onClick={()=>{setProjectsPanelVisibility(true)}}><h3 className="normal_text">Criar Novo Portfolio</h3></div>
             </div>
 
           <div className="signButtonsBox">

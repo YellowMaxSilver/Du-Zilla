@@ -256,7 +256,7 @@ body{
     background-color: #000000d0;
     background-image: var(--containerEffect2);
     z-index: 4;
-    display: none;
+    display: flex;
     justify-content: center;
     align-items: center;
     transition: 1s;
@@ -417,6 +417,13 @@ body{
     transition: 0.5s;
 }
 
+.popUpPanel .panelCloseButton{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 20px;
+    right:20px;
+}
 
 .popUpPanel .topTitle{
     width: 100%;

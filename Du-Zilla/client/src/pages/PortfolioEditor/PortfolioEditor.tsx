@@ -3,15 +3,52 @@ import { form, Spinner, TopNavBar } from "../Widgets";
 import "./PortfolioEditor.css"
 import "../style.css"
 import { title } from "process";
+import { AccountDocument } from "../../Query/interface/accountInterface";
+import { getAccountByUid, getCurrentSession } from "../../Query/accountQuery";
+import { getPortfolioById, updatePortfolio } from "../../Query/portfolioQuery";
+import { PortfolioDocument, PortfolioDocumentUpdate } from "../../Query/interface/portfolioInterface";
+import Notification from "../Notification/Notification";
+import { compilerToString } from "../compiler";
+import { createForm, updateForm, verifyFormExistence } from "../../Query/formQuery";
+import { FormDocument, FormInput, FormUpdate } from "../../Query/interface/formInterface";
+import { ObjectId } from "mongodb";
 
 function PortfolioEditor(){
+    const [Account,setAccount] = useState<AccountDocument|null>(null);
     const [Main, setMain] = useState<JSX.Element[]>([]);
-    const [MainIds, setMainIds] = useState<string[]>([]);
+    const [MainIds, setMainIds] = useState<string[][]>([]);
+    const [Portfolio, setPortfolio] = useState<PortfolioDocument|null>(null); 
 
     const overBox = useRef<HTMLDivElement|null>(null);
     const clickedBox = useRef<HTMLDivElement|null>(null);
     const background = useRef<HTMLDivElement|null>(null);
 
+    useEffect(()=>{
+              const loadData = async () =>{
+                  try{
+                      const uid:string|null = await getCurrentSession();
+                      if(!uid){
+                          setAccount(null);
+                          return;
+                      }
+                      const account:AccountDocument = await getAccountByUid(uid);
+                      setAccount(account);
+                  }catch(error){
+                      setAccount(null);
+                  }finally{
+      
+                  }
+              }
+              loadData();
+    },[])
+
+    useEffect(()=>{
+        if(Account){
+            GetPortfolio();
+        }
+    },[Account])
+
+    const {newSuccessNotification ,newErrorNotification ,newLoadingNotification, closeNotification} = Notification();
     const {activeAttributesPanel, AttributesPanelElement} = AttributesPanel();
     const {activeFormAttributesPanel, FormAttributesPanelElement } = FormAttributesPanel();
     const {activeNewWidgetPanel, hiddenNewWidgetPanel, NewWidgetPanelElement} = NewWidgetPanel();
@@ -27,6 +64,9 @@ function PortfolioEditor(){
                 argument5: any|null,
                 argument6: any|null,
                 argument7: any|null,
+                argument8: any|null,
+                argument9: any|null,
+                argument10: any|null,
             ) {
                 const { formWidget } = form();
                 let elementId: string = "Wdg"+String(Math.floor(Math.random() * (999999999 - 10 + 1)) + 10);
@@ -44,6 +84,7 @@ function PortfolioEditor(){
                         //argument7 = font family
                         //argument8 = width
                         //argument9 = height
+                        //argument 10 = background color
     
                         const text = argument1;
                         const fontSize = argument2;
@@ -52,6 +93,7 @@ function PortfolioEditor(){
                         const weight = argument5;
                         const fontStyle = argument6;
                         const fontFamily = argument7;
+                        const backgroundColor = argument10;
     
                         const widgetStyle:React.CSSProperties = {
                             fontSize:fontSize,
@@ -62,6 +104,7 @@ function PortfolioEditor(){
                             fontFamily:fontFamily,
                             width:"auto",
                             height:"auto",
+                            backgroundColor: argument10,
                             cursor:"pointer",
                             margin:0
                         }
@@ -73,7 +116,6 @@ function PortfolioEditor(){
                         )
     
                         setMain((prevItens)=>[...prevItens,widgetElement]);
-                        setMainIds((prevItens)=>[...prevItens,elementId]);
                     break;
                     case "form":
                         //form -->
@@ -81,8 +123,7 @@ function PortfolioEditor(){
                         //argument2 = formName
                         //argument3 = formDescription
     
-                        setMain((prevItens)=>[...prevItens,formWidget(elementId,argument2,argument3,"userName","@userNameId")]);
-                        
+                        setMain((prevItens)=>[...prevItens,formWidget(elementId,argument1,argument2,argument3,"userName","@userNameId")]);
                     break;
                     case "background":
                         //background -->
@@ -98,7 +139,7 @@ function PortfolioEditor(){
                         }
                     break;
                 }
-
+                setMainIds((prevItens)=>[...prevItens,[widgetType,elementId]]);
                 setTimeout(()=>{
                     const widget = document.querySelector("#"+elementId) as HTMLElement;
                     if(widget){
@@ -504,6 +545,175 @@ function PortfolioEditor(){
             }
     }
 
+    function GetPortfolio(){
+        const loading = newLoadingNotification("Carregando Portfolio");
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id');
+
+        if(!id){
+            return;
+        }
+
+        if(!Account){
+            return;
+        }
+
+        const getPortfolioAttributes = ()=>{
+            if(!Portfolio){
+                return;
+            }
+            console.log(Portfolio);
+            let elements:string[][] = compilerToString(Portfolio.code);
+            for(let i = 0;i < elements.length;i++){
+                let thisElement = elements[i];
+                new Widget(thisElement[0],thisElement[1],thisElement[2],thisElement[3],thisElement[4],thisElement[5],thisElement[6],thisElement[7],thisElement[8],thisElement[9],thisElement[10]);
+            }
+            //new Widget("background","solidColor","#ffff",null,null,null,null,null,null,null,null);
+
+        }
+
+        const loadPortfolio = async ()=>{
+            try{
+                const portfolio:PortfolioDocument = await getPortfolioById(id);
+                if(!portfolio){
+                    newErrorNotification("Portfolio not found");
+                }
+                if(Account.uid != portfolio.creator){
+                    newErrorNotification("Its not your portfolio");
+                }
+                setPortfolio(portfolio);
+                console.log(portfolio);
+            }catch(error){
+                newErrorNotification("Error to load Portfolio");
+            }
+        }
+
+        try{
+            loadPortfolio();
+        }catch(error){
+            newErrorNotification(""+error);
+        }finally{
+            closeNotification(loading);
+            getPortfolioAttributes();
+        }
+
+    }
+
+
+    async function PublishPortfolio(){
+        if(!Account){
+            return;
+        }
+        if(!Portfolio){
+            return;
+        }
+        const loading = newLoadingNotification("Publicando Portfólio");
+
+        var code = ""
+
+        if(!MainIds){
+            return;
+        }
+        for(let i = 0;i < MainIds.length; i++){
+            let thisElement = MainIds[i];
+            let element = document.querySelector("#"+thisElement[1]) as HTMLElement;
+            let thisCode = "{!}"
+            switch(thisElement[0]){
+                case "background":
+                    // thisCode += `{${thisElement[0]}}`
+                    // thisCode += `{${element.innerHTML}}`;
+                    
+                    // thisCode += "{/!}"
+                    // code = code+thisCode;
+                    if(background.current?.style.backgroundColor){
+                        thisCode += `{${thisElement[0]}}`
+                        thisCode += `{solidColor}`
+                        thisCode += `{${background.current?.style.backgroundColor}}`
+                        thisCode += "{/!}"
+                        code = code+thisCode;
+                    }
+                break;
+                case "text":
+                    thisCode += `{${thisElement[0]}}`
+                    thisCode += `{${element.innerHTML}}`;
+                    thisCode += `{${element.style.fontSize}}`;
+                    thisCode += `{${element.style.color}}`;
+                    thisCode += `{${element.style.textAlign}}`;
+                    thisCode += `{${element.style.fontWeight}}`;
+                    thisCode += `{${element.style.fontStyle}}`;
+                    thisCode += `{${element.style.fontFamily}}`;
+                    thisCode += `{${element.style.width}}`;
+                    thisCode += `{${element.style.height}}`;
+                    thisCode += `{${element.style.backgroundColor}}`;
+                    thisCode += "{/!}"
+                    code = code+thisCode;
+                break;
+                case "form":      
+                    if(!Account || !Portfolio){return;}
+                    
+                    let id = element.dataset.id;
+                    let name:string = element.dataset.name ? element.dataset.name:"";
+                    let description:string = element.dataset.description ? element.dataset.description :"";
+
+
+                    
+                    if(!id){
+                        const newForm:FormInput = {
+                            name:name,
+                            description:description,
+                            portfolio_id:String(Portfolio._id),
+                            creator:Account.uid
+                        }
+                        const newFormSaved = await createForm(newForm);
+
+                        if(newFormSaved){
+                            thisCode += `{${thisElement[0]}}`
+                            thisCode += `{${newFormSaved._id}}`
+                            thisCode += `{${newFormSaved.name}}`
+                            thisCode += `{${newFormSaved.description}}`
+                            thisCode += `{/!}`
+                        }
+                    }else{
+                        const formUpdated:FormUpdate = {
+                            name:name,
+                            description:description,
+                        };
+                        const formUpdatedSaved:FormDocument = await updateForm(id,formUpdated);
+                        if(formUpdatedSaved){
+                            thisCode += `{${thisElement[0]}}`
+                            thisCode += `{${formUpdatedSaved._id}}`
+                            thisCode += `{${formUpdatedSaved.name}}`
+                            thisCode += `{${formUpdatedSaved.description}}`
+                            thisCode += `{/!}`
+                        }
+                    }   
+                    
+                    code = code+thisCode;
+
+                break;
+            }
+        }
+        
+        console.log("mainIds: "+MainIds+"  !!!!!!!!! code: "+code);
+        const newPortfolio:PortfolioDocumentUpdate = {
+            code: code
+        }
+
+        const updatePortfolioCode = async () =>{
+            try{
+                const portfolioUpdated:PortfolioDocument = await updatePortfolio(String(Portfolio._id),newPortfolio);
+                newSuccessNotification("Portfolio publicado");
+            }catch(error){
+                newErrorNotification("Error to update portfolio.")
+            }finally{
+                closeNotification(loading);
+            }
+        }
+
+        updatePortfolioCode();
+        
+
+    }
 
     function NewWidgetPanel(){
             const newWidgetPopUpPanel = useRef<HTMLDivElement | null>(null);
@@ -520,11 +730,11 @@ function PortfolioEditor(){
             }
 
             const newText = ()=>{
-                new Widget("text","Title", 52, "#00000","center",100,"normal","Arial, Helvetica, sans-serif")
+                new Widget("text","Title", 52, "#00000","center",100,"normal","Arial, Helvetica, sans-serif",100,100,"#00000000")
             }
 
             const newForm = ()=>{
-                new Widget("form","id", "formName", "description",null,null,null,null);
+                new Widget("form",null, "formName", "description",null,null,null,null,null,null,null);
             }
     
             const NewWidgetPanelElement: React.FC = () =>{
@@ -595,7 +805,7 @@ function PortfolioEditor(){
 
                     <div className="topBarButtons">
                         <div className="normalButton topBarButton normal_text" style={{color:"var(--textSoloColor)"}}>Visualizar</div>
-                        <div className="createPortfolioButton topBarButton normal_text">Publicar</div>
+                        <div className="createPortfolioButton topBarButton normal_text" onClick={PublishPortfolio}>Publicar</div>
                     </div>
                 </div>
                 <div ref={background} className="editPreview">
